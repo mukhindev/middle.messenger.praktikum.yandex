@@ -1,0 +1,10 @@
+.header {
+  padding: 24px 32px;
+  border-bottom: 1px solid #cecece;
+}
+
+.header__title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: normal;
+}

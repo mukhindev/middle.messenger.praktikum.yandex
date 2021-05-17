@@ -1,7 +1,6 @@
 import './Main.scss'
 
 function Main (props) {
-
   const { children, test } = props;
 
   const context = {
@@ -14,8 +13,8 @@ function Main (props) {
     context,
     `
       <main class="{{ className }}">
-        {{ children }}
         {{ test }}
+        {{ children }}
       </main>
     `
   ]

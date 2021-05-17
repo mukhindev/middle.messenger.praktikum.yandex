@@ -1,7 +1,7 @@
 export default class Templator {
   constructor() {
     this.context = null
-    this.handleMustache = this.handleMustache.bind(this)
+    this.handleMatch = this.handleMatch.bind(this)
     // Если в глобальном window нет $templatorMetods
     if (!window.$templatorMethods) {
       // Создать объект для хранения методов
@@ -23,7 +23,8 @@ export default class Templator {
   }
 
   // Обработчик усов
-  handleMustache(match) {
+  handleMatch(match) {
+    console.log(match)
     // Отбрасываем усы
     const [key] = match.match(/[\w.]+/);
     // Получаем значение из контектса
@@ -36,20 +37,24 @@ export default class Templator {
       // Если в значении компонент
       if (value.name[0] === value.name[0].toUpperCase()) {
         // Найти совпадения по пропсам
-        const propsNames = match.match(/\[(.*?)\]/g) || [];
+        const propsNames = match.match(/{{(.*?)}}/g) || [];
         const props = {}
+        // Найти вложения в тег
+        const children = match.match(/>(.*?)<\//) || []
+        if (children[1]) {
+          props.children = this.compile([this.context, children[1]]);
+        }
         // Если есть пропсы
         if (propsNames.length) {
           for (const prop of propsNames) {
             const propsKey = prop.match(/[\w.]+/)
             if (prop.includes('=')) {
               // Наполняем объект значением после =
-              props[propsKey] = prop.split('=')[1].replace(']', '')
+              props[propsKey] = prop.split('=')[1].replace('}}', '')
             } else {
               // Наполняем объект пропсов из контекста
               props[propsKey] = this.context[propsKey]
             }
-
           }
         }
         // Компилируем шаблон из компонента, передаём props
@@ -71,7 +76,7 @@ export default class Templator {
     this.context = context
     return template
       // Ищем усы, на совпадения вызываем обработчик
-      .replace(/{{(.*?)}}/g, this.handleMustache)
+      .replace(/{{(.*?)}}|<(.*?)\/>|<(.*?)>.*<\/(.*?)+>/g, this.handleMatch)
       .trim();
   }
 }

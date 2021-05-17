@@ -5,17 +5,17 @@ function App () {
   const context = {
     className: 'app',
     Main,
-    children: `
-      Тест это тест
-    `,
-    test: `234`
+    button: `<button>123</button>`,
+    children: `<button>456</button>`
   }
 
   return [
     context,
     `
       <div class="{{ className }}">
-        {{ Main [children] [test=<button>Кнопка</button>] }}
+        1.<Main {{ test=777 }}>{{ button }}</Main>
+        2.<Main><div class="{{ className }}">{{ button }}</div></Main>
+        3.<Main {{ children }} />
       </div>
     `
   ]

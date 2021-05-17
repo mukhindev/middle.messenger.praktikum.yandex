@@ -2,6 +2,11 @@ export default class Templator {
   constructor() {
     this.context = null
     this.handleMustache = this.handleMustache.bind(this)
+    // Если в глобальном window нет $templatorMetods
+    if (!window.$templatorMethods) {
+      // Создать объект для хранения методов
+      window.$templatorMethods = {}
+    }
   }
 
   // Обработчик получения значения из контекста
@@ -27,12 +32,18 @@ export default class Templator {
     if (value === undefined) {
       return `{{ Не найден контекст "${key}" }}`;
     }
-    // Если в значении экземпляр шаблонизатора
+    console.log(value)
+    if (Array.isArray(value)) {
+      console.log('12122')
+      return value.join('')
+    }
     if (typeof value === 'function') {
-      if (value.name[0] === value.name[0].toUpperCase()) { 
+      // Если в значении компонент
+      if (value.name[0] === value.name[0].toUpperCase()) {  
         return new Templator().compile(value());
       }
-      window[value.name] = value
+      // Если в значении метод
+      window.$templatorMethods[value.name] = value
       return `${value.name}()`
     }
     return value;

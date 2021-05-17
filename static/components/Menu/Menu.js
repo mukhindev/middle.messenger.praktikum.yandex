@@ -14,7 +14,7 @@ function Menu () {
   return [
     context,
     `
-      <nav className="{{ className }}">
+      <nav class="{{ className }}">
         <ul class="{{ className }}__list">
           ${menu.map((item) => (
             `

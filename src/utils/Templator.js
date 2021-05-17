@@ -30,17 +30,30 @@ export default class Templator {
     const value = this.getValueFromContext(key);
     // Если значение неопределено
     if (value === undefined) {
-      return `{{ Не найден контекст "${key}" }}`;
-    }
-    console.log(value)
-    if (Array.isArray(value)) {
-      console.log('12122')
-      return value.join('')
+      return `{{ Контекст "${key}" не определён }}`;
     }
     if (typeof value === 'function') {
       // Если в значении компонент
-      if (value.name[0] === value.name[0].toUpperCase()) {  
-        return new Templator().compile(value());
+      if (value.name[0] === value.name[0].toUpperCase()) {
+        // Найти совпадения по пропсам
+        const propsNames = match.match(/\[(.*?)\]/g) || [];
+        const props = {}
+        // Если есть пропсы
+        if (propsNames.length) {
+          for (const prop of propsNames) {
+            const propsKey = prop.match(/[\w.]+/)
+            if (prop.includes('=')) {
+              // Наполняем объект значением после =
+              props[propsKey] = prop.split('=')[1].replace(']', '')
+            } else {
+              // Наполняем объект пропсов из контекста
+              props[propsKey] = this.context[propsKey]
+            }
+
+          }
+        }
+        // Компилируем шаблон из компонента, передаём props
+        return new Templator().compile(value(props));
       }
       // Если в значении метод
       window.$templatorMethods[value.name] = value
@@ -51,14 +64,14 @@ export default class Templator {
 
   /**
    * Компиляция шаблона.
-   * @param {[{}, string|() => string]} 
+   * @param {[{}, string|() => string]}
    * @returns {string}
    */
   compile([context, template]) {
     this.context = context
     return template
       // Ищем усы, на совпадения вызываем обработчик
-      .replace(/{{(.*?)}}/gi, this.handleMustache)
+      .replace(/{{(.*?)}}/g, this.handleMustache)
       .trim();
   }
 }

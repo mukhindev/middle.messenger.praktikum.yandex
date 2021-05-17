@@ -1,0 +1,35 @@
+@import url('./fonts.scss');
+
+:root {
+  --color-background: #F5F5F5;
+  --color-white: #FFFFFF;
+  --color-text: #0E0E0E;
+  --color-primary: #0380DA;
+  --color-secondary: #808080;
+  --color-error: #DF4863;
+  --color-success: #7AB671;
+  --color-border: #E0E0E0;
+  --color--selected: #D7F0FF;
+}
+
+.body {
+  margin: 0;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--color-text);
+  background-color: var(--color-background);
+}
+
+/* Хаки */
+
+* {
+  box-sizing: border-box;
+}
+
+button, input, textarea {
+  font: inherit;
+}

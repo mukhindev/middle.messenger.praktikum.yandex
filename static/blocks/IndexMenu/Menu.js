@@ -1,4 +1,4 @@
-import './Menu.css'
+import './Menu.scss'
 
 function Menu () {
   const context = {
@@ -6,9 +6,8 @@ function Menu () {
   }
 
   const menu = [
-    { name: 'Главная', to: '/' },
-    { name: 'Коты', to: '/cats' },
-    { name: 'О сайте', to: '/about' },
+    { name: 'Логин', to: '/sign-in' },
+    { name: 'Регистрация', to: '/sign-up' },
   ]
 
   return [

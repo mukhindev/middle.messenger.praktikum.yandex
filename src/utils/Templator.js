@@ -38,11 +38,15 @@ export default class Templator {
         // Найти совпадения по пропсам
         const propsNames = match.match(/{{(.*?)}}/g) || [];
         const props = {}
-        // Найти вложения в тег
+        // Найти вложения в тег компонента
         const children = match.match(/<[A-Z].*?>(.*?)<\/[A-Z][a-z]*>/) || []
-        console.log(match)
+        // Если есть, создаёт компонент и компилируем результат в Child
         if (children[1]) {
-          props.children = this.compile([this.context, children[1]]);
+          function Child() {
+            Child.context = this.context
+            return children[1]
+          }
+          props.children = this.compile(Child);
         }
         // Если есть пропсы
         if (propsNames.length) {
@@ -58,7 +62,7 @@ export default class Templator {
           }
         }
         // Компилируем шаблон из компонента, передаём props
-        return new Templator().compile(value(props));
+        return new Templator().compile(value, props);
       }
       // Если в значении метод
       window.$templatorMethods[value.name] = value
@@ -67,13 +71,9 @@ export default class Templator {
     return value;
   }
 
-  /**
-   * Компиляция шаблона.
-   * @param {[{}, string|() => string]}
-   * @returns {string}
-   */
-  compile([context, template]) {
-    this.context = context
+  compile(Component, props) {
+    const template = Component.call(this, props);
+    this.context = Component.context
     return template
       // Ищем нужные cовпадения, вызываем обработчик
       .replace(/\s{2,}/g, '')

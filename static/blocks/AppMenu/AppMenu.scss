@@ -1,8 +1,8 @@
-.menu {
+.app-menu {
   background-color: transparent;
 }
 
-.menu__list {
+.app-menu__list {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -10,10 +10,10 @@
   align-items: center;
 }
 
-.menu__item {
+.app-menu__item {
   margin: 0 16px 0 0;
 }
 
-.menu__item:last-of-type {
+.app-menu__item:last-of-type {
   margin: 0;
 }

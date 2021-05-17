@@ -3,6 +3,8 @@
 Макет в Figma: [https://www.figma.com/file/nMKeQd1eOiWN27uZpuzREb/mukhin-chat?node-id=0%3A1](https://www.figma.com/file/nMKeQd1eOiWN27uZpuzREb/mukhin-chat?node-id=0%3A1)  
 netlify: [https://frosty-poincare-ded0e8.netlify.app](https://frosty-poincare-ded0e8.netlify.app)
 
+Подсветка html в js-стоке для VSCode: https://marketplace.visualstudio.com/items?itemName=Tobermory.es6-string-html
+
 ---
 
 ### Ветка, в которой делаете задания спринта, должна называться sprint_i, где i - номер спринта. Не переименовывайте её.

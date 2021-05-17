@@ -1,21 +1,18 @@
 import './Main.scss'
 
 function Main (props) {
-  const { children, test } = props;
+  const { children } = props;
 
-  const context = {
+  Main.context = {
     className: 'main',
     children,
   }
 
-  return [
-    context,
-    `
-      <main class="{{ className }}">
-        {{ children }}
-      </main>
-    `
-  ]
+  return /*html*/ `
+    <main class="{{ className }}">
+      {{ children }}
+    </main>
+  `
 }
 
 export default Main;

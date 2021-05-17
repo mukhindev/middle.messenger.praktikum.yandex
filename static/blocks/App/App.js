@@ -13,9 +13,18 @@ function App () {
     context,
     `
       <div class="{{ className }}">
-        1.<Main {{ test=777 }}>{{ button }}</Main>
-        2.<Main><div class="{{ className }}">{{ button }}</div></Main>
-        3.<Main {{ children }} />
+        <Main>
+          <ul>
+            <li>
+              <a href="#">
+                test
+              </a>
+            </li>
+          </ul>
+        </Main>
+        <Main>
+          123
+        </Main>
       </div>
     `
   ]

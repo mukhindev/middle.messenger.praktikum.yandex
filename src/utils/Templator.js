@@ -24,8 +24,7 @@ export default class Templator {
 
   // Обработчик усов
   handleMatch(match) {
-    console.log(match)
-    // Отбрасываем усы
+    // Отбрасываем усы и ковычки
     const [key] = match.match(/[\w.]+/);
     // Получаем значение из контектса
     const value = this.getValueFromContext(key);
@@ -40,7 +39,8 @@ export default class Templator {
         const propsNames = match.match(/{{(.*?)}}/g) || [];
         const props = {}
         // Найти вложения в тег
-        const children = match.match(/>(.*?)<\//) || []
+        const children = match.match(/<[A-Z].*?>(.*?)<\/[A-Z][a-z]*>/) || []
+        console.log(match)
         if (children[1]) {
           props.children = this.compile([this.context, children[1]]);
         }
@@ -75,8 +75,9 @@ export default class Templator {
   compile([context, template]) {
     this.context = context
     return template
-      // Ищем усы, на совпадения вызываем обработчик
-      .replace(/{{(.*?)}}|<(.*?)\/>|<(.*?)>.*<\/(.*?)+>/g, this.handleMatch)
+      // Ищем нужные cовпадения, вызываем обработчик
+      .replace(/\s{2,}/g, '')
+      .replace(/{{(.*?)}}|<[A-Z](.*?)>(.*?)<\/[A-Z][a-z]*>|<[A-Z](.*?)\/>/g, this.handleMatch)
       .trim();
   }
 }

@@ -6,14 +6,12 @@ function Main (props) {
   const context = {
     className: 'main',
     children,
-    test
   }
 
   return [
     context,
     `
       <main class="{{ className }}">
-        {{ test }}
         {{ children }}
       </main>
     `

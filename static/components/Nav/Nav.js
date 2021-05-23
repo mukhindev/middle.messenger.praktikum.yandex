@@ -1,14 +1,9 @@
-import './AppMenu.scss'
+import './Nav.scss'
 
-function Menu () {
-  Menu.context = {
-    className: 'app-menu',
+function Nav ({ menu }) {
+  Nav.context = {
+    className: 'nav',
   }
-
-  const menu = [
-    { name: 'Логин', to: '/sign-in' },
-    { name: 'Регистрация', to: '/sign-up' },
-  ]
 
   return `
   <nav class="{{ className }}">
@@ -25,4 +20,4 @@ function Menu () {
 `
 }
 
-export default Menu;
+export default Nav;

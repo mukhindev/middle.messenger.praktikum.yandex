@@ -4,12 +4,12 @@
   background-color: #fff;
   overflow: hidden;
   position: relative;
-}
 
-.main__number {
-  margin: 16px 0 0;
-}
+  &__number {
+    margin: 16px 0 0;
+  }
 
-.main__button {
-  margin: 16px 0 0;
+  &__button {
+    margin: 16px 0 0;
+  }
 }

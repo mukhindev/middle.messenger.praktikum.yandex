@@ -51,10 +51,11 @@ export default class Templator {
         // Если есть пропсы
         if (propsNames.length) {
           for (const prop of propsNames) {
-            const propsKey = prop.match(/[\w.]+/)
+            const propsKey = prop.match(/[\w.]+/)[0]
             if (prop.includes('=')) {
               // Наполняем объект значением после =
-              props[propsKey] = prop.split('=')[1].replace('}}', '')
+              props[propsKey] = prop.split(/="/)[1].replace(/".*}}/, '').trim()
+              console.log(prop, propsKey, props)
             } else {
               // Наполняем объект пропсов из контекста
               props[propsKey] = this.context[propsKey]
@@ -74,10 +75,11 @@ export default class Templator {
   compile(Component, props) {
     const template = Component.call(this, props);
     this.context = Component.context
-    return template
+    const tmpl = template
       // Ищем нужные cовпадения, вызываем обработчик
       .replace(/\s{2,}/g, '')
-      .replace(/{{(.*?)}}|<[A-Z](.*?)>(.*?)<\/[A-Z][a-z]*>|<[A-Z](.*?)\/>/g, this.handleMatch)
+      .replace(/{{(.*?)}}|<[A-Z](.*?)\/>|<[A-Z](.*?)>(.*?)<\/[A-Z][a-z]*>/g, this.handleMatch)
       .trim();
+    return tmpl
   }
 }

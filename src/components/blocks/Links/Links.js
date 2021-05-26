@@ -1,14 +1,14 @@
-import './Nav.scss'
+import './Links.scss'
 
-function Nav ({ menu }) {
-  Nav.context = {
-    className: 'nav',
+function Links ({ links }) {
+  Links.context = {
+    className: 'links',
   }
 
   return `
   <nav class="{{ className }}">
     <ul class="{{ className }}__list">
-      ${menu.map((item) => (
+      ${links.map((item) => (
         `
           <li class="{{ className }}__item">
             <a class="{{ className }}__link" href="${item.to}">${item.name}</a>
@@ -20,4 +20,4 @@ function Nav ({ menu }) {
 `
 }
 
-export default Nav;
+export default Links;

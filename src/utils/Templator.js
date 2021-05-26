@@ -33,10 +33,10 @@ export default class Templator {
       return `{{ Контекст "${key}" не определён }}`;
     }
     if (typeof value === 'function') {
-      // Если в значении компонент
+      // Если в значении компонент (определяется по заглавной букве)
       if (value.name[0] === value.name[0].toUpperCase()) {
         // Найти совпадения по пропсам
-        const propsNames = match.match(/{{(.*?)}}/g) || [];
+        const propsNames = match.match(/\w+="[\w{}\s]+"/g) || [];
         const props = {}
         // Найти вложения в тег компонента
         const children = match.match(/<[A-Z].*?>(.*?)<\/[A-Z][a-z]*>/) || []
@@ -51,14 +51,19 @@ export default class Templator {
         // Если есть пропсы
         if (propsNames.length) {
           for (const prop of propsNames) {
-            const propsKey = prop.match(/[\w.]+/)[0]
-            if (prop.includes('=')) {
-              // Наполняем объект значением после =
-              props[propsKey] = prop.split(/="/)[1].replace(/".*}}/, '').trim()
-              console.log(prop, propsKey, props)
+            // Ключ пропса (левая часть до =)
+            const propsKey = prop.match(/[^<][\w.]+/)[0]
+            // Получаем значение после =
+            const propValue = prop.split(/="/)[1].replace(/"/, '').trim()
+            // Проверяем, является ли ключом к контексту (prop="{{ key }}")
+            const propValueContextKey = propValue.match(/{{\s*?(\w+?)\s*?}}/)
+            // Если ключ к контексту
+            if (propValueContextKey && propValueContextKey[1]) {
+              // Сохраняем под ключом пропса текущий контекст
+              props[propsKey] = this.context[propValueContextKey[1]]
             } else {
-              // Наполняем объект пропсов из контекста
-              props[propsKey] = this.context[propsKey]
+              // Сохраняем в пропс значение после =
+              props[propsKey] = propValue
             }
           }
         }
@@ -77,7 +82,6 @@ export default class Templator {
     this.context = Component.context
     const tmpl = template
       // Ищем нужные cовпадения, вызываем обработчик
-      .replace(/\s{2,}/g, '')
       .replace(/{{(.*?)}}|<[A-Z](.*?)\/>|<[A-Z](.*?)>(.*?)<\/[A-Z][a-z]*>/g, this.handleMatch)
       .trim();
     return tmpl

@@ -4,8 +4,8 @@
   "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main. Название pull request может быть любое.",
   "main": "index.js",
   "scripts": {
-    "watch": "parcel watch build ./static/pages/*.html",
-    "build": "parcel build ./static/pages/*.html --no-minify",
+    "watch": "parcel watch build ./static/pages/**/*.html",
+    "build": "parcel build ./static/pages/**/*.html --no-minify",
     "dev": "npm run watch & node ./src/server.js",
     "start": "npm run build && node ./src/server.js"
   },
@@ -25,7 +25,6 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7",
     "parcel-bundler": "^1.12.5",
     "sass": "^1.32.13"
   }

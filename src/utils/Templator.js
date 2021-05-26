@@ -23,7 +23,7 @@ export default class Templator {
   }
 
   // Обработчик усов
-  handleMatch(match) {
+  handleMatch(match, template) {
     // Отбрасываем усы и ковычки
     const [key] = match.match(/[\w.]+/);
     // Получаем значение из контектса
@@ -39,7 +39,8 @@ export default class Templator {
         const propsNames = match.match(/\w+="[\w{}\s]+"/g) || [];
         const props = {}
         // Найти вложения в тег компонента
-        const children = match.match(/<[A-Z].*?>(.*?)<\/[A-Z][a-z]*>/) || []
+        const children = match.match(/<[A-Z].*?>(.*?)<\/[A-Z][a-z]*>/s) || []
+        console.log({ match, children })
         // Если есть, создаёт компонент и компилируем результат в Child
         if (children[1]) {
           function Child() {
@@ -82,7 +83,7 @@ export default class Templator {
     this.context = Component.context
     const tmpl = template
       // Ищем нужные cовпадения, вызываем обработчик
-      .replace(/{{(.*?)}}|<[A-Z](.*?)\/>|<[A-Z](.*?)>(.*?)<\/[A-Z][a-z]*>/g, this.handleMatch)
+      .replace(/<([A-Z][a-z]+)\s*.*\s*\/\1>|<[A-Z][a-z]+\s*[^<>]*\s*\/>|<[A-Z][a-z]+\s*(.*?)>(.*?)<\/[A-Z][a-z]*>|{{(.*?)}}/gs, (m) => this.handleMatch(m, template))
       .trim();
     return tmpl
   }

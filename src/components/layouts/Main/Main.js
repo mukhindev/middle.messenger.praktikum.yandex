@@ -7,9 +7,9 @@ function Main ({ children }) {
   }
 
   return /*html*/ `
-    <a class="{{ className }}">
+    <main class="{{ className }}">
       {{ children }}
-    </a>
+    </main>
   `
 }
 

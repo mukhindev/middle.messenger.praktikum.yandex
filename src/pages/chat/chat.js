@@ -1,7 +1,7 @@
 import Templator from '../../utils/Templator.js';
 import getElementFromString from "../../utils/getElementFromString";
 import Main from '../../components/layouts/Main/Main.js'
-import MessageCardList from  '../../components/blocks/MessageCardList/MessageCardList.js'
+import ChatCardList from '../../components/blocks/ChatCardList/ChatCardList.js'
 import '../../assets/styles/global.scss';
 import './chat.scss';
 
@@ -9,7 +9,7 @@ function ChatPage () {
   ChatPage.context = {
     className: 'chat-page',
     Main,
-    MessageCardList,
+    ChatCardList,
     messageCards: [
       {
         id: '1',
@@ -47,7 +47,7 @@ function ChatPage () {
   return /*html*/ `
     <div class="{{ className }}">
       <Main>
-        <MessageCardList messageCards="{{ messageCards }}" />
+        <ChatCardList messageCards="{{ messageCards }}" />
       </Main>
     </div>
   `

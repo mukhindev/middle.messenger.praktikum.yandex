@@ -1,0 +1,14 @@
+.chat-card-list {
+  list-style: none;
+  margin: 0;
+  padding: 24px;
+  overflow-x: auto;
+
+  &__item {
+    margin: 0 0 16px;
+
+    &:last-of-type {
+      margin: 0;
+    }
+  }
+}

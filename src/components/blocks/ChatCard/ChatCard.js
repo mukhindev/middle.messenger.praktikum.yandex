@@ -1,9 +1,9 @@
-import './MessageCard.scss'
+import './ChatCard.scss'
 import defaultAvatar from '../../../assets/images/default-avatar.png'
 
-function MessageCard ({ messageCards, index }) {
-  MessageCard.context = {
-    className: 'message-card',
+function ChatCard ({ messageCards, index }) {
+  ChatCard.context = {
+    className: 'chat-card',
     messageCard: messageCards[index],
     avatar: messageCards[index].avatar ?? defaultAvatar,
     updatedAt: messageCards[index].updatedAt
@@ -26,8 +26,10 @@ function MessageCard ({ messageCards, index }) {
         src="{{ avatar }}"
         alt="Аватар пользователя {{ messageCard.name }}"
       />
-      ${groupMarkerElement}
-      <p class="{{ className }}__name">{{ messageCard.name }}</p>
+      <div class="{{ className }}__name-wrapper">
+        ${groupMarkerElement}
+        <p class="{{ className }}__name">{{ messageCard.name }}</p>
+      </div>
       <p class="{{ className }}__last-message">{{ messageCard.lastMessage }}</p>
       ${counterUnreadMessagesElement}
       <span class="{{ className }}__updated-at">{{ updatedAt }}</span>
@@ -35,4 +37,4 @@ function MessageCard ({ messageCards, index }) {
   `
 }
 
-export default MessageCard;
+export default ChatCard;

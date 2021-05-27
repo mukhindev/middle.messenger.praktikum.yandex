@@ -1,4 +1,4 @@
-.chat-card {
+.contact-card {
   background: var(--color-white);
   padding: 8px;
   border-radius: 8px;
@@ -63,7 +63,9 @@
   }
 
   &__updated-at {
+    justify-self: flex-end;
     align-self: flex-end;
+    white-space: nowrap;
     font-size: 11px;
     color: var(--color-secondary);
     grid-column: 3;

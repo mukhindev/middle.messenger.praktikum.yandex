@@ -1,19 +1,20 @@
-import './ChatCard.scss'
+import './ContactCard.scss'
 import defaultAvatar from '../../../assets/images/default-avatar.png'
+import formatDate from '../../../utils/formatDate.js'
 
-function ChatCard ({ messageCards, index }) {
-  ChatCard.context = {
-    className: 'chat-card',
-    messageCard: messageCards[index],
-    avatar: messageCards[index].avatar ?? defaultAvatar,
-    updatedAt: messageCards[index].updatedAt
+function ContactCard ({ contacts, index }) {
+  ContactCard.context = {
+    className: 'contact-card',
+    messageCard: contacts[index],
+    avatar: contacts[index].avatar ?? defaultAvatar,
+    updatedAt: formatDate(contacts[index].updatedAt)
   }
 
-  const groupMarkerElement = messageCards[index].isGroup
+  const groupMarkerElement = contacts[index].isGroup
     ? '<div class="{{ className }}__group-marker"></div>'
     : ''
 
-  const counterUnreadMessagesElement = messageCards[index].counterUnreadMessages
+  const counterUnreadMessagesElement = contacts[index].counterUnreadMessages
     ? `<span class="{{ className }}__counter-unread-messages">
           {{ messageCard.counterUnreadMessages }}
       </span>`
@@ -37,4 +38,4 @@ function ChatCard ({ messageCards, index }) {
   `
 }
 
-export default ChatCard;
+export default ContactCard;

@@ -1,7 +1,7 @@
 import Templator from '../../utils/Templator.js';
 import getElementFromString from "../../utils/getElementFromString";
 import Main from '../../components/layouts/Main/Main.js'
-import ChatCardList from '../../components/blocks/ChatCardList/ChatCardList.js'
+import ContactCardList from '../../components/blocks/ContactCardList/ContactCardList.js'
 import '../../assets/styles/global.scss';
 import './chat.scss';
 
@@ -9,8 +9,8 @@ function ChatPage () {
   ChatPage.context = {
     className: 'chat-page',
     Main,
-    ChatCardList,
-    messageCards: [
+    ContactCardList,
+    contacts: [
       {
         id: '1',
         name: 'Стас Басов',
@@ -19,7 +19,7 @@ function ChatPage () {
         ownerLastMessage: 'Стас Басов',
         counterUnreadMessages: 1,
         avatar: null,
-        updatedAt: '2021-05-26T19:18:15.563Z'
+        updatedAt: '2021-05-27T19:18:15.563Z'
       },
       {
         id: '2',
@@ -47,7 +47,7 @@ function ChatPage () {
   return /*html*/ `
     <div class="{{ className }}">
       <Main>
-        <ChatCardList messageCards="{{ messageCards }}" />
+        <ContactCardList contacts="{{ contacts }}" />
       </Main>
     </div>
   `

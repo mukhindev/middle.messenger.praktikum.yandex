@@ -1,15 +1,16 @@
 import ContactCard from "../ContactCard/ContactCard.js";
 import './ContactCardList.scss'
 
-function ContactCardList ({ contacts }) {
+function ContactCardList ({ contacts, parentBlock, mix }) {
   ContactCardList.context = {
     className: 'contact-card-list',
+    mixClassName: (parentBlock && mix) ? ` ${parentBlock}__${mix}` : '',
     ContactCard,
     contacts,
   }
 
   return /*html*/ `
-    <ul class="{{ className }}">
+    <ul class="{{ className }}{{ mixClassName }}">
       ${contacts.map((_, index) => (
         `
           <li class="{{ className }}__item">

@@ -5,18 +5,18 @@ import formatDate from '../../../utils/formatDate.js'
 function ContactCard ({ contacts, index }) {
   ContactCard.context = {
     className: 'contact-card',
-    messageCard: contacts[index],
+    contact: contacts[index],
     avatar: contacts[index].avatar ?? defaultAvatar,
     updatedAt: formatDate(contacts[index].updatedAt)
   }
 
-  const groupMarkerElement = contacts[index].isGroup
+  const groupMarkerTemplate = contacts[index].isGroup
     ? '<div class="{{ className }}__group-marker"></div>'
     : ''
 
-  const counterUnreadMessagesElement = contacts[index].counterUnreadMessages
+  const counterUnreadMessagesTemplate = contacts[index].counterUnreadMessages
     ? `<span class="{{ className }}__counter-unread-messages">
-          {{ messageCard.counterUnreadMessages }}
+        {{ contact.counterUnreadMessages }}
       </span>`
     : ''
 
@@ -25,14 +25,14 @@ function ContactCard ({ contacts, index }) {
       <img
         class="{{ className }}__avatar"
         src="{{ avatar }}"
-        alt="Аватар пользователя {{ messageCard.name }}"
+        alt="Аватар пользователя {{ contact.name }}"
       />
       <div class="{{ className }}__name-wrapper">
-        ${groupMarkerElement}
-        <p class="{{ className }}__name">{{ messageCard.name }}</p>
+        ${groupMarkerTemplate}
+        <p class="{{ className }}__name">{{ contact.name }}</p>
       </div>
-      <p class="{{ className }}__last-message">{{ messageCard.lastMessage }}</p>
-      ${counterUnreadMessagesElement}
+      <p class="{{ className }}__last-message">{{ contact.lastMessage }}</p>
+      ${counterUnreadMessagesTemplate}
       <span class="{{ className }}__updated-at">{{ updatedAt }}</span>
     </div>
   `

@@ -1,0 +1,53 @@
+.chat-page {
+  height: 100vh;
+  display: flex;
+
+  /* Боковая панель */
+
+  &__side-panel {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-white);
+    box-shadow: 0px 8px 48px -16px rgba(0, 0, 0, 0.25);
+    width: 362px;
+    height: 100%;
+    z-index: 1;
+  }
+
+  &__side-panel-header {
+    flex-shrink: 0;
+    padding: 24px;
+  }
+
+  &__contact-card-list {
+    flex-grow: 1;
+    padding: 24px;
+    overflow-y: auto;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  &__side-panel-footer {
+    flex-shrink: 0;
+    padding: 24px;
+  }
+
+  /* Окно сообщений */
+
+  &__main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__message-list {
+    flex-grow: 1;
+    padding: 24px;
+    overflow-y: auto;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+
+}

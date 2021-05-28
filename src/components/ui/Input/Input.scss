@@ -1,0 +1,41 @@
+.input {
+  position: relative;
+
+  &__field {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 48px;
+    padding: 0 16px;
+    background: var(--color-white);
+    box-shadow: inset 0px 0px 0px 1px var(--color-border);
+    border-radius: 8px;
+    transition: 0.25s;
+    outline: none;
+    border: none;
+  }
+
+  &__field:-webkit-autofill {
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  &__field:focus {
+    box-shadow: inset 0px 0px 0px 2px var(--color-primary);
+  }
+
+  &__label {
+    position: absolute;
+    left: 12px;
+    top: 0;
+    pointer-events: none;
+    transition: .15s;
+    color: var(--color-secondary);
+    padding: 0 4px;
+  }
+
+  &__field:not(:placeholder-shown) ~ &__label {
+    position: absolute;
+    top: -21px;
+    background: var(--color-white);
+    font-size: 13px;
+  }
+}

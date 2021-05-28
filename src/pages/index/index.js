@@ -3,6 +3,7 @@ import Main from '../../components/layouts/Main/Main.js'
 import Links from '../../components/blocks/Links/Links.js'
 import '../../assets/styles/global.scss';
 import './index.scss';
+import getElementFromString from "../../utils/getElementFromString";
 
 function IndexPage () {
   IndexPage.context = {
@@ -39,7 +40,7 @@ function IndexPage () {
 }
 
 const html = new Templator().compile(IndexPage);
-const parser = new DOMParser();
-const page = parser.parseFromString(html, 'text/html');
+const pageElement = getElementFromString(html)
 const root = document.body;
-root.append(page.documentElement);
+root.append(pageElement);
+

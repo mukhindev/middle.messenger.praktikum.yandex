@@ -36,7 +36,8 @@ export default class Templator {
       // Если в значении компонент (определяется по заглавной букве)
       if (value.name[0] === value.name[0].toUpperCase()) {
         // Найти совпадения по пропсам
-        const propsNames = match.match(/\w+="[\w{}\s]+"/g) || [];
+        const matchForProps = match.split('>')[0]
+        const propsNames = matchForProps.match(/\w+=".*?"/g) || [];
         const props = {}
         // Найти вложения в тег компонента
         const children = match.match(/<[A-Z].*?>(.*?)<\/[A-Z][a-z]*>/s) || []
@@ -72,7 +73,8 @@ export default class Templator {
       }
       // Если в значении метод
       window.$templatorMethods[value.name] = value
-      return `${value.name}()`
+      const method = match.match(/{{\s*?([\w.()]*)\s*?}}/)[1]
+      return `$templatorMethods.${method.replace(/.+\(/, `${value.name}(`)}`
     }
     return value;
   }
@@ -82,7 +84,8 @@ export default class Templator {
     this.context = Component.context
     const tmpl = template
       // Ищем нужные cовпадения, вызываем обработчик
-      .replace(/<([A-Z][a-z]+)\s*.*\s*\/\1>|<[A-Z][a-z]+\s*[^<>]*\s*\/>|<[A-Z][a-z]+\s*(.*?)>(.*?)<\/[A-Z][a-z]*>|{{(.*?)}}/gs, this.handleMatch)
+      // <([A-Z][a-z]+)\s*.*\s*\/\1>|
+      .replace(/<[A-Z][a-z]+\s*[^<>]*\s*\/>|<[A-Z][a-z]+\s*(.*?)>(.*?)<\/[A-Z][a-z]*>|{{(.*?)}}/gs, this.handleMatch)
       .trim();
     return tmpl
   }

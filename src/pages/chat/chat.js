@@ -4,6 +4,7 @@ import Main from '../../components/layouts/Main/Main';
 import Input from '../../components/ui/Input/Input';
 import ContactCardList from '../../components/blocks/ContactCardList/ContactCardList';
 import Button from '../../components/ui/Button/Button';
+import ChatHeader from '../../components/blocks/ChatHeader/ChatHeader';
 import MessageList from '../../components/blocks/MessageList/MessageList';
 import MessageInput from '../../components/blocks/MessageInput/MessageInput';
 import createChatIcon from '../../assets/images/create-chat.svg';
@@ -19,13 +20,16 @@ function ChatPage() {
     Input,
     ContactCardList,
     Button,
+    ChatHeader,
     MessageList,
     MessageInput,
     createChatIcon,
     settingIcon,
     handleSearchInput: (value) => console.log('Ввод в поиск:', value),
-    handleCreateClick: () => console.log('Нажата кнопка создания чата'),
+    handleCreate: () => console.log('Нажата кнопка создания чата'),
     handleOptionsClick: () => console.log('Нажата кнопка настроек'),
+    handleAddContact: () => console.log('Нажата кнопка добавления контакта'),
+    handleDeleteContact: () => console.log('Нажата кнопка удаления контакта'),
     handleAttachFile: () => console.log('Нажата кнопка прикрепления файла'),
     handleMessageInput: (value) => console.log('Ввод нового сообщения:', value),
     handleSend: () => console.log('Нажата кнопка отправки сообщения'),
@@ -70,6 +74,11 @@ function ChatPage() {
       parentBlock="{{ className }}"
       mix="main"
     >
+      <ChatHeader
+        name="Денис Колбасов"
+        onAddContact="{{ handleAddContact }}"
+        onDeleteContact="{{ handleDeleteContact }}"
+      />
       <MessageList
         parentBlock="{{ className }}"
         mix="message-list"

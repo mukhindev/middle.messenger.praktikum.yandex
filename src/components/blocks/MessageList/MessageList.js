@@ -9,7 +9,7 @@ function MessageList ({ messages, parentBlock, mix }) {
     messages,
   }
 
-  return /*html*/ `
+  return `
     <ul class="{{ className }}{{ mixClassName }}">
       ${messages.map((_, index) => (
         `

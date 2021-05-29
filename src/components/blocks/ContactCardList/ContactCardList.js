@@ -9,7 +9,7 @@ function ContactCardList ({ contacts, parentBlock, mix }) {
     contacts,
   }
 
-  return /*html*/ `
+  return `
     <ul class="{{ className }}{{ mixClassName }}">
       ${contacts.map((_, index) => (
         `

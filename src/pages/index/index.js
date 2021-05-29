@@ -20,7 +20,7 @@ function IndexPage () {
     ],
   }
 
-  return /*html*/ `
+  return `
     <div class="{{ className }}">
       <header class="{{ className }}__header">
         <h1 class="{{ className }}__title">Чат</h1>

@@ -5,8 +5,12 @@ import Input from '../../components/ui/Input/Input.js'
 import ContactCardList from '../../components/blocks/ContactCardList/ContactCardList.js'
 import Button from '../../components/ui/Button/Button.js'
 import MessageList from '../../components/blocks/MessageList/MessageList.js';
+import MessageInput from '../../components/blocks/MessageInput/MessageInput.js';
+import createChatIcon from '../../assets/images/create-chat.svg'
+import settingIcon from '../../assets/images/settings.svg'
 import '../../assets/styles/global.scss';
 import './chat.scss';
+import { contacts, messages } from '../../utils/mockData.js';
 
 function ChatPage () {
   ChatPage.context = {
@@ -16,78 +20,14 @@ function ChatPage () {
     ContactCardList,
     Button,
     MessageList,
+    MessageInput,
+    createChatIcon,
+    settingIcon,
     handleSearchInput: (value) => console.log(value),
     handleCreateClick: () => console.log('Нажата кнопка создания чата'),
     handleOptionsClick: () => console.log('Нажата кнопка настроек'),
-    contacts: [
-      {
-        id: '1',
-        name: 'Стас Басов',
-        isGroup: false,
-        lastMessage: 'Привет! Ты куда пропал-то?',
-        ownerLastMessage: 'Стас Басов',
-        counterUnreadMessages: 1,
-        avatar: null,
-        updatedAt: '2021-05-27T19:18:15.563Z'
-      },
-      {
-        id: '2',
-        name: 'Денис Колбасов',
-        isGroup: false,
-        lastMessage: 'Что за бред? 😂',
-        ownerLastMessage: 'Денис Колбасов',
-        counterUnreadMessages: 0,
-        avatar: null,
-        updatedAt: '2021-05-24T15:18:02.563Z'
-      },
-      {
-        id: '3',
-        name: 'Работа',
-        isGroup: true,
-        lastMessage: 'Ахахаххаха',
-        ownerLastMessage: 'Макс Коровин',
-        counterUnreadMessages: 0,
-        avatar: null,
-        updatedAt: '2021-05-23T10:21:07.563Z'
-      }
-    ],
-    messages: [
-      {
-        id: '1',
-        owner: 'Сергей Мухин',
-        text: 'Привет! Не ожидал тебя тут увидеть',
-        avatar: null,
-        date: '2021-05-24T15:18:02.563Z'
-      },
-      {
-        id: '2',
-        owner: 'Денис Колбасов',
-        text: 'Привет! А ты кто хоть?',
-        avatar: null,
-        date: '2021-05-24T15:18:02.563Z'
-      },
-      {
-        id: '3',
-        owner: 'Сергей Мухин',
-        text: 'Ты только не пугайся того что я скажу',
-        avatar: null,
-        date: '2021-05-24T15:18:02.563Z'
-      },
-      {
-        id: '4',
-        owner: 'Сергей Мухин',
-        text: 'На самом деле я тебя создал несколько дней назад, что сдать первый спринт в Яндекс.Практикум. Это такие курсы, их там много, а я на Веб-разработчика кстати',
-        avatar: null,
-        date: '2021-05-27T15:18:02.563Z'
-      },
-      {
-        id: '5',
-        owner: 'Денис Колбасов',
-        text: 'Что за бред? 😂',
-        avatar: null,
-        date: '2021-05-28T15:18:02.563Z'
-      }
-    ]
+    contacts,
+    messages,
   }
 
   const sidePanelTemplate = `
@@ -106,8 +46,18 @@ function ChatPage () {
         contacts="{{ contacts }}"
       />
       <div class="{{ className }}__side-panel-footer">
-        <Button onClick="{{ handleCreateClick }}">Новый чат</Button>
-        <Button onClick="{{ handleOptionsClick }}">Настройки</Button>
+        <Button
+          onClick="{{ handleCreateClick }}"
+          icon="{{ createChatIcon }}"
+          label="Новый чат"
+          light="{{ true }}"
+        />
+        <Button
+          onClick="{{ handleOptionsClick }}"
+          icon="{{ settingIcon }}"
+          label="Настройки"
+          light="{{ true }}"
+        />
       </div>
     </aside>
   `
@@ -122,10 +72,11 @@ function ChatPage () {
         mix="message-list"
         messages="{{ messages }}"
       />
+      <MessageInput />
     </Main>
   `
 
-  return /*html*/ `
+  return `
     <div class="{{ className }}">
       ${sidePanelTemplate}
       ${chatWindowTemplate}

@@ -13,7 +13,7 @@ function Input ({ type, label, placeholder, onInput }) {
     ? '<span class="{{ className }}__label">{{ label }}</span>'
     : ''
 
-  return /*html*/ `
+  return `
     <label class="{{ className }}">
       <input
         class="{{ className }}__field"

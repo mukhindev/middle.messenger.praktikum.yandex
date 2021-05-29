@@ -42,7 +42,7 @@ function Message ({ messages, index }) {
     ? OutgoingMessageTemplate
     : IncomingMessageTemplate
 
-  return /*html*/ `
+  return `
     ${messageTempale}
   `
 }

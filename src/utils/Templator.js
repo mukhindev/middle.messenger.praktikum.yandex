@@ -60,8 +60,14 @@ export default class Templator {
             const propValueContextKey = propValue.match(/{{\s*?(\w+?)\s*?}}/)
             // Если ключ к контексту
             if (propValueContextKey && propValueContextKey[1]) {
-              // Сохраняем под ключом пропса текущий контекст
-              props[propsKey] = this.context[propValueContextKey[1]]
+              if (propValueContextKey[1] === 'true') {
+                props[propsKey] = true
+              } else if (propValueContextKey[1] === 'false') {
+                props[propsKey] = false
+              } else {
+                // Иначе сохраняем под ключом пропса текущий контекст
+                props[propsKey] = this.context[propValueContextKey[1]]
+              }
             } else {
               // Сохраняем в пропс значение после =
               props[propsKey] = propValue

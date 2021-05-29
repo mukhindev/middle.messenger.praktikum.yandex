@@ -20,7 +20,7 @@ function ContactCard ({ contacts, index }) {
       </span>`
     : ''
 
-  return /*html*/ `
+  return `
     <div class="{{ className }}">
       <img
         class="{{ className }}__avatar"

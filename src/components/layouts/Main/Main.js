@@ -7,7 +7,7 @@ function Main ({ children, parentBlock, mix }) {
     mixClassName: (parentBlock && mix) ? ` ${parentBlock}__${mix}` : '',
   }
 
-  return /*html*/ `
+  return `
     <main class="{{ className }}{{ mixClassName }}">
       {{ children }}
     </main>

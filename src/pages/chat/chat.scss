@@ -30,9 +30,11 @@
 
   &__side-panel-footer {
     flex-shrink: 0;
-    padding: 24px;
+    min-height: 72px;
+    padding: 12px 24px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 16px;
   }
 

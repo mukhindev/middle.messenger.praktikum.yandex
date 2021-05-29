@@ -22,6 +22,7 @@ export default class Templator {
     return path.reduce((acc, k) => acc[k], this.context);
   }
 
+  // TODO: Разбить на методы
   // Обработчик усов
   handleMatch(match) {
     // Отбрасываем усы и ковычки
@@ -82,6 +83,7 @@ export default class Templator {
         return new Templator().compile(value, props);
       }
       // Если в значении метод
+      // TODO: Придумать алгоритм хранения методов, чтобы можно было использовать одинаковые имена
       window.$templatorMethods[value.name] = value;
       const method = match.match(/{{\s*?([\w.()]*)\s*?}}/)[1];
       return `$templatorMethods.${method.replace(/.+\(/, `${value.name}(`)}`;

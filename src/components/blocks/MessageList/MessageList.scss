@@ -3,9 +3,14 @@
   list-style: none;
   margin: 0;
   padding: 0;
-
+  display: flex;
+  flex-direction: column;
   &__item {
     margin: 0 0 16px;
+
+    &:first-of-type {
+      margin: auto 0 0;
+    }
 
     &:last-of-type {
       margin: 0;

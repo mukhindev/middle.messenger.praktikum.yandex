@@ -23,9 +23,12 @@ function ChatPage() {
     MessageInput,
     createChatIcon,
     settingIcon,
-    handleSearchInput: (value) => console.log(value),
+    handleSearchInput: (value) => console.log('Ввод в поиск:', value),
     handleCreateClick: () => console.log('Нажата кнопка создания чата'),
     handleOptionsClick: () => console.log('Нажата кнопка настроек'),
+    handleAttachFile: () => console.log('Нажата кнопка прикрепления файла'),
+    handleMessageInput: (value) => console.log('Ввод нового сообщения:', value),
+    handleSend: () => console.log('Нажата кнопка отправки сообщения'),
     contacts,
     messages,
   };
@@ -72,7 +75,11 @@ function ChatPage() {
         mix="message-list"
         messages="{{ messages }}"
       />
-      <MessageInput />
+      <MessageInput
+        onAttachFile="{{ handleAttachFile }}"
+        onMessageInput="{{ handleMessageInput }}"
+        onSend="{{ handleSend }}"
+      />
     </Main>
   `;
 

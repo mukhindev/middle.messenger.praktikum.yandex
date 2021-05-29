@@ -1,3 +1,3 @@
 module.exports = {
-  DISTRIBUTIVE_DIR: 'dist'
-}
+  DISTRIBUTIVE_DIR: 'dist',
+};

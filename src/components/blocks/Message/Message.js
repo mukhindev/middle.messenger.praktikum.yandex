@@ -1,14 +1,14 @@
-import './Message.scss'
-import defaultAvatar from '../../../assets/images/default-avatar.png'
-import formatDate from '../../../utils/formatDate.js'
+import './Message.scss';
+import defaultAvatar from '../../../assets/images/default-avatar.png';
+import formatDate from '../../../utils/formatDate';
 
-function Message ({ messages, index }) {
+function Message({ messages, index }) {
   Message.context = {
     className: 'message',
     message: messages[index],
     avatar: messages[index].avatar ?? defaultAvatar,
-    date: formatDate(messages[index].date)
-  }
+    date: formatDate(messages[index].date),
+  };
 
   const OutgoingMessageTemplate = `
     <div class="{{ className }} {{ className }}_outgoing-message">
@@ -22,7 +22,7 @@ function Message ({ messages, index }) {
         <span class="{{ className }}__date {{ className }}__date_outgoing-message" >{{ date }}</span>
       </p>
     </div>
-  `
+  `;
 
   const IncomingMessageTemplate = `
     <div class="{{ className }}">
@@ -36,15 +36,15 @@ function Message ({ messages, index }) {
         <span class="{{ className }}__date">{{ date }}</span>
       </p>
     </div>
-  `
+  `;
 
   const messageTempale = messages[index].owner === 'Сергей Мухин'
     ? OutgoingMessageTemplate
-    : IncomingMessageTemplate
+    : IncomingMessageTemplate;
 
   return `
     ${messageTempale}
-  `
+  `;
 }
 
 export default Message;

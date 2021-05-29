@@ -1,24 +1,24 @@
-import './ContactCard.scss'
-import defaultAvatar from '../../../assets/images/default-avatar.png'
-import formatDate from '../../../utils/formatDate.js'
+import './ContactCard.scss';
+import defaultAvatar from '../../../assets/images/default-avatar.png';
+import formatDate from '../../../utils/formatDate';
 
-function ContactCard ({ contacts, index }) {
+function ContactCard({ contacts, index }) {
   ContactCard.context = {
     className: 'contact-card',
     contact: contacts[index],
     avatar: contacts[index].avatar ?? defaultAvatar,
-    updatedAt: formatDate(contacts[index].updatedAt)
-  }
+    updatedAt: formatDate(contacts[index].updatedAt),
+  };
 
   const groupMarkerTemplate = contacts[index].isGroup
     ? '<div class="{{ className }}__group-marker"></div>'
-    : ''
+    : '';
 
   const counterUnreadMessagesTemplate = contacts[index].counterUnreadMessages
     ? `<span class="{{ className }}__counter-unread-messages">
         {{ contact.counterUnreadMessages }}
       </span>`
-    : ''
+    : '';
 
   return `
     <div class="{{ className }}">
@@ -35,7 +35,7 @@ function ContactCard ({ contacts, index }) {
       ${counterUnreadMessagesTemplate}
       <span class="{{ className }}__updated-at">{{ updatedAt }}</span>
     </div>
-  `
+  `;
 }
 
 export default ContactCard;

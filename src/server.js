@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
-const { PORT } = require('./utils/env.js');
-const { DISTRIBUTIVE_DIR } = require('./utils/constants.js');
+const { PORT } = require('./utils/env');
+const { DISTRIBUTIVE_DIR } = require('./utils/constants');
 
 const distributiveDirPath = path.join(__dirname, '../', DISTRIBUTIVE_DIR);
 

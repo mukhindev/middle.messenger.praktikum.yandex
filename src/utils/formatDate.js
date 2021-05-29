@@ -1,24 +1,24 @@
-function formatDate (isoDate) {
-  const date = new Date(isoDate)
-  const now = new Date()
+function formatDate(isoDate) {
+  const date = new Date(isoDate);
+  const now = new Date();
   const months = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
-  const mouth = months[date.getMonth()]
-  const day = date.getDate()
-  const hours = date.getHours()
-  const minutes = date.getMinutes()
-  const difference = now.getDate() - date.getDate()
+  const mouth = months[date.getMonth()];
+  const day = date.getDate();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const difference = now.getDate() - date.getDate();
 
-  let dateString = `${day} ${mouth}`
+  let dateString = `${day} ${mouth}`;
 
   if (difference < 1) {
-    dateString = `${hours}:${minutes}`
+    dateString = `${hours}:${minutes}`;
   }
 
   if (difference === 1) {
-    dateString = 'Вчера'
+    dateString = 'Вчера';
   }
 
   return dateString;
 }
 
-export default formatDate
+export default formatDate;

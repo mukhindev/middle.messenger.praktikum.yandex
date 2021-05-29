@@ -1,18 +1,18 @@
-import Templator from '../../utils/Templator.js';
-import getElementFromString from "../../utils/getElementFromString";
-import Main from '../../components/layouts/Main/Main.js'
-import Input from '../../components/ui/Input/Input.js'
-import ContactCardList from '../../components/blocks/ContactCardList/ContactCardList.js'
-import Button from '../../components/ui/Button/Button.js'
-import MessageList from '../../components/blocks/MessageList/MessageList.js';
-import MessageInput from '../../components/blocks/MessageInput/MessageInput.js';
-import createChatIcon from '../../assets/images/create-chat.svg'
-import settingIcon from '../../assets/images/settings.svg'
+import Templator from '../../utils/Templator';
+import getElementFromString from '../../utils/getElementFromString';
+import Main from '../../components/layouts/Main/Main';
+import Input from '../../components/ui/Input/Input';
+import ContactCardList from '../../components/blocks/ContactCardList/ContactCardList';
+import Button from '../../components/ui/Button/Button';
+import MessageList from '../../components/blocks/MessageList/MessageList';
+import MessageInput from '../../components/blocks/MessageInput/MessageInput';
+import createChatIcon from '../../assets/images/create-chat.svg';
+import settingIcon from '../../assets/images/settings.svg';
 import '../../assets/styles/global.scss';
 import './chat.scss';
-import { contacts, messages } from '../../utils/mockData.js';
+import { contacts, messages } from '../../utils/mockData';
 
-function ChatPage () {
+function ChatPage() {
   ChatPage.context = {
     className: 'chat-page',
     Main,
@@ -28,7 +28,7 @@ function ChatPage () {
     handleOptionsClick: () => console.log('Нажата кнопка настроек'),
     contacts,
     messages,
-  }
+  };
 
   const sidePanelTemplate = `
     <aside class="{{ className }}__side-panel">
@@ -60,7 +60,7 @@ function ChatPage () {
         />
       </div>
     </aside>
-  `
+  `;
 
   const chatWindowTemplate = `
     <Main
@@ -74,17 +74,17 @@ function ChatPage () {
       />
       <MessageInput />
     </Main>
-  `
+  `;
 
   return `
     <div class="{{ className }}">
       ${sidePanelTemplate}
       ${chatWindowTemplate}
     </div>
-  `
+  `;
 }
 
 const html = new Templator().compile(ChatPage);
-const pageElement = getElementFromString(html)
+const pageElement = getElementFromString(html);
 const root = document.body;
 root.append(pageElement);

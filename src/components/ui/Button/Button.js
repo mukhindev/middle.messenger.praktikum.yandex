@@ -1,6 +1,6 @@
-import './Button.scss'
+import './Button.scss';
 
-function Button (props) {
+function Button(props) {
   const {
     type,
     icon,
@@ -10,8 +10,8 @@ function Button (props) {
     label,
     onClick,
     parentBlock,
-    mix
-  } = props
+    mix,
+  } = props;
 
   Button.context = {
     className: 'button',
@@ -22,18 +22,18 @@ function Button (props) {
     type: type ?? 'button',
     children: children ?? label ?? '',
     onClick,
-  }
+  };
 
   const modifiers = [
-    light ? ` {{ className }}_light` : '',
-    color === 'primary' ? ` {{ className }}_primary` : '',
-  ].join('')
+    light ? ' {{ className }}_light' : '',
+    color === 'primary' ? ' {{ className }}_primary' : '',
+  ].join('');
 
   const iconTemplate = icon
     ? '<img class="{{ className }}__icon" src="{{ icon }}" alt="" />'
-    : ''
+    : '';
 
-  return  `
+  return `
     <button
       class="{{ className }}${modifiers}{{ mixClassName }}"
       type="{{ type }}"
@@ -42,7 +42,7 @@ function Button (props) {
       ${iconTemplate}
       {{ children }}
     </button>
-  `
+  `;
 }
 
-export default Button
+export default Button;

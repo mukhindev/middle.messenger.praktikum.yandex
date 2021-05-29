@@ -1,11 +1,11 @@
-import Templator from '../../utils/Templator.js';
-import Main from '../../components/layouts/Main/Main.js'
-import Links from '../../components/blocks/Links/Links.js'
+import Templator from '../../utils/Templator';
+import Main from '../../components/layouts/Main/Main';
+import Links from '../../components/blocks/Links/Links';
 import '../../assets/styles/global.scss';
 import './index.scss';
-import getElementFromString from "../../utils/getElementFromString";
+import getElementFromString from '../../utils/getElementFromString';
 
-function IndexPage () {
+function IndexPage() {
   IndexPage.context = {
     className: 'index-page',
     Main,
@@ -18,7 +18,7 @@ function IndexPage () {
     links: [
       { name: 'Чат', to: '/chat.html' },
     ],
-  }
+  };
 
   return `
     <div class="{{ className }}">
@@ -36,11 +36,10 @@ function IndexPage () {
         </section>
       </Main>
     </div>
-  `
+  `;
 }
 
 const html = new Templator().compile(IndexPage);
-const pageElement = getElementFromString(html)
+const pageElement = getElementFromString(html);
 const root = document.body;
 root.append(pageElement);
-

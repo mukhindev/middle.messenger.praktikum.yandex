@@ -41,7 +41,7 @@ function Button(props) {
     <button
       class="{{ className }}${modifiers}{{ mixClassName }}"
       type="{{ type }}"
-      onclick="{{ onClick(this) }}"
+      ${onClick ? 'onclick="{{ onClick(this) }}"' : ''}
       ${menuIndex ? 'data-menu-index="{{ menuIndex }}"' : ''}
       ${menuName ? 'data-menu-name="{{ menuName }}"' : ''}
     >

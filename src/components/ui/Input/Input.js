@@ -3,6 +3,7 @@ import './Input.scss';
 function Input(props) {
   const {
     type,
+    name,
     label,
     placeholder,
     onInput,
@@ -13,6 +14,7 @@ function Input(props) {
   Input.context = {
     className: 'input',
     mixClassName: (parentBlock && mix) ? ` ${parentBlock}__${mix}` : '',
+    name: name ?? '',
     type: type ?? 'text',
     label: label ?? '',
     placeholder: placeholder ?? '',
@@ -27,9 +29,10 @@ function Input(props) {
     <label class="{{ className }}{{ mixClassName }}">
       <input
         class="{{ className }}__field"
+        ${name ? 'name="{{ name }}"' : ''}
         type="{{ type }}"
         placeholder="{{ placeholder }}"
-        oninput="{{ onInput(this) }}"
+        ${onInput ? 'oninput="{{ onInput(this) }}"' : ''}
       />
       ${labelTemplate}
     </label>

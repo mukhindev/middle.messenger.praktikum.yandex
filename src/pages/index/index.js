@@ -14,9 +14,10 @@ function IndexPage() {
       { name: 'Чат', to: '/chat.html' },
       { name: 'Логин', to: '/sign-in.html' },
       { name: 'Регистрация', to: '/sign-up.html' },
-    ],
-    links: [
-      { name: 'Чат', to: '/chat.html' },
+      { name: 'Изменить пароль', to: '/password.html' },
+      { name: 'Профиль', to: '/profile.html' },
+      { name: 'Ошибка 404', to: '/404.html' },
+      { name: 'Ошибка 500', to: '/500.html' },
     ],
   };
 
@@ -26,14 +27,8 @@ function IndexPage() {
         <h1 class="{{ className }}__title">Чат</h1>
       </header>
       <Main>
-        <section>
-          <h2 class="{{ className }}__section-title">Страницы приложения</h2>
-          <Links links="{{ menu }}" />
-        </section>
-        <section>
-          <h2 class="{{ className }}__section-title">Дополнительные ссылки</h2>
-          <Links links="{{ links }}" />
-        </section>
+        <h2 class="{{ className }}__links-title">Страницы приложения</h2>
+        <Links links="{{ menu }}" />
       </Main>
     </div>
   `;

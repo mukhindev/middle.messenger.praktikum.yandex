@@ -51,7 +51,9 @@ function ChatPage() {
     handleSearchInput: (target) => console.log('Ввод в поиск:', target.value),
     handleAddContactInput: (target) => console.log('Ввод логина нового контакта:', target.value),
     handleCreateClick: () => console.log('Нажата кнопка создания чата'),
-    handleOptionsClick: () => console.log('Нажата кнопка настроек'),
+    handleOptionsClick: () => {
+      window.location.href = '/profile.html';
+    },
     handleMessageInput: (target) => console.log('Ввод нового сообщения:', target.value),
     handleSend: () => console.log('Нажата кнопка отправки сообщения'),
     handleMoreMenu: () => handleVisibility('.chat-header__more-menu', 'drop-down-list_opened'),
@@ -63,7 +65,6 @@ function ChatPage() {
           icon: addContactIcon,
           name: 'Добавить пользователя',
           on: () => {
-            console.log('Нажат пункт Добавить пользователя');
             ChatPage.context.handleMoreMenu();
             ChatPage.context.handleAddContactPopup();
           },

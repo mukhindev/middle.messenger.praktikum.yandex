@@ -7,8 +7,8 @@ import generateForm from '../../utils/generateForm';
 import '../../assets/styles/global.scss';
 import './sign-in.scss';
 
-function SignUpPage() {
-  SignUpPage.context = {
+function SignInPage() {
+  SignInPage.context = {
     className: 'sign-in-page',
     Main,
     Input,
@@ -64,7 +64,7 @@ function SignUpPage() {
   `;
 }
 
-const html = new Templator().compile(SignUpPage);
+const html = new Templator().compile(SignInPage);
 const pageElement = getElementFromString(html);
 const root = document.body;
 root.append(pageElement);

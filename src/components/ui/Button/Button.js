@@ -8,6 +8,7 @@ function Button(props) {
     color,
     children,
     label,
+    title,
     onClick,
     parentBlock,
     mix,
@@ -22,6 +23,7 @@ function Button(props) {
     color: color ?? '',
     mixClassName: (parentBlock && mix) ? ` ${parentBlock}__${mix}` : '',
     type: type ?? 'button',
+    title,
     children: children ?? label ?? '',
     onClick,
     menuIndex,
@@ -42,6 +44,7 @@ function Button(props) {
       class="{{ className }}${modifiers}{{ mixClassName }}"
       type="{{ type }}"
       ${onClick ? 'onclick="{{ onClick(this) }}"' : ''}
+      ${title ? 'title="{{ title }}"' : ''}
       ${menuIndex ? 'data-menu-index="{{ menuIndex }}"' : ''}
       ${menuName ? 'data-menu-name="{{ menuName }}"' : ''}
     >

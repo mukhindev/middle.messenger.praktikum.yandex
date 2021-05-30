@@ -37,7 +37,7 @@
     min-width: 32px;
 
     &:focus {
-      box-shadow: inset 0 -2px var(--color-primary);
+      box-shadow: inset 0 -2px currentColor;
     }
   }
 

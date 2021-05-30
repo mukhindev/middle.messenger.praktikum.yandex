@@ -1,0 +1,102 @@
+.profile-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  &__main {
+    width: 100%;
+    max-width: 486px;
+    background-color: var(--color-white);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 8px 48px -16px rgba(0, 0, 0, 0.25);
+    position: relative;
+  }
+
+  &__header {
+    position: relative;
+  }
+
+  &__come-back-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &__title {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    text-align: center;
+    margin: 0;
+  }
+
+  &__avatar-wrapper {
+    position: absolute;
+    top: 100px;
+    right: 24px;
+  }
+
+  &__avatar-change-button {
+    cursor: pointer;
+    padding: 0;
+    background: transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    outline: none;
+    border: none;
+    position: relative;
+    display: block;
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 4px var(--color-selected);
+    }
+
+    &:hover:after {
+      content: '';
+      display: block;
+      background-color: rgba(0,0,0,0.50);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      background-image: url("../../assets/images/edit.svg");
+      background-repeat: no-repeat;
+      background-size: 24px;
+      background-position: center;
+    }
+  }
+
+  &__avatar {
+    width: 128px;
+    height: 128px;
+    display: block;
+  }
+
+  &__avatar-delete-button {
+    margin: 0 auto;
+    color: var(--color-error);
+  }
+
+  &__form-fields {
+    width: 292px;
+    margin: 48px 0 0;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 16px;
+  }
+
+  &__form-buttons {
+    margin: 48px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}

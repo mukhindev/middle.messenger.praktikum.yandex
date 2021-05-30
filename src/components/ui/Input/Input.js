@@ -29,7 +29,7 @@ function Input(props) {
         class="{{ className }}__field"
         type="{{ type }}"
         placeholder="{{ placeholder }}"
-        oninput="{{ onInput(this.value) }}"
+        oninput="{{ onInput(this) }}"
       />
       ${labelTemplate}
     </label>

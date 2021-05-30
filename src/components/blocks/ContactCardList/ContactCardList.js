@@ -11,13 +11,11 @@ function ContactCardList({ contacts, parentBlock, mix }) {
 
   return `
     <ul class="{{ className }}{{ mixClassName }}">
-      ${contacts.map((_, index) => (
-    `
-          <li class="{{ className }}__item">
-            <ContactCard contacts="{{ contacts }}" index="${index}" />
-          </li>
-        `
-  )).join('')}
+      ${contacts.map((_, index) => (`
+        <li class="{{ className }}__item">
+          <ContactCard contacts="{{ contacts }}" index="${index}" />
+        </li>
+      `)).join('')}
     </ul>
   `;
 }

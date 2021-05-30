@@ -11,6 +11,8 @@ function Button(props) {
     onClick,
     parentBlock,
     mix,
+    menuIndex,
+    menuName,
   } = props;
 
   Button.context = {
@@ -22,6 +24,8 @@ function Button(props) {
     type: type ?? 'button',
     children: children ?? label ?? '',
     onClick,
+    menuIndex,
+    menuName,
   };
 
   const modifiers = [
@@ -37,7 +41,9 @@ function Button(props) {
     <button
       class="{{ className }}${modifiers}{{ mixClassName }}"
       type="{{ type }}"
-      onclick="{{ onClick() }}"
+      onclick="{{ onClick(this) }}"
+      ${menuIndex ? 'data-menu-index="{{ menuIndex }}"' : ''}
+      ${menuName ? 'data-menu-name="{{ menuName }}"' : ''}
     >
       ${iconTemplate}
       {{ children }}

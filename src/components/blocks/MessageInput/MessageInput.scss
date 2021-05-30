@@ -3,6 +3,13 @@
   align-items: center;
   padding: 12px 24px;
   gap: 16px;
+  position: relative;
+
+  &__attachment-menu {
+    bottom: 56px;
+    left: 24px;
+    z-index: 1;
+  }
 
   &__input {
     flex-grow: 1;

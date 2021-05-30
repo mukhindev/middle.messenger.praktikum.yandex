@@ -1,5 +1,6 @@
 import './ChatHeader.scss';
 import Button from '../../ui/Button/Button';
+import DropDownList from '../../ui/DropDownMenu/DropDownList';
 import defaultAvatar from '../../../assets/images/default-avatar.png';
 import moreIcon from '../../../assets/images/more.svg';
 
@@ -7,8 +8,11 @@ function ChatHeader(props) {
   const {
     avatar,
     name,
+    onMoreMenu,
     onAddContact,
     onDeleteContact,
+    moreMenu,
+    onSelectItem,
   } = props;
 
   ChatHeader.context = {
@@ -16,10 +20,13 @@ function ChatHeader(props) {
     avatar: avatar ?? defaultAvatar,
     name,
     Button,
+    DropDownList,
     onAddContact,
     onDeleteContact,
-    onClickMore: () => console.log('Нажали открыть меню'),
+    onMoreMenu,
     moreIcon,
+    moreMenu,
+    onSelectItem,
   };
 
   return `
@@ -31,10 +38,16 @@ function ChatHeader(props) {
       />
       <p class="{{ className }}__name">{{ name }}</p>
       <Button
-        title="Отправить сообщение"
+        title="Управление пользователями"
         icon="{{ moreIcon }}"
         light="{{ true }}"
-        onClick="{{ onClickMore }}"
+        onClick="{{ onMoreMenu }}"
+      />
+      <DropDownList
+        parentBlock="{{ className }}"
+        mix="more-menu"
+        menu="{{ moreMenu }}"
+        onSelectItem="{{ onSelectItem }}"
       />
     </div>
   `;

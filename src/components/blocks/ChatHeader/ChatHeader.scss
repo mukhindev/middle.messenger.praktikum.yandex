@@ -1,8 +1,9 @@
 .chat-header {
   display: flex;
   align-items: center;
-  padding: 12px 24px;
+  padding: 20px 24px;
   gap: 8px;
+  position: relative;
 
   &__avatar {
     flex-shrink: 0;
@@ -17,5 +18,11 @@
     margin: 0;
     font-weight: 500;
     font-size: 13px;
+  }
+
+  &__more-menu {
+    top: 56px;
+    right: 24px;
+    z-index: 1;
   }
 }

@@ -7,7 +7,7 @@
     "watch": "parcel watch build ./static/pages/**/*.html",
     "build": "parcel build ./static/pages/**/*.html --no-minify",
     "dev": "npm run watch & node ./src/server.js",
-    "start": "npm run build && node ./src/server.js",
+    "start": "parcel build ./static/pages/**/*.html --no-minify && node ./src/server.js",
     "lint": "eslint ./src"
   },
   "repository": {

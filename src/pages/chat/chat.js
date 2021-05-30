@@ -4,6 +4,7 @@ import Main from '../../components/layouts/Main/Main';
 import Input from '../../components/ui/Input/Input';
 import ContactCardList from '../../components/blocks/ContactCardList/ContactCardList';
 import Button from '../../components/ui/Button/Button';
+import Popup from '../../components/ui/Popup/Popup';
 import ChatHeader from '../../components/blocks/ChatHeader/ChatHeader';
 import MessageList from '../../components/blocks/MessageList/MessageList';
 import MessageInput from '../../components/blocks/MessageInput/MessageInput';
@@ -19,7 +20,7 @@ import './chat.scss';
 import { contacts, messages } from '../../utils/mockData';
 
 function ChatPage() {
-  const handleMenu = (targetSelector, openedClass) => {
+  const handleVisibility = (targetSelector, openedClass) => {
     const list = document.querySelector(targetSelector);
     list.classList.toggle(openedClass);
     function handleOverlay(evt) {
@@ -44,14 +45,16 @@ function ChatPage() {
     ChatHeader,
     MessageList,
     MessageInput,
+    Popup,
     createChatIcon,
     settingIcon,
     handleSearchInput: (target) => console.log('Ввод в поиск:', target.value),
+    handleAddContactInput: (target) => console.log('Ввод логина нового контакта:', target.value),
     handleCreateClick: () => console.log('Нажата кнопка создания чата'),
     handleOptionsClick: () => console.log('Нажата кнопка настроек'),
     handleMessageInput: (target) => console.log('Ввод нового сообщения:', target.value),
     handleSend: () => console.log('Нажата кнопка отправки сообщения'),
-    handleMoreMenu: () => handleMenu('.chat-header__more-menu', 'drop-down-list_opened'),
+    handleMoreMenu: () => handleVisibility('.chat-header__more-menu', 'drop-down-list_opened'),
     moreMenu: {
       name: 'moreMenu',
       items: [
@@ -62,6 +65,7 @@ function ChatPage() {
           on: () => {
             console.log('Нажат пункт Добавить пользователя');
             ChatPage.context.handleMoreMenu();
+            ChatPage.context.handleAddContactPopup();
           },
         },
         {
@@ -75,7 +79,8 @@ function ChatPage() {
         },
       ],
     },
-    handleAttachmentMenu: () => handleMenu('.message-input__attachment-menu', 'drop-down-list_opened'),
+    handleAddContactPopup: () => handleVisibility('.popup', 'popup_opened'),
+    handleAttachmentMenu: () => handleVisibility('.message-input__attachment-menu', 'drop-down-list_opened'),
     attachmentMenu: {
       name: 'attachmentMenu',
       items: [
@@ -111,6 +116,7 @@ function ChatPage() {
     handleSelectMenuItem: (menu, id) => {
       ChatPage.context[menu].items.find((item) => item.id === id).on();
     },
+    handleAddContactClose: () => ChatPage.context.handleAddContactPopup(),
     contacts,
     messages,
   };
@@ -179,11 +185,42 @@ function ChatPage() {
     </Main>
   `;
 
+  const addUserPopupTemplate = `
+    <Popup
+      title="Добавить пользователя в чат"
+      parentBlock="{{ className }}"
+      mix="popup"
+      onClose="{{ handleAddContactClose }}"
+    >
+      <Input
+        type="search"
+        label="Логин"
+        placeholder="Логин"
+        onInput="{{ handleAddContactInput }}"
+      />
+      <Button
+        parentBlock="{{ className }}"
+        mix="button-submit-add-contact"
+        onClick="{{ handleCreateClick }}"
+        label="Добавить"
+        color="primary"
+      />
+      <Button
+        parentBlock="{{ className }}"
+        mix="button-submit-invite-contact"
+        onClick="{{ handleCreateClick }}"
+        label="Пригласить в чат"
+        light="{{ true }}"
+      />
+    </Popup>
+  `;
+
   return `
     <div class="{{ className }}">
       ${sidePanelTemplate}
       ${unselectedChatWindowTemplate}
       ${chatWindowTemplate}
+      ${addUserPopupTemplate}
     </div>
   `;
 }

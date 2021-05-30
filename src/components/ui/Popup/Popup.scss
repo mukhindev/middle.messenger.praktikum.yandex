@@ -1,0 +1,60 @@
+.popup {
+  background-color: rgba(0,0,0,0.50);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.5s;
+  pointer-events: none;
+
+  &_opened {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.25s;
+    pointer-events: auto;
+  }
+
+  .popup__card {
+    background-color: var(--color-white);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 8px 48px -16px rgba(0, 0, 0, 0.25);
+  }
+
+  .popup__header {
+    position: relative;
+  }
+
+  &__come-back-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .popup__title {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    text-align: center;
+    margin: 0 48px;
+  }
+
+  &__close-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .popup__body {
+    margin: 48px 0 0;
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -68,4 +68,16 @@
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
   }
+
+  /* Попап добавления контакта в чат */
+
+  &__button-submit-add-contact {
+    margin: 80px 0 0;
+  }
+
+  &__button-submit-invite-contact {
+    margin: 8px 0 0;
+    align-self: center;
+    color: var(--color-primary);
+  }
 }

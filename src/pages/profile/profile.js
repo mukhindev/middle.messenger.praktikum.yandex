@@ -27,8 +27,14 @@ function ProfilePage() {
       }, {});
       console.log(formData);
     },
-    handleComeBack2: () => {
+    toChatPage: () => {
       window.location.href = '/chat.html';
+    },
+    toChangePassword: () => {
+      window.location.href = '/password.html';
+    },
+    handleSignOut: () => {
+      window.location.href = '/sign-up.html';
     },
   };
 
@@ -76,7 +82,7 @@ function ProfilePage() {
       title="Назад"
       icon="{{ arrowLeftIcon }}"
       light="{{ true }}"
-      onClick="{{ handleComeBack2 }}"
+      onClick="{{ toChatPage }}"
     />
   `;
 
@@ -103,7 +109,20 @@ function ProfilePage() {
         </div>
         ${generateForm(profileForm, '{{ className }}__form', '{{ handleSubmitButton(event) }}')}
         <div class="{{ className }}__footer">
-
+          <Button
+            parentBlock="{{ className }}"
+            mix="password-button"
+            label="Сменить пароль"
+            light="{{ true }}"
+            onClick="{{ toChangePassword }}"
+          />
+          <Button
+            parentBlock="{{ className }}"
+            mix="sign-out-button"
+            label="Выйти из аккаунта"
+            light="{{ true }}"
+            onClick="{{ handleSignOut }}"
+          />
         </div>
       </Main>
     </div>

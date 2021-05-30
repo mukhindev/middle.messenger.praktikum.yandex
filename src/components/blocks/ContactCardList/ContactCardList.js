@@ -9,10 +9,17 @@ function ContactCardList({ contacts, parentBlock, mix }) {
     contacts,
   };
 
+  window.selectChat = function () {
+    const chatWindowElement = document.querySelector('.chat-page__main');
+    const unselectedChatWindowElement = document.querySelector('.chat-page__unselected-сhat-window');
+    chatWindowElement.style.display = 'flex';
+    unselectedChatWindowElement.style.display = 'none';
+  };
+
   return `
     <ul class="{{ className }}{{ mixClassName }}">
       ${contacts.map((_, index) => (`
-        <li class="{{ className }}__item">
+        <li class="{{ className }}__item" onclick="window.selectChat()">
           <ContactCard contacts="{{ contacts }}" index="${index}" />
         </li>
       `)).join('')}

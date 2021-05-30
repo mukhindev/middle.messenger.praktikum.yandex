@@ -147,6 +147,12 @@ function ChatPage() {
     </aside>
   `;
 
+  const unselectedChatWindowTemplate = `
+    <div class="{{ className }}__unselected-сhat-window">
+      <p class="{{ className }}__unselected-сhat-message">Выберете чат или создайте новый</p>
+    </div>
+  `;
+
   const chatWindowTemplate = `
     <Main
       parentBlock="{{ className }}"
@@ -176,6 +182,7 @@ function ChatPage() {
   return `
     <div class="{{ className }}">
       ${sidePanelTemplate}
+      ${unselectedChatWindowTemplate}
       ${chatWindowTemplate}
     </div>
   `;

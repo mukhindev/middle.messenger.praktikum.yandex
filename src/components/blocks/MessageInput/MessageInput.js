@@ -11,7 +11,7 @@ function MessageInput(props) {
     onMessageInput,
     onSend,
     attachmentMenu,
-    onSelectItem
+    onSelectItem,
   } = props;
 
   MessageInput.context = {

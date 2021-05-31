@@ -1,3 +1,4 @@
+import join from '../../../utils/join';
 import './Button.scss';
 
 function Button(props) {
@@ -30,10 +31,10 @@ function Button(props) {
     menuName,
   };
 
-  const modifiers = [
+  const modifiers = join([
     light ? ' {{ className }}_light' : '',
     color === 'primary' ? ' {{ className }}_primary' : '',
-  ].join('');
+  ]);
 
   const iconTemplate = icon
     ? '<img class="{{ className }}__icon" src="{{ icon }}" alt="" />'

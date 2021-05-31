@@ -1,4 +1,5 @@
 import ContactCard from '../ContactCard/ContactCard';
+import join from '../../../utils/join';
 import './ContactCardList.scss';
 
 function ContactCardList({ contacts, parentBlock, mix }) {
@@ -18,11 +19,11 @@ function ContactCardList({ contacts, parentBlock, mix }) {
 
   return `
     <ul class="{{ className }}{{ mixClassName }}">
-      ${contacts.map((_, index) => (`
+      ${join(contacts.map((_, index) => `
         <li class="{{ className }}__item" onclick="window.selectChat()">
           <ContactCard contacts="{{ contacts }}" index="${index}" />
         </li>
-      `)).join('')}
+      `))}
     </ul>
   `;
 }

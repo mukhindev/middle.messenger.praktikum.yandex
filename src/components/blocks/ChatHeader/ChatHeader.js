@@ -1,7 +1,7 @@
 import './ChatHeader.scss';
 import Button from '../../ui/Button/Button';
 import DropDownList from '../../ui/DropDownMenu/DropDownList';
-import defaultAvatar from '../../../assets/images/default-avatar.png';
+import defaultAvatar from '../../../assets/images/default-avatar.jpg';
 import moreIcon from '../../../assets/images/more.svg';
 
 function ChatHeader(props) {

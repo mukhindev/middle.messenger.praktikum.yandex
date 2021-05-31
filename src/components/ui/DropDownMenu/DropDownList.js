@@ -1,4 +1,5 @@
 import Button from '../Button/Button';
+import join from '../../../utils/join';
 import './DropDownList.scss';
 
 function DropDownList(props) {
@@ -22,7 +23,7 @@ function DropDownList(props) {
 
   return `
     <ul class="{{ className }}{{ mixClassName }}">
-      ${items.map(({ id, icon, name: itemName }) => (`
+      ${join(items.map(({ id, icon, name: itemName }) => `
         <li class="{{ className }}__item">
           <Button
             onClick="{{ handleMenuItemClick }}"
@@ -33,7 +34,7 @@ function DropDownList(props) {
             light="{{ true }}"
           />
         </li>
-      `)).join('')}
+      `))}
     </ul>
   `;
 }

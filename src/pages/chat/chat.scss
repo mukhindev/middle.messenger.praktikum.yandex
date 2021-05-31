@@ -1,18 +1,18 @@
 .chat-page {
-  height: 100vh;
   display: flex;
+  height: 100vh;
 
   /* Боковая панель */
 
   &__side-panel {
-    flex-shrink: 0;
+    z-index: 1;
     display: flex;
     flex-direction: column;
-    background: var(--color-white);
-    box-shadow: 0px 8px 48px -16px rgba(0, 0, 0, 0.25);
+    flex-shrink: 0;
     width: 362px;
     height: 100%;
-    z-index: 1;
+    background: var(--color-white);
+    box-shadow: 0px 8px 48px -16px rgba(0, 0, 0, 0.25);
   }
 
   &__side-panel-header {
@@ -21,20 +21,20 @@
   }
 
   &__contact-card-list {
+    overflow-y: auto;
     flex-grow: 1;
     padding: 24px;
-    overflow-y: auto;
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
   }
 
   &__side-panel-footer {
-    flex-shrink: 0;
-    min-height: 72px;
-    padding: 12px 24px;
     display: flex;
     align-items: center;
+    flex-shrink: 0;
     justify-content: space-between;
+    min-height: 72px;
+    padding: 12px 24px;
     gap: 16px;
   }
 
@@ -43,28 +43,28 @@
   &__unselected-сhat-window {
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-grow: 1;
+    justify-content: center;
   }
 
   &__unselected-сhat-message {
-    padding: 0 24px;
-    margin: 0;
     font-size: 16px;
+    margin: 0;
+    padding: 0 24px;
   }
 
   /* Окно сообщений */
 
   &__main {
-    flex-grow: 1;
     display: none;
     flex-direction: column;
+    flex-grow: 1;
   }
 
   &__message-list {
+    overflow-y: auto;
     flex-grow: 1;
     padding: 24px;
-    overflow-y: auto;
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
   }
@@ -76,8 +76,8 @@
   }
 
   &__button-submit-invite-contact {
-    margin: 8px 0 0;
     align-self: center;
+    margin: 8px 0 0;
     color: var(--color-primary);
   }
 }

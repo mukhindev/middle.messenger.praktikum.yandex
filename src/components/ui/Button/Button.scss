@@ -1,19 +1,22 @@
 .button {
-  flex-shrink: 0;
-  height: 48px;
-  min-width: 48px;
-  margin: 0;
-  padding: 0 16px;
-  border-radius: 8px;
-  background-color: transparent;
-  color: var(--color-text);
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   justify-content: center;
-  gap: 4px;
+  min-width: 48px;
+  height: 48px;
+  margin: 0;
+  padding: 0 16px;
+  transition:
+    transform 0.15s,
+    opacity 0.15s,
+    box-shadow 0.15s;
+  color: var(--color-text);
   border: none;
+  border-radius: 8px;
   outline: none;
-  transition: 0.15s;
+  background-color: transparent;
+  gap: 4px;
 
   &:active {
     transform: scale(0.95);
@@ -31,10 +34,10 @@
   }
 
   &_light {
+    min-width: 32px;
     height: 32px;
     padding: 0;
     border-radius: 0;
-    min-width: 32px;
 
     &:focus {
       box-shadow: inset 0 -2px currentColor;
@@ -42,8 +45,8 @@
   }
 
   &_primary {
-    background-color: var(--color-primary);
     color: var(--color-white);
+    background-color: var(--color-primary);
 
     &:focus {
       box-shadow: 0 0 0 4px var(--color-selected);

@@ -1,5 +1,5 @@
 import './ContactCard.scss';
-import defaultAvatar from '../../../assets/images/default-avatar.png';
+import defaultAvatar from '../../../assets/images/default-avatar.jpg';
 import formatDate from '../../../utils/formatDate';
 
 function ContactCard({ contacts, index }) {

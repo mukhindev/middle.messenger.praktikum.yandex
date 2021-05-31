@@ -1,4 +1,5 @@
 import './Links.scss';
+import join from '../../../utils/join';
 
 function Links({ links }) {
   Links.context = {
@@ -6,18 +7,16 @@ function Links({ links }) {
   };
 
   return `
-  <nav class="{{ className }}">
-    <ul class="{{ className }}__list">
-      ${links.map((item) => (
-    `
+    <nav class="{{ className }}">
+      <ul class="{{ className }}__list">
+        ${join(links.map((item) => `
           <li class="{{ className }}__item">
             <a class="{{ className }}__link" href="${item.to}">${item.name}</a>
           </li>
-        `
-  )).join('')}
-    </ul>
-  </nav>
-`;
+        `))}
+      </ul>
+    </nav>
+  `;
 }
 
 export default Links;

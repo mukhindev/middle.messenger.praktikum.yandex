@@ -13,22 +13,18 @@
     &:last-of-type {
       margin: 0;
     }
-
-    &:hover {
-
-    }
   }
 
-  &__link{
-    color: var(--color-primary);
+  &__link {
     text-decoration: none;
+    color: var(--color-primary);
   }
 
-  &__link:hover{
+  &__link:hover {
     text-decoration: underline;
   }
 
-  &__link:visited{
-    color: #854d7d;
+  &__link:visited {
+    color: var(--color-visited-link);
   }
 }

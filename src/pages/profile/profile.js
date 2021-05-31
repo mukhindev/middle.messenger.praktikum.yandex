@@ -4,7 +4,7 @@ import Main from '../../components/layouts/Main/Main';
 import Input from '../../components/ui/Input/Input';
 import Button from '../../components/ui/Button/Button';
 import generateForm from '../../utils/generateForm';
-import defaultAvatar from '../../assets/images/default-avatar.png';
+import defaultAvatar from '../../assets/images/default-avatar.jpg';
 import arrowLeftIcon from '../../assets/images/arrow-left.svg';
 import '../../assets/styles/global.scss';
 import './profile.scss';

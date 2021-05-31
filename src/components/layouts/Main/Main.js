@@ -1,5 +1,3 @@
-import './Main.scss';
-
 function Main({ children, parentBlock, mix }) {
   Main.context = {
     className: 'main',

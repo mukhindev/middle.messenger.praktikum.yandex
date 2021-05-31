@@ -1,4 +1,5 @@
 import Message from '../Message/Message';
+import join from '../../../utils/join';
 import './MessageList.scss';
 
 function MessageList({ messages, parentBlock, mix }) {
@@ -11,13 +12,11 @@ function MessageList({ messages, parentBlock, mix }) {
 
   return `
     <ul class="{{ className }}{{ mixClassName }}">
-      ${messages.map((_, index) => (
-    `
-      <li class="{{ className }}__item">
-        <Message messages="{{ messages }}" index="${index}" />
-      </li>
-    `
-  )).join('')}
+      ${join(messages.map((_, index) => `
+        <li class="{{ className }}__item">
+          <Message messages="{{ messages }}" index="${index}" />
+        </li>
+      `))}
     </ul>
   `;
 }

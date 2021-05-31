@@ -1,8 +1,8 @@
 .contact-card-list {
-  background: var(--color-white);
-  list-style: none;
   margin: 0;
   padding: 0;
+  list-style: none;
+  background: var(--color-white);
 
   &__item {
     margin: 0 0 16px;

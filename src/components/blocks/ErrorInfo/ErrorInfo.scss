@@ -1,38 +1,38 @@
 .error-info {
-  max-width: 340px;
-  width: 100%;
-  background-color: var(--color-white);
-  border-radius: 12px;
-  padding: 48px 24px 48px;
-  box-shadow: 0 8px 48px -16px rgba(0, 0, 0, 0.25);
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 340px;
+  padding: 48px 24px;
+  border-radius: 12px;
+  background-color: var(--color-white);
+  box-shadow: 0 8px 48px -16px rgba(0, 0, 0, 0.25);
 
   &__title {
-    margin: 0;
-    font-style: normal;
-    font-weight: normal;
     font-size: 24px;
+    font-weight: normal;
+    font-style: normal;
+    margin: 0;
     text-align: center;
   }
 
   &__message {
-    margin: 8px 0 0;
-    font-style: normal;
-    font-weight: normal;
     font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    margin: 8px 0 0;
     text-align: center;
   }
 
   &__return-link {
-    margin: 48px 0 0;
-    font-style: normal;
-    font-weight: normal;
     font-size: 16px;
-    color: var(--color-primary);
-    text-decoration: none;
+    font-weight: normal;
+    font-style: normal;
+    margin: 48px 0 0;
     text-align: center;
+    text-decoration: none;
+    color: var(--color-primary);
   }
 
   &__return-link:hover {

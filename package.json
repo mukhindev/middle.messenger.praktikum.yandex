@@ -1,0 +1,35 @@
+{
+  "name": "middle.messenger.praktikum.yandex",
+  "version": "1.0.0",
+  "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main. Название pull request может быть любое.",
+  "main": "index.js",
+  "scripts": {
+    "watch": "parcel watch build ./static/pages/**/*.html",
+    "build": "parcel build ./static/pages/**/*.html --no-minify",
+    "dev": "npm run watch & node ./src/server.js",
+    "start": "parcel build ./static/pages/**/*.html --no-minify && node ./src/server.js",
+    "lint": "eslint ./src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mukhindev-praktikum/middle.messenger.praktikum.yandex.git"
+  },
+  "keywords": [],
+  "author": "Sergey Mukhin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mukhindev-praktikum/middle.messenger.praktikum.yandex/issues"
+  },
+  "homepage": "https://github.com/mukhindev-praktikum/middle.messenger.praktikum.yandex#readme",
+  "dependencies": {
+    "dotenv": "^9.0.2",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.27.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.3",
+    "parcel-bundler": "^1.12.5",
+    "sass": "^1.32.13"
+  }
+}

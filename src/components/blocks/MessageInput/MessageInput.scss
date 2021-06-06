@@ -1,0 +1,17 @@
+.message-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  gap: 16px;
+
+  &__attachment-menu {
+    z-index: 1;
+    bottom: 56px;
+    left: 24px;
+  }
+
+  &__input {
+    flex-grow: 1;
+  }
+}

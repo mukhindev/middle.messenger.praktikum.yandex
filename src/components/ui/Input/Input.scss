@@ -1,0 +1,52 @@
+.input {
+  position: relative;
+  display: block;
+
+  &__field {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 48px;
+    margin: 0;
+    padding: 0 16px;
+    transition: box-shadow 0.25s;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    background: var(--color-white);
+    box-shadow: inset 0 0 0 1px var(--color-border);
+  }
+
+  // Фикс отступа в Safari при поле типа search
+  &__field::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+
+  &__field:-webkit-autofill {
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  &__field:focus {
+    box-shadow:
+      inset 0 0 0 2px var(--color-primary),
+      0 0 0 4px var(--color-selected);
+  }
+
+  &__field:not(:placeholder-shown) ~ &__label {
+    font-size: 13px;
+    position: absolute;
+    top: -8px;
+    background: var(--color-white);
+  }
+
+  &__label {
+    position: absolute;
+    top: 14px;
+    left: 12px;
+    display: block;
+    padding: 0 4px;
+    transition: top 0.15s, font-size 0.15s;
+    pointer-events: none;
+    color: var(--color-secondary);
+  }
+}

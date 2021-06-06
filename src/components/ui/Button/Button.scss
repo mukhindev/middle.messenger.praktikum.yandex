@@ -8,18 +8,18 @@
   margin: 0;
   padding: 0 16px;
   transition:
-    transform 0.15s,
-    opacity 0.15s,
-    box-shadow 0.15s;
+    transform .15s,
+    opacity .15s,
+    box-shadow .15s;
   color: var(--color-text);
-  border: none;
+  border: 0;
   border-radius: 8px;
   outline: none;
   background-color: transparent;
   gap: 4px;
 
   &:active {
-    transform: scale(0.95);
+    transform: scale(.95);
   }
 
   &:focus {
@@ -30,7 +30,7 @@
 
   &:hover {
     cursor: pointer;
-    opacity: 0.7;
+    opacity: .7;
   }
 
   &_light {

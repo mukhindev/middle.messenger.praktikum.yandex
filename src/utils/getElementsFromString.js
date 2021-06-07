@@ -1,8 +1,8 @@
 const parser = new DOMParser();
 
-function getElementsFromString(html) {
+function getTemplateFromHTML(html) {
   const page = parser.parseFromString(html, 'text/html');
-  return page.documentElement.querySelector('body').children;
+  return page.querySelector('template');
 }
 
-export default getElementsFromString;
+export default getTemplateFromHTML;

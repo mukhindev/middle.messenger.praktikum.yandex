@@ -3,7 +3,9 @@ import { compile } from '../../../utils/templator';
 import './Button.scss';
 
 const template = `
-  <button class="{{ className }}">{{ label }}</button>
+  <template class="{{ className }}">
+    {{ label }}
+  </template>
 `;
 
 export default class Button extends Block {
@@ -11,18 +13,19 @@ export default class Button extends Block {
     super('div', {
       className: 'button',
       label: 'Моя кнопка',
+      startCounter: 1,
       ...props,
     });
 
-    // this.counter = 1;
-    //
-    // const interval = setInterval(() => {
-    //   if (this.counter >= 5) {
-    //     clearInterval(interval);
-    //   }
-    //   this.props.label = `Моя кнопка ${this.counter}`;
-    //   this.counter += 1;
-    // }, 1000);
+    this.counter = this.props.startCounter;
+
+    const interval = setInterval(() => {
+      if (this.counter >= 5) {
+        clearInterval(interval);
+      }
+      this.props.label = `Моя кнопка ${this.counter}`;
+      this.counter += 1;
+    }, 1000);
   }
 
   render() {

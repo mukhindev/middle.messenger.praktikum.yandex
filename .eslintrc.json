@@ -13,6 +13,7 @@
     "class-methods-use-this": "off",
     "no-param-reassign": "off",
     "import/prefer-default-export": "off",
-    "dot-notation": "off"
+    "dot-notation": "off",
+    "arrow-body-style": "off"
   }
 }

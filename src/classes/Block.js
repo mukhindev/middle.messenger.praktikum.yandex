@@ -84,21 +84,27 @@ class Block {
   }
 
   _renderChildComponents(elements) {
-    elements.forEach((element) => {
-      const parent = element.parentNode;
-      parent.replaceChild(window._components[element.dataset.uuid], element);
+    elements.forEach((markerElement) => {
+      const parent = markerElement.parentNode;
+      const blockElement = window._components[markerElement.dataset.uuid];
+      parent.replaceChild(blockElement, markerElement);
     });
   }
 
   _render() {
     const blockHTML = this.render();
-    const blockElements = getElementsFromString(blockHTML);
+    const template = getElementsFromString(blockHTML);
+    // Перенос атрибутов с <template> на обёртку блока
+    template.getAttributeNames()
+      .forEach((name) => {
+        this._element.setAttribute(name, template.getAttribute(name));
+      });
+    const blockElements = template.content.cloneNode(true);
     this._element.innerHTML = '';
-    Array.from(blockElements).forEach((element) => {
-      this._element.append(element);
-    });
+    this._element.append(blockElements);
     const markerElements = this._element.querySelectorAll('[data-uuid]');
     this._renderChildComponents(markerElements);
+    this._element.removeAttribute('data-uuid');
     this._componentDidRender();
   }
 

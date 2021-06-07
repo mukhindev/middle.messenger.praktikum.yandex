@@ -4,6 +4,9 @@ class Templator {
     this.components = {};
     this._handleFound = this._handleFound.bind(this);
     this.compile = this.compile.bind(this);
+    if (!window._components) {
+      window['_components'] = {};
+    }
   }
 
   // Обработчик получения значения из контекста
@@ -31,8 +34,8 @@ class Templator {
     }
     // Если ключ с большой буквы, считать компонентом
     if (key[0] === key[0].toUpperCase()) {
-      window['tmpl'] = value.getContent();
-      return '<div id="tmpl">%tmpl%</div>';
+      window._components[value._uuid] = value.getContent();
+      return `<div data-uuid="${value._uuid}"></div>`;
     }
     return value;
   }
@@ -40,7 +43,7 @@ class Templator {
   compile(template, context) {
     this.context = context;
     return template
-      .replace(/{{(?<key>.*?)}}/gs, this._handleFound)
+      .replace(/{{\s(?<key>.*?)\s}}/gs, this._handleFound)
       .trim();
   }
 }

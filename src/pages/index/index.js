@@ -5,22 +5,26 @@ import './index.scss';
 import { compile } from '../../utils/templator';
 
 const template = `
-<main>
+<div>
   <h1>{{ title }}</h1>
-  {{ Button }}
-</main>
+  {{ Button1 }}
+  {{ Button2 }}
+</div>
 `;
 
 class IndexPage extends Block {
   constructor() {
     super('div', {
       title: 'Привет, Мир!',
-      Button: new Button(),
+      Button1: new Button(),
+      Button2: new Button({
+        className: 'button-2',
+      }),
     });
 
-    setTimeout(() => {
-      this.props.title = 'Hello, World!';
-    }, 2000);
+    // setTimeout(() => {
+    //   this.props.title = 'Hello, World!';
+    // }, 2000);
   }
 
   render() {

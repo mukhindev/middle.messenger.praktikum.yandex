@@ -1,5 +1,5 @@
 import EventBus from './EventBus';
-import getElementFromString from '../utils/getElementFromString';
+import getElementsFromString from '../utils/getElementsFromString';
 
 class Block {
   static EVENTS = {
@@ -13,6 +13,8 @@ class Block {
 
   _meta = null;
 
+  _id = null;
+
   constructor(tagName = 'div', props = {}) {
     const eventBus = new EventBus();
 
@@ -21,7 +23,9 @@ class Block {
       props,
     };
 
-    this.props = this._makePropsProxy(props);
+    this._uuid = `x${Date.now()}`;
+
+    this.props = this._makePropsProxy({ ...props, _uuid: this._uuid });
     this.eventBus = () => eventBus;
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
@@ -79,22 +83,22 @@ class Block {
     return this._element;
   }
 
-  _renderChildComponents() {
-    const componentMarker = this._element.querySelector('#tmpl');
-    if (componentMarker) {
-      console.log(this._element);
-      const parent = componentMarker.parentNode;
-      parent.replaceChild(window['tmpl'], componentMarker);
-    }
-    console.log('_render', this._element);
+  _renderChildComponents(elements) {
+    elements.forEach((element) => {
+      const parent = element.parentNode;
+      parent.replaceChild(window._components[element.dataset.uuid], element);
+    });
   }
 
   _render() {
     const blockHTML = this.render();
-    const blockElement = getElementFromString(blockHTML);
+    const blockElements = getElementsFromString(blockHTML);
     this._element.innerHTML = '';
-    this._element.append(blockElement);
-    this._renderChildComponents();
+    Array.from(blockElements).forEach((element) => {
+      this._element.append(element);
+    });
+    const markerElements = this._element.querySelectorAll('[data-uuid]');
+    this._renderChildComponents(markerElements);
     this._componentDidRender();
   }
 
@@ -125,7 +129,9 @@ class Block {
   }
 
   _createDocumentElement(tagName) {
-    return document.createElement(tagName);
+    const element = document.createElement(tagName);
+    element.setAttribute('data-uuid', this._uuid);
+    return element;
   }
 
   show() {

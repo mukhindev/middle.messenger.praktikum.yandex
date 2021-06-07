@@ -7,21 +7,22 @@ const template = `
 `;
 
 export default class Button extends Block {
-  constructor() {
-    super('button', {
+  constructor(props) {
+    super('div', {
       className: 'button',
       label: 'Моя кнопка',
+      ...props,
     });
 
-    this.counter = 1;
-
-    const interval = setInterval(() => {
-      if (this.counter >= 5) {
-        clearInterval(interval);
-      }
-      this.props.label = `Моя кнопка ${this.counter}`;
-      this.counter += 1;
-    }, 1000);
+    // this.counter = 1;
+    //
+    // const interval = setInterval(() => {
+    //   if (this.counter >= 5) {
+    //     clearInterval(interval);
+    //   }
+    //   this.props.label = `Моя кнопка ${this.counter}`;
+    //   this.counter += 1;
+    // }, 1000);
   }
 
   render() {

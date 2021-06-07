@@ -1,58 +1,32 @@
-import join from '../../../utils/join';
+import Block from '../../../classes/Block';
+import { compile } from '../../../utils/templator';
 import './Button.scss';
 
-function Button(props) {
-  const {
-    type,
-    icon,
-    light,
-    color,
-    children,
-    label,
-    title,
-    onClick,
-    parentBlock,
-    mix,
-    menuIndex,
-    menuName,
-  } = props;
+const template = `
+  <button class="{{ className }}">{{ label }}</button>
+`;
 
-  Button.context = {
-    className: 'button',
-    light,
-    icon,
-    color: color ?? '',
-    mixClassName: (parentBlock && mix) ? ` ${parentBlock}__${mix}` : '',
-    type: type ?? 'button',
-    title,
-    children: children ?? label ?? '',
-    onClick,
-    menuIndex,
-    menuName,
-  };
+export default class Button extends Block {
+  constructor() {
+    super('button', {
+      className: 'button',
+      label: 'Моя кнопка',
+    });
 
-  const modifiers = join([
-    light ? ' {{ className }}_light' : '',
-    color === 'primary' ? ' {{ className }}_primary' : '',
-  ]);
+    this.counter = 1;
 
-  const iconTemplate = icon
-    ? '<img class="{{ className }}__icon" src="{{ icon }}" alt="" />'
-    : '';
+    const interval = setInterval(() => {
+      if (this.counter >= 5) {
+        clearInterval(interval);
+      }
+      this.props.label = `Моя кнопка ${this.counter}`;
+      this.counter += 1;
+    }, 1000);
+  }
 
-  return `
-    <button
-      class="{{ className }}${modifiers}{{ mixClassName }}"
-      type="{{ type }}"
-      ${onClick ? 'onclick="{{ onClick(this) }}"' : ''}
-      ${title ? 'title="{{ title }}"' : ''}
-      ${menuIndex ? 'data-menu-index="{{ menuIndex }}"' : ''}
-      ${menuName ? 'data-menu-name="{{ menuName }}"' : ''}
-    >
-      ${iconTemplate}
-      {{ children }}
-    </button>
-  `;
+  render() {
+    return compile(template, this.props);
+  }
 }
 
-export default Button;
+// document.body.prepend(new Button().getContent());

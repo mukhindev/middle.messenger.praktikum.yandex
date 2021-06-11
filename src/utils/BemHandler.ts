@@ -1,5 +1,5 @@
 type TBemElement = string | undefined;
-type TBemModifierObject = Record<string, string | boolean>;
+type TBemModifierObject = Record<string, string | boolean | undefined>;
 type TBemModifierElement = string | string[] | TBemModifierObject | undefined;
 type TBemMix = string | undefined;
 
@@ -27,7 +27,7 @@ class BemHandler {
       return classes.length ? ` ${classes.join(' ')}` : '';
     }
 
-    if (modifier && Array.isArray(modifier)) {
+    if (modifier && typeof modifier === 'object') {
       const modifiers = Object.entries(modifier);
       modifiers.forEach((el) => {
         if (!el[1]) {

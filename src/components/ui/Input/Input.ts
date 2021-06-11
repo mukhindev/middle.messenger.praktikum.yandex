@@ -7,11 +7,11 @@ import './Input.scss';
 const bem = new BemHandler('input');
 
 interface IInput {
+  classMix?: string
   label?: string
   placeholder?: string
   name?: string
   type?: string
-  classMix?: string
   onInput: (value: string) => void
 }
 

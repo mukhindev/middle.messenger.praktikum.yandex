@@ -3,9 +3,9 @@ import { join } from '../../../utils/templator';
 
 export const template = (props: TProps) => `
   <template class="{{ classNameWithMix }}">
-    ${join(props.ContactCard.map((_: unknown, index: number) => `
+    ${join(props.Message.map((_: unknown, index: number) => `
       <li class="{{ className }}__item">
-        <ContactCard key="${index}" />
+        <Message key="${index}" />
       </li>
     `))}
   </template>

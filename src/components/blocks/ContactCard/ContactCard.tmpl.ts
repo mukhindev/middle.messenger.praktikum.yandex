@@ -1,6 +1,6 @@
 import { TProps } from '../../../classes/Block';
 
-export const template = (props: TProps) =>`
+export const template = (props: TProps) => `
   <template class="{{ className }}">
     <img
       class="{{ className }}__avatar"
@@ -8,7 +8,7 @@ export const template = (props: TProps) =>`
       alt="Аватар пользователя {{ name }}"
     />
     <div class="{{ className }}__name-wrapper">
-      ${props.isGroup ? '<div class="{{ className }}__group-marker"></div>' : '' }
+      ${props.isGroup ? '<div class="{{ className }}__group-marker"></div>' : ''}
       <p class="{{ className }}__name">{{ name }}</p>
     </div>
     <p class="{{ className }}__last-message">{{ lastMessage }}</p>

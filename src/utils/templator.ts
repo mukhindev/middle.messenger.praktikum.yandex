@@ -112,13 +112,20 @@ class Templator {
     return value;
   }
 
-  compile(templateFunction: (props: TProps) => string, context: TProps) {
+  compile(templateFunction: (props: TProps) => string, context: TProps): string {
     this.context = context;
     const template = templateFunction(context);
     return template
       .replace(this.parserRegex, this._handleFound)
       .trim();
   }
+
+  join(templates: string[]) {
+    if (!Array.isArray(templates)) {
+      throw new Error(`Функция join ожидает массив, был передан ${typeof templates}`);
+    }
+    return templates.join('');
+  }
 }
 
-export const { compile } = new Templator();
+export const { compile, join } = new Templator();

@@ -1,6 +1,6 @@
 import Block from '../../../classes/Block';
 import { compile } from '../../../utils/templator';
-import { template } from "./ContactCard.tmpl";
+import { template } from './ContactCard.tmpl';
 import BemHandler from '../../../utils/BemHandler';
 import defaultAvatar from '../../../assets/images/default-avatar.jpg';
 import formatDate from '../../../utils/formatDate';

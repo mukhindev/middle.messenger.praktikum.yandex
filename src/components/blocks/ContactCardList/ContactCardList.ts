@@ -1,7 +1,7 @@
 import Block from '../../../classes/Block';
 import ContactCard from '../ContactCard/ContactCard';
 import { compile } from '../../../utils/templator';
-import { template } from "./ContactCardList.tmpl";
+import { template } from './ContactCardList.tmpl';
 import BemHandler from '../../../utils/BemHandler';
 import { contacts } from '../../../utils/mockData';
 import './ContactCardList.scss';

@@ -1,8 +1,7 @@
 type TBemElement = string | undefined;
 type TBemModifierObject = Record<string, string | boolean>;
-type TBemModifierElement = string | string[] | TBemModifierObject | undefined
+type TBemModifierElement = string | string[] | TBemModifierObject | undefined;
 type TBemMix = string | undefined;
-
 
 class BemHandler {
   constructor(
@@ -33,7 +32,7 @@ class BemHandler {
       modifiers.forEach((el) => {
         if (!el[1]) {
           return '';
-        };
+        }
         if (typeof el[1] === 'boolean') {
           return classes.push(`${target}${this.modSymbol}${el[0]}`);
         }
@@ -41,6 +40,7 @@ class BemHandler {
       });
       return classes.length ? ` ${classes.join(' ')}` : '';
     }
+    return '';
   }
 
   private getBlockWithModifier(modifier: TBemModifierElement) {
@@ -54,7 +54,7 @@ class BemHandler {
   private getElementWithModifier = (element: TBemElement, modifier: TBemModifierElement) => {
     const bemElement = this.getElement(element);
     return `${bemElement}${this.getModifier(bemElement, modifier)}`;
-  }
+  };
 
   private getBemClass(element: TBemElement, modifier: TBemModifierElement) {
     if (!element && !modifier) {
@@ -72,7 +72,7 @@ class BemHandler {
     return '';
   }
 
-  public get(element?: TBemElement, modifier?: TBemModifierElement, mix?: TBemMix, ): string {
+  public get(element?: TBemElement, modifier?: TBemModifierElement, mix?: TBemMix): string {
     return !mix
       ? this.getBemClass(element, modifier)
       : `${this.getBemClass(element, modifier)} ${mix}`;

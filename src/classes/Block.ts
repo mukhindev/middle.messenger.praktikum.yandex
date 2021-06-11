@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 import EventBus from './EventBus';
 import getElementsFromString from '../utils/getTemplateFromHTML';
 
-export type TProps = Record<string, any>
+export type TProps = Record<string, any>;
 
 class Block {
   private _uuid: string;
@@ -10,6 +10,7 @@ class Block {
     tagName: string;
     props: TProps;
   };
+
   private _element: HTMLElement;
   private eventBus: () => EventBus;
   public props: TProps;
@@ -83,11 +84,27 @@ class Block {
     return this._element;
   }
 
+  _addEvents() {
+    const { events = {} } = this.props;
+
+    Object.keys(events).forEach((eventName) => {
+      this._element.addEventListener(eventName, events[eventName]);
+    });
+  }
+
+  _removeEvents() {
+    const { events = {} } = this.props;
+
+    Object.keys(events).forEach((eventName) => {
+      this._element.removeEventListener(eventName, events[eventName]);
+    });
+  }
+
   _renderChildComponents(elements: NodeListOf<Element>) {
     elements.forEach((markerElement) => {
       if (markerElement instanceof HTMLElement) {
         const parent = markerElement.parentNode;
-        if (parent && markerElement.dataset.uuid)  {
+        if (parent && markerElement.dataset.uuid) {
           const blockElement = window._componentStore[markerElement.dataset.uuid];
           parent.replaceChild(blockElement, markerElement);
         }
@@ -97,14 +114,15 @@ class Block {
 
   _render() {
     const blockHTML = this.render();
+    this._removeEvents();
     if (blockHTML) {
       const template = getElementsFromString(blockHTML);
       // Перенос атрибутов с <template> на обёртку блока
       if (template) {
         template.getAttributeNames()
-        .forEach((name) => {
-          this._element.setAttribute(name, template.getAttribute(name) || '');
-        });
+          .forEach((name) => {
+            this._element.setAttribute(name, template.getAttribute(name) || '');
+          });
         const blockElements = template.content.cloneNode(true);
         this._element.innerHTML = '';
         this._element.append(blockElements);
@@ -113,6 +131,7 @@ class Block {
         this._element.removeAttribute('data-uuid');
       }
     }
+    this._addEvents();
   }
 
   render(): void | string {}

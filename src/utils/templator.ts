@@ -11,7 +11,7 @@ class Templator {
   private parserRegex: RegExp;
 
   constructor() {
-    this.parserRegex = /<(\w*:if)\({{\s([\w]+)\s}}\).*>.*<\/\1>|{{\s([\w]+)\s}}|<(?<tag>[A-Z]+\w+)\s+(.*?)\s*>(.*?)<\/\k<tag>>|<([A-Z]+\w+)\s+(.*?)\s*\/>/gs;
+    this.parserRegex = /{{\s([\w]+)\s}}|<(?<tag>[A-Z]+\w+)\s+(.*?)\s*>(.*?)<\/\k<tag>>|<([A-Z]+\w+)\s+(.*?)\s*\/>/gs;
     this.context = null;
     this._handleFound = this._handleFound.bind(this);
     this.compile = this.compile.bind(this);
@@ -43,25 +43,25 @@ class Templator {
       // Ключ пропса (левая часть до =)
       const [propsKey] = prop.match(/[^<][\w.]+/) || [];
 
-        // Получаем значение после =
-        const propValue = prop.split(/="/)[1].replace(/"/, '').trim();
-        // Проверяем, является ли ключом к контексту (prop="{{ key }}")
-        const [_, propValueContextKey] = propValue.match(/{{\s*?(\w+?)\s*?}}/) || [];
+      // Получаем значение после =
+      const propValue = prop.split(/="/)[1].replace(/"/, '').trim();
+      // Проверяем, является ли ключом к контексту (prop="{{ key }}")
+      const { key: propValueContextKey } = propValue.match(/{{\s*?(?<key>\w+?)\s*?}}/)?.groups || {};
 
-        // Если это ключ к контексту
-        if (propValueContextKey) {
-          if (propValueContextKey === 'true') {
-            props[propsKey] = true;
-          } else if (propValueContextKey === 'false') {
-            props[propsKey] = false;
-          } else {
-            // Сохраняем под ключом пропса текущий контекст
-            props[propsKey] = this.context[propValueContextKey];
-          }
+      // Если это ключ к контексту
+      if (propValueContextKey) {
+        if (propValueContextKey === 'true') {
+          props[propsKey] = true;
+        } else if (propValueContextKey === 'false') {
+          props[propsKey] = false;
         } else {
-          // Сохраняем в пропс значение после =
-          props[propsKey] = propValue;
+          // Сохраняем под ключом пропса текущий контекст
+          props[propsKey] = this.context[propValueContextKey];
         }
+      } else {
+        // Сохраняем в пропс значение после =
+        props[propsKey] = propValue;
+      }
     }
 
     return props;

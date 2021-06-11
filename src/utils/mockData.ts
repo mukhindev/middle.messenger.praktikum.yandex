@@ -30,6 +30,7 @@ export const contacts = [
     updatedAt: '2021-05-23T10:21:07.563Z',
   },
 ];
+
 export const messages = [
   {
     id: '1',

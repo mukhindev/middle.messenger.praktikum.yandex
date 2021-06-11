@@ -1,11 +1,13 @@
 class EventBus {
+  readonly listeners: Record<string, Function[]>
+
   constructor() {
     // Объект для наполнения ожидаемыми событиями
     this.listeners = {};
   }
 
   // Подписка на события
-  on(event, callback) {
+  on(event: string, callback: () => void): void {
     // Если свойства с названием события нет, создаём пустой массив для них
     if (!this.listeners[event]) {
       this.listeners[event] = [];
@@ -15,7 +17,7 @@ class EventBus {
   }
 
   // Отписка от событий
-  off(event, callback) {
+  off(event: string, callback: () => void): void {
     this._checkEvent(event);
     // Отфильтровываем все колбеки кроме совпавшего
     this.listeners[event] = this.listeners[event]
@@ -23,7 +25,7 @@ class EventBus {
   }
 
   // Отправка события
-  emit(event, ...args) {
+  emit(event: string, ...args: unknown[]): void {
     this._checkEvent(event);
     this.listeners[event].forEach((listener) => {
       // Вызываем событие, передаём аргументы
@@ -31,7 +33,7 @@ class EventBus {
     });
   }
 
-  _checkEvent(event) {
+  _checkEvent(event: string) {
     // Если событий с таким именем нет, выкидываем ошибку
     if (!this.listeners[event]) {
       throw new Error(`Нет события: ${event}`);

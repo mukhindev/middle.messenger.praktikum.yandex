@@ -1,7 +1,19 @@
+import { v4 as uuid } from 'uuid';
 import EventBus from './EventBus';
-import getElementsFromString from '../utils/getElementsFromString';
+import getElementsFromString from '../utils/getTemplateFromHTML';
+
+type TProps = Record<string, unknown>
 
 class Block {
+  private _uuid: string;
+  private _meta: {
+    tagName: string;
+    props: TProps;
+  };
+  private _element: HTMLElement;
+  private eventBus: () => EventBus;
+  public props: TProps;
+
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
@@ -9,13 +21,7 @@ class Block {
     FLOW_RENDER: 'flow:render',
   };
 
-  _element = null;
-
-  _meta = null;
-
-  _id = null;
-
-  constructor(tagName = 'div', props = {}) {
+  constructor(tagName: string = 'div', props: TProps = {}) {
     const eventBus = new EventBus();
 
     this._meta = {
@@ -23,7 +29,7 @@ class Block {
       props,
     };
 
-    this._uuid = `x${Date.now()}`;
+    this._uuid = uuid();
 
     this.props = this._makePropsProxy({ ...props, _uuid: this._uuid });
     this.eventBus = () => eventBus;
@@ -31,7 +37,7 @@ class Block {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _registerEvents(eventBus) {
+  _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -55,24 +61,18 @@ class Block {
 
   componentDidMount() {}
 
-  _componentDidUpdate(oldProps, newProps) {
+  _componentDidUpdate(oldProps: TProps, newProps: TProps) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (response) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
   }
 
-  _componentDidRender() {
-    this.componentDidRender(this._element);
-  }
-
-  componentDidRender() {}
-
-  componentDidUpdate(oldProps, newProps) {
+  componentDidUpdate(oldProps: TProps, newProps: TProps) {
     return oldProps !== newProps;
   }
 
-  setProps = (nextProps) => {
+  setProps = (nextProps: TProps) => {
     if (!nextProps) {
       return;
     }
@@ -83,44 +83,47 @@ class Block {
     return this._element;
   }
 
-  _renderChildComponents(elements) {
+  _renderChildComponents(elements: NodeListOf<Element>) {
     elements.forEach((markerElement) => {
-      const parent = markerElement.parentNode;
-      const blockElement = window._components[markerElement.dataset.uuid];
-      parent.replaceChild(blockElement, markerElement);
+      if (markerElement instanceof HTMLElement) {
+        const parent = markerElement.parentNode;
+        if (parent && markerElement.dataset.uuid)  {
+          const blockElement = window._components[markerElement.dataset.uuid];
+          parent.replaceChild(blockElement, markerElement);
+        }
+      }
     });
   }
 
   _render() {
     const blockHTML = this.render();
-    const template = getElementsFromString(blockHTML);
-    // Перенос атрибутов с <template> на обёртку блока
-    template.getAttributeNames()
-      .forEach((name) => {
-        this._element.setAttribute(name, template.getAttribute(name));
-      });
-    const blockElements = template.content.cloneNode(true);
-    this._element.innerHTML = '';
-    this._element.append(blockElements);
-    const markerElements = this._element.querySelectorAll('[data-uuid]');
-    this._renderChildComponents(markerElements);
-    this._element.removeAttribute('data-uuid');
-    this._componentDidRender();
+    if (blockHTML) {
+      const template = getElementsFromString(blockHTML);
+      // Перенос атрибутов с <template> на обёртку блока
+      if (template) {
+        template.getAttributeNames()
+        .forEach((name) => {
+          this._element.setAttribute(name, template.getAttribute(name) || '');
+        });
+        const blockElements = template.content.cloneNode(true);
+        this._element.innerHTML = '';
+        this._element.append(blockElements);
+        const markerElements = this._element.querySelectorAll('[data-uuid]');
+        this._renderChildComponents(markerElements);
+        this._element.removeAttribute('data-uuid');
+      }
+    }
   }
 
-  render() {}
+  render(): void | string {}
 
   getContent() {
     return this.element;
   }
 
-  getComponent(name) {
-    return this.components[name];
-  }
-
-  _makePropsProxy(props) {
-    const proxyProps = new Proxy(props, {
-      set: (target, prop, value) => {
+  _makePropsProxy(props: TProps) {
+    return new Proxy(props, {
+      set: (target: TProps, prop: string, value: unknown) => {
         target[prop] = value;
         this._meta.props = this.props;
         this.eventBus().emit(Block.EVENTS.FLOW_CDU, this._meta.props, target);
@@ -130,11 +133,9 @@ class Block {
         throw new Error('Нет доступа');
       },
     });
-
-    return proxyProps;
   }
 
-  _createDocumentElement(tagName) {
+  _createDocumentElement(tagName: string) {
     const element = document.createElement(tagName);
     element.setAttribute('data-uuid', this._uuid);
     return element;

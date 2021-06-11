@@ -1,4 +1,4 @@
-function formatDate(isoDate) {
+function formatDate(isoDate: string): string {
   const date = new Date(isoDate);
   const now = new Date();
   const months = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];

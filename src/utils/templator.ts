@@ -1,22 +1,27 @@
+import { TProps } from '../classes/Block';
+
 declare global {
   interface Window {
-    _components: Record<string, HTMLElement>;
+    _componentStore: Record<string, HTMLElement>;
   }
 }
 
 class Templator {
+  private context: any;
+  private parserRegex: RegExp;
+
   constructor() {
     this.parserRegex = /<(\w*:if)\({{\s([\w]+)\s}}\).*>.*<\/\1>|{{\s([\w]+)\s}}|<(?<tag>[A-Z]+\w+)\s+(.*?)\s*>(.*?)<\/\k<tag>>|<([A-Z]+\w+)\s+(.*?)\s*\/>/gs;
     this.context = null;
     this._handleFound = this._handleFound.bind(this);
     this.compile = this.compile.bind(this);
-    if (!window._components) {
-      window['_components'] = {};
+    if (!window._componentStore) {
+      window['_componentStore'] = {};
     }
   }
 
   // Обработчик получения значения из контекста
-  _getValueFromContext(key) {
+  _getValueFromContext(key: string) {
     // Если ключ без точки
     if (!key.includes('.')) {
       // Вернуть значение из корня контекста
@@ -28,111 +33,88 @@ class Templator {
     return path.reduce((acc, k) => acc[k], this.context);
   }
 
-  _transformAttributesToProps(attributes) {
-    const props = {};
+  // Трансформация атрибутов в объект пропсов
+  _transformAttributesToProps(attributes: string[]) {
+    const props: TProps = {};
 
     // TODO: Решить проблему указанную линтером
     // eslint-disable-next-line no-restricted-syntax
     for (const prop of attributes) {
       // Ключ пропса (левая часть до =)
-      const propsKey = prop.match(/[^<][\w.]+/)[0];
-      // Получаем значение после =
-      const propValue = prop.split(/="/)[1].replace(/"/, '').trim();
-      // Проверяем, является ли ключом к контексту (prop="{{ key }}")
-      const propValueContextKey = propValue.match(/{{\s*?(\w+?)\s*?}}/);
-      console.log(propsKey);
-      // Если ключ к контексту
-      if (propValueContextKey && propValueContextKey[1]) {
-        if (propValueContextKey[1] === 'true') {
-          props[propsKey] = true;
-        } else if (propValueContextKey[1] === 'false') {
-          props[propsKey] = false;
+      const [propsKey] = prop.match(/[^<][\w.]+/) || [];
+
+        // Получаем значение после =
+        const propValue = prop.split(/="/)[1].replace(/"/, '').trim();
+        // Проверяем, является ли ключом к контексту (prop="{{ key }}")
+        const [_, propValueContextKey] = propValue.match(/{{\s*?(\w+?)\s*?}}/) || [];
+
+        // Если это ключ к контексту
+        if (propValueContextKey) {
+          if (propValueContextKey === 'true') {
+            props[propsKey] = true;
+          } else if (propValueContextKey === 'false') {
+            props[propsKey] = false;
+          } else {
+            // Сохраняем под ключом пропса текущий контекст
+            props[propsKey] = this.context[propValueContextKey];
+          }
         } else {
-          // Иначе сохраняем под ключом пропса текущий контекст
-          props[propsKey] = this.context[propValueContextKey[1]];
+          // Сохраняем в пропс значение после =
+          props[propsKey] = propValue;
         }
-      } else {
-        // Сохраняем в пропс значение после =
-        props[propsKey] = propValue;
-      }
     }
 
     return props;
   }
 
-  // Обработчик усов
-  _handleFound(found) {
-    const foundIf = found.match(/<(\w*:if)\({{\s(?<ifKey>[\w]+)\s}}\).*>/);
-    if (foundIf?.groups?.ifKey) {
-      const { ifKey } = foundIf.groups;
-      if (this.context[ifKey]) {
-        const template = found.replace(/:if\({{\s(?<ifKey>[\w]+)\s}}\)|:if/g, '');
-        return this.compile(template, this.context);
-      }
-      return '';
-    }
-
-    // Извлекаем текст
-    const [key] = found.match(/[\w.]+/);
-    // Получаем значение из контекста
+  // Обработчик вхождений шаблона
+  _handleFound(found: string) {
+    // Извлекаем имя ключа
+    const [key]: RegExpMatchArray = found.match(/[\w.]+/) || [];
+    // Получаем значение из контекста по ключу
     const value = this._getValueFromContext(key);
+
     // Если значение не определено
     if (value === undefined) {
       return `{{ ${key} }}`;
     }
-    // Если ключ с большой буквы, считать компонентом
-    // if (key[0] === key[0].toUpperCase()) {
-    //   // Массив компонентов. Если компонент 1, обернуть массивом
-    //   const components = Array.isArray(value)
-    //     ? [value[0]] : [value];
-    //   return components.reduce((acc, component) => {
-    //     const componentOpenTag = found.split('>')[0];
-    //     const attributes = componentOpenTag.match(/\w+=".*?"/g) || [];
-    //     const props = this._transformAttributesToProps(attributes);
-    //     setTimeout(() => {
-    //       component.setProps(props);
-    //     }, 0);
-    //     // Поместить элемент компонента в хранилище
-    //     window._components[component._uuid] = component.getContent();
-    //     // Вернуть элемент-маркер который будет заменен на элемент компонента
-    //     return `${acc}<div data-uuid="${component._uuid}"></div>`;
-    //   }, '');
 
     if (key[0] === key[0].toUpperCase()) {
-      // Массив компонентов. Если компонент 1, обернуть массивом
       const componentOpenTag = found.split('>')[0];
       const attributes = componentOpenTag.match(/\w+=".*?"/g) || [];
       const props = this._transformAttributesToProps(attributes);
 
       // Итерация
-      if (Array.isArray(value)) {
+      if (Array.isArray(value) && (typeof props.key === 'string')) {
         if (!('key' in props)) {
-          throw new Error('Для итерации из массива необходим уникальный key');
+          throw new Error('Компонентам внутри итерации необходим уникальный key="number", указывающий на экземпляр в массиве');
         }
-
         const { key } = props;
+
         setTimeout(() => {
-          value[key].setProps(props);
+          value[+key].setProps(props);
         }, 0);
         // Поместить элемент компонента в хранилище
-        window._components[value[key]._uuid] = value[key].getContent();
+        window._componentStore[value[+key]._uuid] = value[+key].getContent();
         // Вернуть элемент-маркер который будет заменен на элемент компонента
-        return `<div data-uuid="${value[key]._uuid}"></div>`;
+        return `<div data-uuid="${value[+key]._uuid}"></div>`;
       }
 
       setTimeout(() => {
         value.setProps(props);
       }, 0);
+
       // Поместить элемент компонента в хранилище
-      window._components[value._uuid] = value.getContent();
+      window._componentStore[value._uuid] = value.getContent();
       // Вернуть элемент-маркер который будет заменен на элемент компонента
       return `<div data-uuid="${value._uuid}"></div>`;
     }
     return value;
   }
 
-  compile(template, context) {
+  compile(templateFunction: (props: TProps) => string, context: TProps) {
     this.context = context;
+    const template = templateFunction(context);
     return template
       .replace(this.parserRegex, this._handleFound)
       .trim();

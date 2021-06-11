@@ -1,15 +1,10 @@
 import Block from '../../../classes/Block';
 import { compile } from '../../../utils/templator';
+import { template } from "./Button.tmpl";
 import BemHandler from '../../../utils/BemHandler';
 import './Button.scss';
 
 const bem = new BemHandler('button');
-
-const template = `
-  <template class="{{ className }}">
-    {{ label }}
-  </template>
-`;
 
 interface IButton {
   label: string

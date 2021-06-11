@@ -1,4 +1,8 @@
-type TModifierObject = Record<string, string | boolean>
+type TBemElement = string | undefined;
+type TBemModifierObject = Record<string, string | boolean>;
+type TBemModifierElement = string | string[] | TBemModifierObject | undefined
+type TBemMix = string | undefined;
+
 
 class BemHandler {
   constructor(
@@ -9,7 +13,7 @@ class BemHandler {
     this.modSymbol = modSymbol;
   }
 
-  private getModifier({ target, modifier }: { target: string, modifier: TModifierObject }) {
+  private getModifier(target: string, modifier: TBemModifierElement) {
     const classes: string[] = [];
 
     if (modifier && typeof modifier === 'string') {
@@ -39,45 +43,39 @@ class BemHandler {
     }
   }
 
-  private getBlockWithModifier({ modifier }: {modifier: TModifierObject}) {
-    return `${this.block}${this.getModifier({ target: this.block, modifier })}`;
+  private getBlockWithModifier(modifier: TBemModifierElement) {
+    return `${this.block}${this.getModifier(this.block, modifier)}`;
   }
 
-  private getElement({ element }: { element: string }) {
+  private getElement(element: TBemElement) {
     return `${this.block}__${element}`;
   }
 
-  private getElementWithModifier = (
-    { element, modifier }: { element: string, modifier: TModifierObject }
-  ) => {
-    const bemElement = this.getElement({ element });
-    return `${bemElement}${this.getModifier({ target: bemElement, modifier })}`;
+  private getElementWithModifier = (element: TBemElement, modifier: TBemModifierElement) => {
+    const bemElement = this.getElement(element);
+    return `${bemElement}${this.getModifier(bemElement, modifier)}`;
   }
 
-  private getBemClass({ element, modifier }: { element: string, modifier: TModifierObject }) {
+  private getBemClass(element: TBemElement, modifier: TBemModifierElement) {
     if (!element && !modifier) {
       return this.block;
     }
     if (!element && modifier) {
-      return this.getBlockWithModifier({ modifier });
+      return this.getBlockWithModifier(modifier);
     }
     if (element && !modifier) {
-      return this.getElement({ element });
+      return this.getElement(element);
     }
     if (element && modifier) {
-      return this.getElementWithModifier({ element, modifier });
+      return this.getElementWithModifier(element, modifier);
     }
     return '';
   }
 
-  public get(
-    element?: string,
-    modifier?: string | string[] | TModifierObject,
-    mix?: string,
-  ): string {
+  public get(element?: TBemElement, modifier?: TBemModifierElement, mix?: TBemMix, ): string {
     return !mix
-      ? this.getBemClass({ element, modifier })
-      : `${this.getBemClass({ element, modifier })} ${mix}`;
+      ? this.getBemClass(element, modifier)
+      : `${this.getBemClass(element, modifier)} ${mix}`;
   }
 }
 

@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 import EventBus from './EventBus';
 import getElementsFromString from '../utils/getTemplateFromHTML';
 
-type TProps = Record<string, unknown>
+export type TProps = Record<string, any>
 
 class Block {
   private _uuid: string;
@@ -88,7 +88,7 @@ class Block {
       if (markerElement instanceof HTMLElement) {
         const parent = markerElement.parentNode;
         if (parent && markerElement.dataset.uuid)  {
-          const blockElement = window._components[markerElement.dataset.uuid];
+          const blockElement = window._componentStore[markerElement.dataset.uuid];
           parent.replaceChild(blockElement, markerElement);
         }
       }

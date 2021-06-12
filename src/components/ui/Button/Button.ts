@@ -29,9 +29,7 @@ class Button extends Block {
       label: props.label ?? '',
       title: props.title ?? '',
       events: {
-        click: () => {
-          props.onClick();
-        },
+        click: props.onClick,
       },
     });
   }

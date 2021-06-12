@@ -27,6 +27,7 @@
       "error",
       { "argsIgnorePattern": "^_$" }
     ],
-    "@typescript-eslint/indent": "off"
+    "@typescript-eslint/indent": "off",
+    "no-console": "off"
   }
 }

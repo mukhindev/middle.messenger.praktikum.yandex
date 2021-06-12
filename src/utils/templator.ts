@@ -119,13 +119,23 @@ class Templator {
       .replace(this.parserRegex, this._handleFound)
       .trim();
   }
-
-  join(templates: string[]) {
-    if (!Array.isArray(templates)) {
-      throw new Error(`Функция join ожидает массив, был передан ${typeof templates}`);
-    }
-    return templates.join('');
-  }
 }
 
-export const { compile, join } = new Templator();
+/* Утилиты шаблонизатора */
+// Соединение массива строк без запятой
+function join(templates: string[]) {
+  if (!Array.isArray(templates)) {
+    throw new Error(`Функция join ожидает массив, был передан ${typeof templates}`);
+  }
+  return templates.join('');
+}
+
+// Конструктор свойства style из объекта
+function stylize(props: Record<string, string>) {
+  return Object.entries(props).reduce((acc, [key, value], index, arr) => {
+    return `${acc}${key}:${value};${index === arr.length - 1 ? '"' : ''}`;
+  }, 'style="');
+}
+
+export const { compile } = new Templator();
+export { join, stylize };

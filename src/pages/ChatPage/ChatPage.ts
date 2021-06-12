@@ -13,6 +13,7 @@ import settingIcon from '../../assets/images/settings.svg';
 import { contacts, messages } from '../../utils/mockData';
 import '../../assets/styles/global.scss';
 import './ChatPage.scss';
+import Popup from '../../components/ui/Popup/Popup';
 
 const bem = new BemHandler('chat-page');
 
@@ -30,7 +31,9 @@ class ChatPage extends Block {
         contacts,
       }),
       ChatHeader: new ChatHeader({
-        onAddContact: () => console.log('Кнопка добавления контакта'),
+        onAddContact: () => {
+          this.props.AddContactPopup.show();
+        },
         onRemoveContact: () => console.log('Кнопка удаления контакта'),
       }),
       MessageList: new MessageList({
@@ -55,6 +58,25 @@ class ChatPage extends Block {
         icon: settingIcon,
         light: true,
         onClick: () => console.log('Кнопка настроек'),
+      }),
+      AddContactPopup: new Popup({
+        title: 'Добавить пользователя в чат',
+      }),
+      AddContactInput: new Input({
+        label: 'Логин',
+        onInput: (value) => console.log('Поле логина:', value),
+      }),
+      AddContactSubmitButton: new Button({
+        label: 'Добавить',
+        color: 'primary',
+        classMix: bem.get('button-submit-add-contact'),
+        onClick: () => console.log('Субмит добавления пользователя'),
+      }),
+      AddContactInviteButton: new Button({
+        label: 'Пригласить в чат',
+        light: true,
+        classMix: bem.get('button-submit-invite-contact'),
+        onClick: () => console.log('Кнопка пригласить в чат'),
       }),
     });
   }

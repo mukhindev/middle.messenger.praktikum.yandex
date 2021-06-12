@@ -11,7 +11,7 @@ interface IButton {
   type?: string,
   icon?: string,
   light?: boolean,
-  color?: string,
+  color?: '' | 'primary',
   label?: string,
   title?: string,
   onClick: () => void,

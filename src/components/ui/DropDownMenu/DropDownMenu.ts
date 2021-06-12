@@ -9,7 +9,6 @@ const bem = new BemHandler('drop-down-menu');
 
 interface IDropDownMenu {
   classMix?: string
-  isOpen: boolean
   items: any[]
   icon: string
   title: string
@@ -22,48 +21,51 @@ class DropDownMenu extends Block {
       className: bem.get(),
       classMix: props.classMix,
       classNameRoot: bem.get('', '', props.classMix),
-      classNameMenu: bem.get('menu', { opened: props.isOpen }),
+      classNameMenu: bem.get('menu'),
+      classNameMenuOpen: bem.get('menu', { opened: true }),
       style: props.style,
-      isOpen: props.isOpen,
       MenuButton: new Button({
         title: 'Управление пользователями',
         icon: props.icon,
         light: true,
-        onClick: () => {
-          this.props.isOpen = true;
-        },
+        onClick: () => this.toggleMenu(true),
       }),
       MenuItem: props.items.map((item) => new Button({
         ...item,
         light: true,
         onClick: () => {
           item.onClick();
-          this.props.isOpen = false;
+          this.toggleMenu(false);
         },
       })),
     });
-
     this.handleOverlay = this.handleOverlay.bind(this);
+    this.toggleMenu = this.toggleMenu.bind(this);
   }
 
   handleOverlay(evt: MouseEvent) {
     if (!(evt.target as HTMLElement).closest(`.${bem.get('menu')}`)) {
-      this.props.isOpen = false;
+      this.toggleMenu(false);
+      document.removeEventListener('mousedown', this.handleOverlay);
+    }
+  }
+
+  toggleMenu(isOpen: boolean) {
+    const menuElement = this.getContent().lastElementChild;
+    if (!menuElement) {
+      return;
+    }
+    if (isOpen) {
+      menuElement.className = this.props.classNameMenuOpen;
+      document.addEventListener('mousedown', this.handleOverlay);
+    } else {
+      menuElement.className = this.props.classNameMenu;
       document.removeEventListener('mousedown', this.handleOverlay);
     }
   }
 
   render() {
-    if (this.props.isOpen === true) {
-      document.addEventListener('mousedown', this.handleOverlay);
-    } else {
-      document.removeEventListener('mousedown', this.handleOverlay);
-    }
-
-    return compile(template, {
-      ...this.props,
-      classNameMenu: bem.get('menu', { opened: this.props.isOpen }),
-    });
+    return compile(template, this.props);
   }
 }
 

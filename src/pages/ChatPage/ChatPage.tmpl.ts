@@ -15,5 +15,10 @@ export const template = () => `
       <MessageList />
       <MessageInput />
     </main>
+    <AddContactPopup>
+      <AddContactInput />
+      <AddContactSubmitButton />
+      <AddContactInviteButton />
+    </AddContactPopup>
   </template>
 `;

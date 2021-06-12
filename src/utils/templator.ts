@@ -11,7 +11,7 @@ class Templator {
   private parserRegex: RegExp;
 
   constructor() {
-    this.parserRegex = /{{\s([\w]+)\s}}|<(?<tag>[A-Z]+\w+)\s+(.*?)\s*>(.*?)<\/\k<tag>>|<([A-Z]+\w+)\s+(.*?)\s*\/>/gs;
+    this.parserRegex = /{{\s([\w]+)\s}}|<([A-Z]+\w+)\s*([^<>]+)\s*\/>|<(?<tag>[A-Z]+\w+)\s*(.*?)\s*>(.*?)<\/\k<tag>>/gs;
     this.context = null;
     this._handleFound = this._handleFound.bind(this);
     this.compile = this.compile.bind(this);
@@ -84,12 +84,23 @@ class Templator {
       const attributes = componentOpenTag.match(/\w+=".*?"/g) || [];
       const props = this._transformAttributesToProps(attributes);
 
+      // Найти вложения в тег компонента ({{ children }})
+      const { children } = found.match(/<(?<tag>[A-Z]+\w+).*?>(?<children>.*?)<\/\k<tag>>/s)?.groups || {};
+      if (children) {
+        const compiledChildren = this.compile(() => children, this.context);
+        value.setProps({
+          children: compiledChildren,
+        });
+      }
+
       // Итерация
       if (Array.isArray(value) && (typeof props.key === 'string')) {
         if (!('key' in props)) {
           throw new Error('Компонентам внутри итерации необходим уникальный key="number", указывающий на экземпляр в массиве');
         }
         const { key } = props;
+
+        // console.log(key)
 
         setTimeout(() => {
           value[+key].setProps(props);

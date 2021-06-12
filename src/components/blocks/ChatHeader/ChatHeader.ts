@@ -44,7 +44,6 @@ class ChatHeader extends Block {
             onClick: props.onRemoveContact,
           },
         ],
-        isOpen: false,
       }),
     });
   }

@@ -20,6 +20,7 @@ class Input extends Block {
     super('label', {
       className: bem.get(),
       classNameWithMix: bem.get('', '', props.classMix),
+      name: props.name ?? '',
       label: props.label ?? '',
       placeholder: props.placeholder ?? props.label ?? '',
       type: props.type ?? 'text',

@@ -51,7 +51,6 @@ class MessageInput extends Block {
             onClick: props.onAttachmentLocation,
           },
         ],
-        isOpen: false,
       }),
       MessageInput: new Input({
         placeholder: 'Новое сообщение',

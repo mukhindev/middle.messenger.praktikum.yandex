@@ -1,5 +1,5 @@
 class EventBus {
-  readonly listeners: Record<string, Function[]>
+  readonly listeners: Record<string, Function[]>;
 
   constructor() {
     // Объект для наполнения ожидаемыми событиями

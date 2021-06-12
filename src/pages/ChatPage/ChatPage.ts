@@ -69,13 +69,13 @@ class ChatPage extends Block {
       AddContactSubmitButton: new Button({
         label: 'Добавить',
         color: 'primary',
-        classMix: bem.get('button-submit-add-contact'),
+        classMix: bem.get('add-contact-submit-button'),
         onClick: () => console.log('Субмит добавления пользователя'),
       }),
       AddContactInviteButton: new Button({
         label: 'Пригласить в чат',
         light: true,
-        classMix: bem.get('button-submit-invite-contact'),
+        classMix: bem.get('add-contact-invite-button'),
         onClick: () => console.log('Кнопка пригласить в чат'),
       }),
     });

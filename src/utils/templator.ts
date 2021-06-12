@@ -11,7 +11,7 @@ class Templator {
   private parserRegex: RegExp;
 
   constructor() {
-    this.parserRegex = /{{\s([\w]+)\s}}|<([A-Z]+\w+)\s*([^<>]+)\s*\/>|<(?<tag>[A-Z]+\w+)\s*(.*?)\s*>(.*?)<\/\k<tag>>/gs;
+    this.parserRegex = /{{\s*([\w]+)\s*}}|<([A-Z]+\w+)\s*([^<>]+)\s*\/>|<(?<tag>[A-Z]+\w+)\s*(.*?)\s*>(.*?)<\/\k<tag>>/gs;
     this.context = null;
     this._handleFound = this._handleFound.bind(this);
     this.compile = this.compile.bind(this);
@@ -21,7 +21,7 @@ class Templator {
   }
 
   // Обработчик получения значения из контекста
-  _getValueFromContext(key: string) {
+  private _getValueFromContext(key: string) {
     // Если ключ без точки
     if (!key.includes('.')) {
       // Вернуть значение из корня контекста
@@ -34,12 +34,10 @@ class Templator {
   }
 
   // Трансформация атрибутов в объект пропсов
-  _transformAttributesToProps(attributes: string[]) {
+  private _transformAttributesToProps(attributes: string[]) {
     const props: TProps = {};
 
-    // TODO: Решить проблему указанную линтером
-    // eslint-disable-next-line no-restricted-syntax
-    for (const prop of attributes) {
+    attributes.forEach((prop) => {
       // Ключ пропса (левая часть до =)
       const [propsKey] = prop.match(/[^<][\w.]+/) || [];
 
@@ -50,6 +48,7 @@ class Templator {
 
       // Если это ключ к контексту
       if (propValueContextKey) {
+        // Строки {{ true }} и {{ false }} превращаем в соответствующие значения
         if (propValueContextKey === 'true') {
           props[propsKey] = true;
         } else if (propValueContextKey === 'false') {
@@ -62,13 +61,13 @@ class Templator {
         // Сохраняем в пропс значение после =
         props[propsKey] = propValue;
       }
-    }
+    });
 
     return props;
   }
 
   // Обработчик вхождений шаблона
-  _handleFound(found: string) {
+  private _handleFound(found: string) {
     // Извлекаем имя ключа
     const [key]: RegExpMatchArray = found.match(/[\w.]+/) || [];
     // Получаем значение из контекста по ключу
@@ -100,11 +99,10 @@ class Templator {
         }
         const { key } = props;
 
-        // console.log(key)
-
         setTimeout(() => {
           value[+key].setProps(props);
         }, 0);
+
         // Поместить элемент компонента в хранилище
         window._componentStore[value[+key]._uuid] = value[+key].getContent();
         // Вернуть элемент-маркер который будет заменен на элемент компонента
@@ -123,7 +121,7 @@ class Templator {
     return value;
   }
 
-  compile(templateFunction: (props: TProps) => string, context: TProps): string {
+  public compile(templateFunction: (props: TProps) => string, context: TProps): string {
     this.context = context;
     const template = templateFunction(context);
     return template

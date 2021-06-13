@@ -5,11 +5,22 @@
     font-size: 64px;
     font-weight: normal;
     font-style: normal;
+    margin: 0 0 32px;
+  }
+
+  &__section {
+    margin: 48px 0 0;
   }
 
   &__links-title {
     font-size: 32px;
     font-weight: normal;
     font-style: normal;
+    margin: 0 0 32px;
+  }
+
+  &__test-buttons {
+    display: flex;
+    gap: 16px;
   }
 }

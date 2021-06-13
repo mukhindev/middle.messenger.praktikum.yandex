@@ -38,42 +38,42 @@ class Block {
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _registerEvents(eventBus: EventBus) {
-    eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
+  private _registerEvents(eventBus: EventBus) {
+    eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  _createResources() {
+  private _createResources() {
     const { tagName } = this._meta;
     this._element = this._createDocumentElement(tagName);
   }
 
-  init() {
+  private _init() {
     this._createResources();
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  _componentDidMount() {
+  private _componentDidMount() {
     this.componentDidMount();
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  componentDidMount() {}
+  public componentDidMount() {}
 
-  _componentDidUpdate(oldProps: TProps, newProps: TProps) {
+  private _componentDidUpdate(oldProps: TProps, newProps: TProps) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (response) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
   }
 
-  componentDidUpdate(oldProps: TProps, newProps: TProps) {
+  public componentDidUpdate(oldProps: TProps, newProps: TProps) {
     return oldProps !== newProps;
   }
 
-  setProps = (nextProps: TProps) => {
+  public setProps = (nextProps: TProps) => {
     if (!nextProps) {
       return;
     }
@@ -84,7 +84,7 @@ class Block {
     return this._element;
   }
 
-  _addEvents() {
+  private _addEvents() {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
@@ -92,7 +92,7 @@ class Block {
     });
   }
 
-  _removeEvents() {
+  private _removeEvents() {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
@@ -100,7 +100,7 @@ class Block {
     });
   }
 
-  _renderChildComponents(elements: NodeListOf<Element>) {
+  private _renderChildComponents(elements: NodeListOf<Element>) {
     elements.forEach((markerElement) => {
       if (markerElement instanceof HTMLElement) {
         const parent = markerElement.parentNode;
@@ -112,7 +112,7 @@ class Block {
     });
   }
 
-  _render() {
+  private _render() {
     const blockHTML = this.render();
     this._removeEvents();
     if (blockHTML) {
@@ -136,11 +136,11 @@ class Block {
 
   render(): void | string {}
 
-  getContent() {
+  public getContent() {
     return this.element;
   }
 
-  _makePropsProxy(props: TProps) {
+  private _makePropsProxy(props: TProps) {
     return new Proxy(props, {
       set: (target: TProps, prop: string, value: unknown) => {
         target[prop] = value;
@@ -154,7 +154,7 @@ class Block {
     });
   }
 
-  _createDocumentElement(tagName: string) {
+  private _createDocumentElement(tagName: string) {
     const element = document.createElement(tagName);
     element.setAttribute('data-uuid', this._uuid);
     return element;

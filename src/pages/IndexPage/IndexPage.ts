@@ -3,6 +3,8 @@ import { compile } from '../../utils/templator';
 import { template } from './IndexPage.tmpl';
 import Links from '../../components/blocks/Links/Links';
 import BemHandler from '../../utils/BemHandler';
+import Button from '../../components/ui/Button/Button';
+import HTTPTransport from '../../classes/HTTPTransport';
 import '../../assets/styles/global.scss';
 import './IndexPage.scss';
 
@@ -23,7 +25,43 @@ class IndexPage extends Block {
           { name: 'Ошибка 500', to: '/500.html' },
         ],
       }),
+      TestHTTPTransportGetButton: new Button({
+        label: 'Проверить GET',
+        color: 'primary',
+        onClick: () => this.testHTTPTransportGet(),
+      }),
+      TestHTTPTransportPostButton: new Button({
+        label: 'Проверить POST',
+        color: 'primary',
+        onClick: () => this.testHTTPTransportPost(),
+      }),
     });
+  }
+
+  testHTTPTransportGet() {
+    new HTTPTransport()
+      .get(
+        'https://jsonplaceholder.typicode.com/comments',
+        { data: { postId: 1 } },
+      )
+      .then(({ response }) => console.log('Ответ от HTTPTransport:', JSON.parse(response)))
+      .catch(console.log);
+  }
+
+  testHTTPTransportPost() {
+    new HTTPTransport()
+      .post('https://jsonplaceholder.typicode.com/posts', {
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+        data: {
+          title: 'foo',
+          body: 'bar',
+          userId: 1,
+        },
+      })
+      .then(({ response }) => console.log('Ответ от HTTPTransport:', JSON.parse(response)))
+      .catch(console.log);
   }
 
   render() {

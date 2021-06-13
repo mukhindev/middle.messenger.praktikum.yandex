@@ -1,21 +1,49 @@
 import Block from '../../classes/Block';
 import { compile } from '../../utils/templator';
-import { template } from './SignUpPage.tmpl';
+import { template } from './ProfilePage.tmpl';
 import BemHandler from '../../utils/BemHandler';
 import Button from '../../components/ui/Button/Button';
 import Input from '../../components/ui/Input/Input';
+import arrowLeftIcon from '../../assets/images/arrow-left.svg';
+import defaultAvatar from '../../assets/images/default-avatar.jpg';
 import validateForm from '../../utils/validateForm';
 import { TFormField, TFormButton } from '../../utils/generateForm';
 import '../../assets/styles/global.scss';
-import './SignUpPage.scss';
+import './ProfilePage.scss';
 
-const bem = new BemHandler('sign-up-page');
+const bem = new BemHandler('profile-page');
 
-class SignUpPage extends Block {
+class Profile extends Block {
   constructor() {
     super('div', {
       className: bem.get(),
       classNameForm: bem.get('form'),
+      ComeBackButton: new Button({
+        title: 'Вернуться',
+        icon: arrowLeftIcon,
+        light: true,
+        classMix: bem.get('come-back-button'),
+        onClick: () => console.log('Кнопка возврата'),
+      }),
+      avatar: defaultAvatar,
+      AvatarDeleteButton: new Button({
+        label: 'Удалить аватар',
+        light: true,
+        classMix: bem.get('avatar-delete-button'),
+        onClick: () => console.log('Кнопка удаления аватара'),
+      }),
+      PasswordButton: new Button({
+        label: 'Сменить пароль',
+        light: true,
+        classMix: bem.get('password-button'),
+        onClick: () => console.log('Кнопка смены пароля'),
+      }),
+      SignOutButton: new Button({
+        label: 'Выйти из аккаунта',
+        light: true,
+        classMix: bem.get('sign-out-button'),
+        onClick: () => console.log('Кнопка выхода'),
+      }),
       form: {
         fields: [
           {
@@ -57,22 +85,6 @@ class SignUpPage extends Block {
             onValidate: () => this.validate(),
           },
           {
-            type: 'password',
-            name: 'password',
-            label: 'Пароль',
-            validation: {
-              pattern: '[-+~!?@#$%^&*;\\()\\[\\]\\|:\\w]*',
-              maxlength: 200,
-              required: true,
-              'data-error': 'Обязательно поле. Только англ и символы: -+~!?@#$%^&*;()[]|:',
-            },
-            onInput: (value: string) => {
-              console.log('Поле пароля:', value);
-              this.props.repeatedPasswordValidate();
-            },
-            onValidate: () => this.validate(),
-          },
-          {
             type: 'text',
             name: 'secondName',
             label: 'Фамилия',
@@ -83,32 +95,6 @@ class SignUpPage extends Block {
               'data-error': 'Обязательно поле. Только буквы, дефис и точка',
             },
             onInput: (value: string) => console.log('Поле фамилия:', value),
-            onValidate: () => this.validate(),
-          },
-          {
-            type: 'password',
-            name: 'repeatedPassword',
-            label: 'Пароль ещё раз',
-            validation: {
-              required: true,
-            },
-            useValidation: (validate: () => void) => {
-              this.props.repeatedPasswordValidate = validate;
-            },
-            onInput: (value: string) => {
-              const passwordInput: HTMLInputElement | null = this.getContent().querySelector('[name=password]');
-              const repeatedPasswordInput: HTMLInputElement | null = this.getContent().querySelector('[name=repeatedPassword]');
-              if (!passwordInput || !repeatedPasswordInput) {
-                return;
-              }
-              if (value === passwordInput.value) {
-                repeatedPasswordInput.setCustomValidity('');
-                this.props.repeatedPasswordValidate();
-              } else {
-                repeatedPasswordInput.setCustomValidity('Пароль должен совпадать');
-                this.props.repeatedPasswordValidate();
-              }
-            },
             onValidate: () => this.validate(),
           },
           {
@@ -127,7 +113,7 @@ class SignUpPage extends Block {
         buttons: [
           {
             type: 'submit',
-            label: 'Регистрация',
+            label: 'Сохранить изменения',
             color: 'primary',
             onClick: () => {
               this.validate();
@@ -167,4 +153,4 @@ class SignUpPage extends Block {
   }
 }
 
-document.body.prepend(new SignUpPage().getContent());
+document.body.prepend(new Profile().getContent());

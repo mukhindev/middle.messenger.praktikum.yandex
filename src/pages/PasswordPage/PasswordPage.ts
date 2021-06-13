@@ -1,65 +1,35 @@
 import Block from '../../classes/Block';
 import { compile } from '../../utils/templator';
-import { template } from './SignUpPage.tmpl';
+import { template } from './PasswordPage.tmpl';
 import BemHandler from '../../utils/BemHandler';
 import Button from '../../components/ui/Button/Button';
 import Input from '../../components/ui/Input/Input';
+import arrowLeftIcon from '../../assets/images/arrow-left.svg';
 import validateForm from '../../utils/validateForm';
 import { TFormField, TFormButton } from '../../utils/generateForm';
 import '../../assets/styles/global.scss';
-import './SignUpPage.scss';
+import './PasswordPage.scss';
 
-const bem = new BemHandler('sign-up-page');
+const bem = new BemHandler('password-page');
 
-class SignUpPage extends Block {
+class PasswordPage extends Block {
   constructor() {
     super('div', {
       className: bem.get(),
       classNameForm: bem.get('form'),
+      ComeBackButton: new Button({
+        title: 'Вернуться',
+        icon: arrowLeftIcon,
+        light: true,
+        classMix: bem.get('come-back-button'),
+        onClick: () => console.log('Кнопка возврата'),
+      }),
       form: {
         fields: [
           {
-            type: 'email',
-            name: 'email',
-            label: 'Почта',
-            validation: {
-              maxlength: 200,
-              required: true,
-              'data-error': 'Обязательно поле в формате email',
-            },
-            onInput: (value: string) => console.log('Поле почты:', value),
-            onValidate: () => this.validate(),
-          },
-          {
-            type: 'text',
-            name: 'login',
-            label: 'Логин',
-            validation: {
-              pattern: '[\\w.]*',
-              maxlength: 60,
-              required: true,
-              'data-error': 'Обязательно поле. Только англ. буквы, символ _ и точка',
-            },
-            onInput: (value: string) => console.log('Поле логина:', value),
-            onValidate: () => this.validate(),
-          },
-          {
-            type: 'text',
-            name: 'firstName',
-            label: 'Имя',
-            validation: {
-              pattern: '[-A-Za-zА-Яа-я.\\s]*',
-              maxlength: 80,
-              required: true,
-              'data-error': 'Обязательно поле. Только буквы, дефис и точка',
-            },
-            onInput: (value: string) => console.log('Поле имя:', value),
-            onValidate: () => this.validate(),
-          },
-          {
             type: 'password',
             name: 'password',
-            label: 'Пароль',
+            label: 'Текущий пароль',
             validation: {
               pattern: '[-+~!?@#$%^&*;\\()\\[\\]\\|:\\w]*',
               maxlength: 200,
@@ -73,22 +43,25 @@ class SignUpPage extends Block {
             onValidate: () => this.validate(),
           },
           {
-            type: 'text',
-            name: 'secondName',
-            label: 'Фамилия',
+            type: 'password',
+            name: 'newPassword',
+            label: 'Новый пароль',
             validation: {
-              pattern: '[-A-Za-zА-Яа-я.\\s]*',
-              maxlength: 80,
+              pattern: '[-+~!?@#$%^&*;\\()\\[\\]\\|:\\w]*',
+              maxlength: 200,
               required: true,
-              'data-error': 'Обязательно поле. Только буквы, дефис и точка',
+              'data-error': 'Обязательно поле. Только англ и символы: -+~!?@#$%^&*;()[]|:',
             },
-            onInput: (value: string) => console.log('Поле фамилия:', value),
+            onInput: (value: string) => {
+              console.log('Поле нового пароля:', value);
+              this.props.repeatedPasswordValidate();
+            },
             onValidate: () => this.validate(),
           },
           {
             type: 'password',
             name: 'repeatedPassword',
-            label: 'Пароль ещё раз',
+            label: 'Новый пароль ещё раз',
             validation: {
               required: true,
             },
@@ -96,7 +69,7 @@ class SignUpPage extends Block {
               this.props.repeatedPasswordValidate = validate;
             },
             onInput: (value: string) => {
-              const passwordInput: HTMLInputElement | null = this.getContent().querySelector('[name=password]');
+              const passwordInput: HTMLInputElement | null = this.getContent().querySelector('[name=newPassword]');
               const repeatedPasswordInput: HTMLInputElement | null = this.getContent().querySelector('[name=repeatedPassword]');
               if (!passwordInput || !repeatedPasswordInput) {
                 return;
@@ -111,23 +84,11 @@ class SignUpPage extends Block {
             },
             onValidate: () => this.validate(),
           },
-          {
-            type: 'tel',
-            name: 'tel',
-            label: 'Телефон',
-            validation: {
-              pattern: '^(\\+[0-9])\\s?\\(?[0-9]{3}\\)?\\s?[0-9]{7}$',
-              required: true,
-              'data-error': 'Обязательно поле в формате телефона +79991234567',
-            },
-            onInput: (value: string) => console.log('Поле телефона:', value),
-            onValidate: () => this.validate(),
-          },
         ],
         buttons: [
           {
             type: 'submit',
-            label: 'Регистрация',
+            label: 'Сохранить новый пароль',
             color: 'primary',
             onClick: () => {
               this.validate();
@@ -167,4 +128,4 @@ class SignUpPage extends Block {
   }
 }
 
-document.body.prepend(new SignUpPage().getContent());
+document.body.prepend(new PasswordPage().getContent());

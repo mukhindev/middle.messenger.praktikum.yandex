@@ -31,7 +31,7 @@ class Popup extends Block {
         icon: arrowLeftIcon,
         light: true,
         classMix: bem.get('come-back-button'),
-        onClick: () => this.togglePopup(true),
+        onClick: () => console.log('Кнопка возврата'),
       }),
       closeButton: props.closeButton ?? true,
       CloseButton: new Button({

@@ -146,5 +146,22 @@ function stylize(props: Record<string, string>) {
   }, 'style="');
 }
 
+// Установщик атрибутов из объекта
+function setAttributes(attrs: Record<string, string | number | boolean>) {
+  return Object.entries(attrs).reduce((acc, [key, value]) => {
+    // Если в значении бул
+    if (typeof value === 'boolean') {
+      if (!value) {
+        // Если ложь, не добавлять атрибут
+        return `${acc}`;
+      }
+      // Если истина, атрибут без значения
+      return `${acc} ${key}`;
+    }
+    // Атрибут со значением
+    return `${acc} ${key}="${value}"`;
+  }, '');
+}
+
 export const { compile } = new Templator();
-export { join, stylize };
+export { join, stylize, setAttributes };

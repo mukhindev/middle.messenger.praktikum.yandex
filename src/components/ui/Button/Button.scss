@@ -33,6 +33,11 @@
     opacity: .7;
   }
 
+  &:disabled {
+    cursor: default;
+    opacity: .25;
+  }
+
   &_light {
     min-width: 32px;
     height: 32px;
@@ -52,4 +57,5 @@
       box-shadow: 0 0 0 4px var(--color-selected);
     }
   }
+
 }

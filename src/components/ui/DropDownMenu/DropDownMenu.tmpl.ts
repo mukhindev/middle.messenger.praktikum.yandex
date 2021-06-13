@@ -6,7 +6,7 @@ export const template = (props: TProps) => `
   <MenuButton />
   <ul
     class="{{ classNameMenu }}"
-    ${stylize(props.style)};
+    ${stylize(props.style)}
   >
     ${join(props.MenuItem.map((_: unknown, index: number) => `
       <li class="{{ className }}__item">

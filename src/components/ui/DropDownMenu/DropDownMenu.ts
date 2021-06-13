@@ -23,7 +23,7 @@ class DropDownMenu extends Block {
       classNameRoot: bem.get('', '', props.classMix),
       classNameMenu: bem.get('menu'),
       classNameMenuOpen: bem.get('menu', { opened: true }),
-      style: props.style,
+      style: props.style ?? null,
       MenuButton: new Button({
         title: 'Управление пользователями',
         icon: props.icon,

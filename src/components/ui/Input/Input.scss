@@ -15,6 +15,15 @@
     outline: none;
     background: var(--color-white);
     box-shadow: inset 0 0 0 1px var(--color-border);
+
+    &_color_error {
+      color: var(--color-error);
+      box-shadow: inset 0 0 0 1px var(--color-error);
+    }
+
+    &_color_success {
+      box-shadow: inset 0 0 0 1px var(--color-success);
+    }
   }
 
   // Фикс отступа в Safari при поле типа search
@@ -30,6 +39,18 @@
     box-shadow:
       inset 0 0 0 2px var(--color-primary),
       0 0 0 4px var(--color-selected);
+  }
+
+  &__field_color_error:focus {
+    box-shadow:
+      inset 0 0 0 2px var(--color-error),
+      0 0 0 4px var(--color-selected-error);
+  }
+
+  &__field_color_success:focus {
+    box-shadow:
+      inset 0 0 0 2px var(--color-success),
+      0 0 0 4px var(--color-selected-success);
   }
 
   &__field:not(:placeholder-shown) ~ &__label {
@@ -48,5 +69,32 @@
     transition: top .15s, font-size .15s;
     pointer-events: none;
     color: var(--color-secondary);
+
+    &_color_error {
+      color: var(--color-error);
+    }
+
+    &_color_success {
+      color: var(--color-success);
+    }
+  }
+
+  &__error {
+    position: absolute;
+    top: 36px;
+    left: 12px;
+    right: 12px;
+    font-size: 13px;
+    color: var(--color-white);
+    background-color: var(--color-error);
+    padding: 4px 8px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity .25s;
+    z-index: 1;
+  }
+
+  &__field:focus:invalid ~ &__error {
+    opacity: 1;
   }
 }

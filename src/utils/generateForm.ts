@@ -1,25 +1,27 @@
 import { join } from './templator';
 
-type TFormFields = {
+export type TFormField = {
   type: string,
   name: string,
   label: string,
+  onInput: (value: string) => void
 };
 
-type TFormButtons = {
+export type TFormButton = {
   type: 'submit',
   label: 'Сохранить новый пароль',
   color: 'primary',
+  onClick: () => void
 };
 
 type TForm = {
-  fields: TFormFields[],
-  buttons: TFormButtons[],
+  fields: TFormField[],
+  buttons: TFormButton[],
 };
 
 function generateForm(form: TForm, formClassName: string) {
   return `
-    <form class="${formClassName}" type="submit">
+    <form class="${formClassName}" type="submit" novalidate>
       <div class="${formClassName}-fields">
         ${join(form.fields.map((_: unknown, index: number) => `
           <Input key="${index}"/>

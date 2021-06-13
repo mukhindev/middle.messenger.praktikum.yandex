@@ -15,6 +15,7 @@ interface IInput {
   validation?: Record<string, string | number | boolean>
   onInput?: (value: string) => void
   onValidate?: (name: string, isValid: boolean) => void
+  useValidation?: () => void
   color?: string
 }
 
@@ -33,6 +34,7 @@ class Input extends Block {
       validation: props.validation ?? null,
       onInput: props.onInput ?? null,
       onValidate: props.onValidate ?? null,
+      useValidation: props.useValidation ?? null,
       color: props.color ?? '',
       events: {
         input: (evt: InputEvent) => {
@@ -46,6 +48,12 @@ class Input extends Block {
       },
     });
     this.validate = this.validate.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.useValidation) {
+      this.props.useValidation(this.validate.bind(this));
+    }
   }
 
   validate() {

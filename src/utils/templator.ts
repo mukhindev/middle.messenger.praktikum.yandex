@@ -147,7 +147,10 @@ function stylize(props: Record<string, string>) {
 }
 
 // Установщик атрибутов из объекта
-function setAttributes(attrs: Record<string, string | number | boolean>) {
+function setAttributes(attrs?: Record<string, string | number | boolean>) {
+  if (!attrs) {
+    return '';
+  }
   return Object.entries(attrs).reduce((acc, [key, value]) => {
     // Если в значении бул
     if (typeof value === 'boolean') {

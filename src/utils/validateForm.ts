@@ -13,7 +13,6 @@ function validateForm(form: HTMLFormElement | null, cb?: (isValid: boolean) => v
     } else if (submitButton) {
       submitButton.disabled = true;
     }
-    console.log(submitButton);
   } else {
     // Колбек для нестандартной реакции на валидацию
     cb(isValid);

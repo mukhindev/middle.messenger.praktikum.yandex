@@ -57,7 +57,9 @@ class ChatPage extends Block {
         label: 'Настройки',
         icon: settingIcon,
         light: true,
-        onClick: () => console.log('Кнопка настроек'),
+        onClick: () => {
+          window.location.href = '/profile.html';
+        },
       }),
       AddContactPopup: new Popup({
         title: 'Добавить пользователя в чат',

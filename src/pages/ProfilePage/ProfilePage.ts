@@ -23,7 +23,10 @@ class Profile extends Block {
         icon: arrowLeftIcon,
         light: true,
         classMix: bem.get('come-back-button'),
-        onClick: () => console.log('Кнопка возврата'),
+        onClick: () => {
+          console.log('Кнопка возврата');
+          window.location.href = '/chat.html';
+        },
       }),
       avatar: defaultAvatar,
       AvatarDeleteButton: new Button({
@@ -36,13 +39,19 @@ class Profile extends Block {
         label: 'Сменить пароль',
         light: true,
         classMix: bem.get('password-button'),
-        onClick: () => console.log('Кнопка смены пароля'),
+        onClick: () => {
+          console.log('Кнопка смены пароля');
+          window.location.href = '/password.html';
+        },
       }),
       SignOutButton: new Button({
         label: 'Выйти из аккаунта',
         light: true,
         classMix: bem.get('sign-out-button'),
-        onClick: () => console.log('Кнопка выхода'),
+        onClick: () => {
+          console.log('Кнопка выхода');
+          window.location.href = '/sign-in.html';
+        },
       }),
       form: {
         fields: [

@@ -31,7 +31,10 @@ class Popup extends Block {
         icon: arrowLeftIcon,
         light: true,
         classMix: bem.get('come-back-button'),
-        onClick: () => console.log('Кнопка возврата'),
+        onClick: () => {
+          console.log('Кнопка возврата');
+          window.location.href = '/chat.html';
+        },
       }),
       closeButton: props.closeButton ?? true,
       CloseButton: new Button({

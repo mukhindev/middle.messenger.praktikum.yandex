@@ -1,14 +1,9 @@
 .contact-card-list {
+  display: flex;
+  flex-direction: column;
   margin: 0;
   padding: 0;
   list-style: none;
   background: var(--color-white);
-
-  &__item {
-    margin: 0 0 16px;
-
-    &:last-of-type {
-      margin: 0;
-    }
-  }
+  gap: 16px;
 }

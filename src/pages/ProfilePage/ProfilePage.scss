@@ -1,0 +1,117 @@
+.profile-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  &__main {
+    position: relative;
+    width: 100%;
+    max-width: 486px;
+    padding: 24px;
+    border-radius: 12px;
+    background-color: var(--color-white);
+    box-shadow: 0 8px 48px -16px rgba(0, 0, 0, .25);
+  }
+
+  &__header {
+    position: relative;
+  }
+
+  &__come-back-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &__title {
+    font-size: 24px;
+    font-weight: normal;
+    font-style: normal;
+    margin: 0 48px;
+    text-align: center;
+  }
+
+  &__avatar-wrapper {
+    position: absolute;
+    top: 100px;
+    right: 24px;
+  }
+
+  &__avatar-change-button {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: 0;
+    cursor: pointer;
+    border: 0;
+    border-radius: 8px;
+    outline: none;
+    background: transparent;
+
+    &:active {
+      transform: scale(.95);
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 4px var(--color-selected);
+    }
+
+    &:hover:after {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      content: "";
+      background-color: rgba(0, 0, 0, .50);
+      background-image: url("../../assets/images/edit.svg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 24px;
+    }
+  }
+
+  &__avatar {
+    display: block;
+    width: 128px;
+    height: 128px;
+  }
+
+  &__avatar-delete-button {
+    margin: 0 auto;
+    color: var(--color-error);
+  }
+
+  &__form-fields {
+    display: grid;
+    width: 292px;
+    margin: 48px 0 0;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 16px;
+  }
+
+  &__form-buttons {
+    display: flex;
+    flex-direction: column;
+    margin: 48px 0 0;
+    gap: 16px;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 16px 0 0;
+  }
+
+  &__password-button {
+    color: var(--color-primary);
+  }
+
+  &__sign-out-button {
+    color: var(--color-error);
+  }
+}

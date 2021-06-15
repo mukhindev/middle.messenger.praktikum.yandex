@@ -18,6 +18,6 @@ export const template = (props: TProps) => `
         </span>`
       : ''
     }
-    <span class="{{ className }}__updated-at" datetime="{{ updatedAt }}">{{ formattedUpdatedAt }}</span>
+    <date class="{{ className }}__updated-at" datetime="{{ updatedAt }}">{{ formattedUpdatedAt }}</date>
   </template>
 `;

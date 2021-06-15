@@ -1,7 +1,7 @@
 export const template = () => `
   <template class="{{ className }}">
     <AttachmentMenu />
-    <form class="{{ classNameForm }}" type="submit" novalidate>
+    <form class="{{ classNameForm }}" novalidate>
       <MessageInput />
       <SendButton />
     </form>

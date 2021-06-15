@@ -21,7 +21,7 @@ type TForm = {
 
 function generateForm(form: TForm, formClassName: string) {
   return `
-    <form class="${formClassName}" type="submit" novalidate>
+    <form class="${formClassName}" novalidate>
       <div class="${formClassName}-fields">
         ${join(form.fields.map((_: unknown, index: number) => `
           <Input key="${index}"/>

@@ -10,12 +10,13 @@ import pictureIcon from '../../../assets/images/picture.svg';
 import locationIcon from '../../../assets/images/location.svg';
 import sendIcon from '../../../assets/images/send.svg';
 import './MessageInput.scss';
+import validateForm from '../../../utils/validateForm';
 
 const bem = new BemHandler('message-input');
 
 interface IMessageInput {
   onMessageInput: (value: string) => void
-  onMessageSend: () => void
+  onMessageSend: (formData: Record<string, string>) => void
   onAttachmentFile: () => void
   onAttachmentMedia: () => void
   onAttachmentLocation: () => void
@@ -25,6 +26,7 @@ class MessageInput extends Block {
   constructor(props: IMessageInput) {
     super('div', {
       className: bem.get(),
+      classNameForm: bem.get('form'),
       AttachmentMenu: new DropDownMenu({
         classMix: bem.get('attachment-menu'),
         icon: attachmentIcon,
@@ -55,15 +57,38 @@ class MessageInput extends Block {
       MessageInput: new Input({
         placeholder: 'Новое сообщение',
         classMix: bem.get('input'),
+        name: 'message',
         onInput: props.onMessageInput,
       }),
       SendButton: new Button({
         title: 'Отправить сообщение',
+        type: 'submit',
         icon: sendIcon,
         light: true,
-        onClick: props.onMessageSend,
       }),
+      onMessageSend: props.onMessageSend,
+      events: {
+        submit: (evt: Event) => this.handleSubmit(evt),
+      },
     });
+
+    this.validate = this.validate.bind(this);
+  }
+
+  validate() {
+    const formElement: HTMLFormElement | null = this.getContent().querySelector(`.${this.props.classNameForm}`);
+    validateForm(formElement);
+  }
+
+  handleSubmit(evt: Event) {
+    evt.preventDefault();
+    const { elements } = evt.target as HTMLFormElement;
+    const fields = Array.from(elements).filter((el) => el.nodeName === 'INPUT');
+    const formData = fields.reduce((acc: Record<string, string>, field: HTMLInputElement) => {
+      acc[field.name] = field.value;
+      return acc;
+    }, {});
+    this.props.onMessageSend(formData);
   }
 
   render() {

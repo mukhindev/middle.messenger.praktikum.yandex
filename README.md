@@ -285,5 +285,5 @@ bem.get('', '', 'main-page') // input main-page
 Пример со всеми тремя параметрами:
 
 ```ts
-bem.get('label', { color: 'red'}, 'main-page') // input__label input_color_red main-page
+bem.get('label', { color: 'red'}, 'main-page') // input__label input__label_color_red main-page
 ```

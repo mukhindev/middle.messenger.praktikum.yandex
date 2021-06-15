@@ -3,11 +3,11 @@ export const template = () => `
     <img
       class="{{ className }}__avatar"
       src="{{ avatar }}"
-      alt="Аватар пользователя {{ owner }}"
+      alt="Аватар пользователя {{ authorName }}"
     />
     <p class="{{ className }}__text">
       {{ text }}
-      <span class="{{ classNameDate }}">{{ date }}</span>
+      <date class="{{ classNameDate }}" datetime="{{ date }}">{{ formattedDate }}</date>
     </p>
   </template>
 `;

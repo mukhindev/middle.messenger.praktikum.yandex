@@ -87,8 +87,8 @@ class Block {
   private _addEvents() {
     const { events = {} } = this.props;
 
-    Object.keys(events).forEach((eventName) => {
-      this._element.addEventListener(eventName, events[eventName]);
+    Object.entries(events).forEach(([eventName, event]: [string, (evt: Event) => {}]) => {
+      this._element.addEventListener(eventName, event);
     });
   }
 

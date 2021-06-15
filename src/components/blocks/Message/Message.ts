@@ -10,7 +10,9 @@ const bem = new BemHandler('message');
 
 interface IMessage {
   id: string,
-  owner: string,
+  ownerId: string,
+  authorId: string,
+  authorName: string,
   text: string,
   avatar: string | null,
   date: string,
@@ -20,13 +22,16 @@ class Message extends Block {
   constructor(props: IMessage) {
     super('div', {
       className: bem.get(),
-      classNameRoot: bem.get('', { 'outgoing-message': props.owner === 'Сергей Мухин' }),
-      classNameDate: bem.get('date', { 'outgoing-message': props.owner === 'Сергей Мухин' }),
+      classNameRoot: bem.get('', { 'outgoing-message': props.authorId === props.ownerId }),
+      classNameDate: bem.get('date', { 'outgoing-message': props.authorId === props.ownerId }),
       id: props.id,
-      owner: props.owner,
+      ownerId: props.ownerId,
+      authorId: props.authorId,
+      authorName: props.authorName,
       text: props.text,
       avatar: props.avatar ?? defaultAvatar,
-      date: formatDate(props.date),
+      date: props.date,
+      formattedDate: formatDate(props.date),
     });
   }
 

@@ -29,14 +29,14 @@ class BemHandler {
 
     if (modifier && typeof modifier === 'object') {
       const modifiers = Object.entries(modifier);
-      modifiers.forEach((el) => {
-        if (!el[1]) {
+      modifiers.forEach(([key, value]) => {
+        if (!value) {
           return '';
         }
-        if (typeof el[1] === 'boolean') {
-          return classes.push(`${target}${this.modSymbol}${el[0]}`);
+        if (typeof value === 'boolean') {
+          return classes.push(`${target}${this.modSymbol}${key}`);
         }
-        return classes.push(`${target}${this.modSymbol}${el[0]}_${el[1]}`);
+        return classes.push(`${target}${this.modSymbol}${key}_${value}`);
       });
       return classes.length ? ` ${classes.join(' ')}` : '';
     }

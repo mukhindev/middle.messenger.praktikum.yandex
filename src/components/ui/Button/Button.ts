@@ -14,7 +14,7 @@ interface IButton {
   color?: string,
   label?: string,
   title?: string,
-  onClick: () => void,
+  onClick?: () => void,
 }
 
 class Button extends Block {

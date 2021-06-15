@@ -42,7 +42,7 @@ class ChatPage extends Block {
       }),
       MessageInput: new MessageInput({
         onMessageInput: (value) => console.log('Ввод нового сообщения', value),
-        onMessageSend: () => console.log('Кнопка отправки сообщения'),
+        onMessageSend: (formData) => console.log(formData),
         onAttachmentFile: () => console.log('Кнопка прикрепления файла'),
         onAttachmentMedia: () => console.log('Кнопка прикрепления фото или видео'),
         onAttachmentLocation: () => console.log('Кнопка прикрепления локации'),

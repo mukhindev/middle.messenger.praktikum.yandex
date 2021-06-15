@@ -23,6 +23,8 @@ class SignUpPage extends Block {
             name: 'email',
             label: 'Почта',
             validation: {
+              pattern: '[\\w.-]+@([A-Za-z0-9-]+\\.)+[A-Za-z0-9]+',
+              minlength: 5,
               maxlength: 200,
               required: true,
               'data-error': 'Обязательно поле в формате email',

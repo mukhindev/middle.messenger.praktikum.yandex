@@ -80,6 +80,10 @@ class Router {
   public getRoute(pathname: string) {
     return this.routes.find((route) => route.match(pathname));
   }
+
+  public getLocationPathname() {
+    return window.location.pathname;
+  }
 }
 
 export default Router;

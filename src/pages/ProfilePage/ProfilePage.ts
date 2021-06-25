@@ -25,7 +25,7 @@ class ProfilePage extends Block {
         classMix: bem.get('come-back-button'),
         onClick: () => {
           console.log('Кнопка возврата');
-          router.go('/chat');
+          router.go('/');
         },
       }),
       avatar: defaultAvatar,

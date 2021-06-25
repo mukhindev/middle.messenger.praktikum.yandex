@@ -7,6 +7,7 @@ import Input from '../../components/ui/Input/Input';
 import validateForm from '../../utils/validateForm';
 import { TFormField, TFormButton } from '../../utils/generateForm';
 import './SignInPage.scss';
+import Link from '../../components/ui/Link/Link';
 
 const bem = new BemHandler('sign-in-page');
 
@@ -15,6 +16,10 @@ class SignInPage extends Block {
     super('div', {
       className: bem.get(),
       classNameForm: bem.get('form'),
+      Link: new Link({
+        className: bem.get('to-sign-up-link'),
+        to: '/sign-up',
+      }),
       form: {
         fields: [
           {

@@ -106,7 +106,7 @@ class Templator {
         // Поместить элемент компонента в хранилище
         window._componentStore[value[+key]._uuid] = value[+key].getContent();
         // Вернуть элемент-маркер который будет заменен на элемент компонента
-        return `<div data-uuid="${value[+key]._uuid}"></div>`;
+        return `<node data-uuid="${value[+key]._uuid}"></node>`;
       }
 
       setTimeout(() => {
@@ -116,7 +116,7 @@ class Templator {
       // Поместить элемент компонента в хранилище
       window._componentStore[value._uuid] = value.getContent();
       // Вернуть элемент-маркер который будет заменен на элемент компонента
-      return `<div data-uuid="${value._uuid}"></div>`;
+      return `<node data-uuid="${value._uuid}"></node>`;
     }
     return value;
   }

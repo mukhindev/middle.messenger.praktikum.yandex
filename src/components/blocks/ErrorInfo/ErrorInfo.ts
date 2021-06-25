@@ -19,7 +19,7 @@ class ErrorInfo extends Block {
       className: bem.get(),
       statusCode: props.statusCode ?? '500',
       message: props.message ?? 'Неизвестная ошибка',
-      returnLink: props.returnLink || '/chat.html',
+      returnLink: props.returnLink || '/chat',
       returnLinkText: props.returnLinkText || 'Вернуться к чатам',
     });
   }

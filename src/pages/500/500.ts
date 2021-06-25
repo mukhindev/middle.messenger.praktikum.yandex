@@ -3,7 +3,6 @@ import { compile } from '../../utils/templator';
 import { template } from './500.tmpl';
 import ErrorInfo from '../../components/blocks/ErrorInfo/ErrorInfo';
 import BemHandler from '../../utils/BemHandler';
-import '../../assets/styles/global.scss';
 import './500.scss';
 
 const bem = new BemHandler('error-500-page');
@@ -24,4 +23,4 @@ class Error500Page extends Block {
   }
 }
 
-document.body.prepend(new Error500Page().getContent());
+export default Error500Page;

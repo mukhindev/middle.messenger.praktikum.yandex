@@ -8,7 +8,7 @@ export const template = (props: TProps) => `
       ${generateForm(props.form, '{{ classNameForm }}')}
       <p class="{{ className }}__to-sign-in">
         Есть аккаунт?
-        <a class="{{ className }}__to-sign-in-link" href="/sign-in.html">Вход</a>
+        <a class="{{ className }}__to-sign-in-link" href="/sign-in">Вход</a>
       </p>
     </main>
   </template>

@@ -34,11 +34,11 @@ class Block {
 
     this.props = this._makePropsProxy({ ...props, _uuid: this._uuid });
     this.eventBus = () => eventBus;
-    this._registerEvents(eventBus);
+    this._registerLifecycleEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  private _registerEvents(eventBus: EventBus) {
+  private _registerLifecycleEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -160,12 +160,17 @@ class Block {
     return element;
   }
 
-  show() {
+  public show() {
     this.getContent().style.display = 'block';
   }
 
-  hide() {
+  public hide() {
     this.getContent().style.display = 'none';
+  }
+
+  public destroy() {
+    this._removeEvents();
+    this._element.remove();
   }
 }
 

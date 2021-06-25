@@ -7,7 +7,7 @@ import Input from '../../components/ui/Input/Input';
 import arrowLeftIcon from '../../assets/images/arrow-left.svg';
 import validateForm from '../../utils/validateForm';
 import { TFormField, TFormButton } from '../../utils/generateForm';
-import '../../assets/styles/global.scss';
+import { router } from '../../router';
 import './PasswordPage.scss';
 
 const bem = new BemHandler('password-page');
@@ -24,7 +24,7 @@ class PasswordPage extends Block {
         classMix: bem.get('come-back-button'),
         onClick: () => {
           console.log('Кнопка возврата');
-          window.location.href = '/profile.html';
+          router.back();
         },
       }),
       form: {
@@ -131,4 +131,4 @@ class PasswordPage extends Block {
   }
 }
 
-document.body.prepend(new PasswordPage().getContent());
+export default PasswordPage;

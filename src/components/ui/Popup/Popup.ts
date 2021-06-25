@@ -6,6 +6,7 @@ import arrowLeftIcon from '../../../assets/images/arrow-left.svg';
 import closeIcon from '../../../assets/images/close.svg';
 import BemHandler from '../../../utils/BemHandler';
 import './Popup.scss';
+import { router } from '../../../router';
 
 const bem = new BemHandler('popup');
 
@@ -33,7 +34,7 @@ class Popup extends Block {
         classMix: bem.get('come-back-button'),
         onClick: () => {
           console.log('Кнопка возврата');
-          window.location.href = '/chat.html';
+          router.back();
         },
       }),
       closeButton: props.closeButton ?? true,

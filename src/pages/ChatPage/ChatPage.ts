@@ -11,9 +11,9 @@ import BemHandler from '../../utils/BemHandler';
 import createChatIcon from '../../assets/images/create-chat.svg';
 import settingIcon from '../../assets/images/settings.svg';
 import { contacts, messages } from '../../utils/mockData';
-import '../../assets/styles/global.scss';
-import './ChatPage.scss';
+import { router } from '../../router';
 import Popup from '../../components/ui/Popup/Popup';
+import './ChatPage.scss';
 
 const bem = new BemHandler('chat-page');
 
@@ -58,7 +58,7 @@ class ChatPage extends Block {
         icon: settingIcon,
         light: true,
         onClick: () => {
-          window.location.href = '/profile.html';
+          router.go('/profile');
         },
       }),
       AddContactPopup: new Popup({
@@ -88,4 +88,4 @@ class ChatPage extends Block {
   }
 }
 
-document.body.prepend(new ChatPage().getContent());
+export default ChatPage;

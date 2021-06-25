@@ -8,12 +8,12 @@ import arrowLeftIcon from '../../assets/images/arrow-left.svg';
 import defaultAvatar from '../../assets/images/default-avatar.jpg';
 import validateForm from '../../utils/validateForm';
 import { TFormField, TFormButton } from '../../utils/generateForm';
-import '../../assets/styles/global.scss';
+import { router } from '../../router';
 import './ProfilePage.scss';
 
 const bem = new BemHandler('profile-page');
 
-class Profile extends Block {
+class ProfilePage extends Block {
   constructor() {
     super('div', {
       className: bem.get(),
@@ -25,7 +25,7 @@ class Profile extends Block {
         classMix: bem.get('come-back-button'),
         onClick: () => {
           console.log('Кнопка возврата');
-          window.location.href = '/chat.html';
+          router.go('/chat');
         },
       }),
       avatar: defaultAvatar,
@@ -41,7 +41,7 @@ class Profile extends Block {
         classMix: bem.get('password-button'),
         onClick: () => {
           console.log('Кнопка смены пароля');
-          window.location.href = '/password.html';
+          router.go('/password');
         },
       }),
       SignOutButton: new Button({
@@ -50,7 +50,7 @@ class Profile extends Block {
         classMix: bem.get('sign-out-button'),
         onClick: () => {
           console.log('Кнопка выхода');
-          window.location.href = '/sign-in.html';
+          router.go('/sign-in');
         },
       }),
       form: {
@@ -164,4 +164,4 @@ class Profile extends Block {
   }
 }
 
-document.body.prepend(new Profile().getContent());
+export default ProfilePage;

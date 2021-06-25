@@ -6,7 +6,6 @@ import Button from '../../components/ui/Button/Button';
 import Input from '../../components/ui/Input/Input';
 import validateForm from '../../utils/validateForm';
 import { TFormField, TFormButton } from '../../utils/generateForm';
-import '../../assets/styles/global.scss';
 import './SignInPage.scss';
 
 const bem = new BemHandler('sign-in-page');
@@ -88,4 +87,4 @@ class SignInPage extends Block {
   }
 }
 
-document.body.prepend(new SignInPage().getContent());
+export default SignInPage;

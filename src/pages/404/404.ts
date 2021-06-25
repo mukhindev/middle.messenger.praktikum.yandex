@@ -3,7 +3,6 @@ import { compile } from '../../utils/templator';
 import { template } from './404.tmpl';
 import ErrorInfo from '../../components/blocks/ErrorInfo/ErrorInfo';
 import BemHandler from '../../utils/BemHandler';
-import '../../assets/styles/global.scss';
 import './404.scss';
 
 const bem = new BemHandler('error-404-page');
@@ -24,4 +23,4 @@ class Error404Page extends Block {
   }
 }
 
-document.body.prepend(new Error404Page().getContent());
+export default Error404Page;

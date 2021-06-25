@@ -6,7 +6,6 @@ import Button from '../../components/ui/Button/Button';
 import Input from '../../components/ui/Input/Input';
 import validateForm from '../../utils/validateForm';
 import { TFormField, TFormButton } from '../../utils/generateForm';
-import '../../assets/styles/global.scss';
 import './SignUpPage.scss';
 
 const bem = new BemHandler('sign-up-page');
@@ -169,4 +168,4 @@ class SignUpPage extends Block {
   }
 }
 
-document.body.prepend(new SignUpPage().getContent());
+export default SignUpPage;

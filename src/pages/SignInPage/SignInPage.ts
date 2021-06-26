@@ -7,8 +7,9 @@ import Input from '../../components/ui/Input/Input';
 import validateForm from '../../utils/validateForm';
 import { TFormField, TFormButton } from '../../utils/generateForm';
 import Link from '../../components/ui/Link/Link';
-import './SignInPage.scss';
 import { authSignInController } from '../../controllers';
+import { userStore } from '../../stores/authStore';
+import './SignInPage.scss';
 
 const bem = new BemHandler('sign-in-page');
 
@@ -20,6 +21,14 @@ class SignInPage extends Block {
       Link: new Link({
         className: bem.get('to-sign-up-link'),
         to: '/sign-up',
+      }),
+      test: '',
+      TestButton: new Button({
+        label: 'Тест',
+        color: 'primary',
+        onClick: () => {
+          userStore.setState({ counter: userStore.state.counter + 1 });
+        },
       }),
       form: {
         fields: [
@@ -85,8 +94,14 @@ class SignInPage extends Block {
       acc[field.name] = field.value;
       return acc;
     }, {});
-    const user = formData;
-    authSignInController.signIn(user);
+    authSignInController.signIn({
+      login: formData.user,
+      password: formData.password,
+    });
+  }
+
+  componentDidMount() {
+    userStore.subscribe((state) => { this.props.test = state.counter; });
   }
 
   render() {

@@ -69,7 +69,7 @@ class Block {
     }
   }
 
-  public componentDidUpdate(oldProps: TProps, newProps: TProps) {
+  public componentDidUpdate(oldProps?: TProps, newProps?: TProps) {
     return oldProps !== newProps;
   }
 
@@ -169,7 +169,6 @@ class Block {
   }
 
   public destroy() {
-    this._removeEvents();
     this._element.remove();
   }
 }

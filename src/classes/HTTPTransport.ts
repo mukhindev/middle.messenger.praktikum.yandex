@@ -8,11 +8,12 @@ enum METHODS {
 
 type TRequestData = Record<string, string | number>;
 
-type TRequestOptions = {
+export type TRequestOptions = {
   method?: METHODS
   headers?: Record<string, string>
   timeout?: number
   data?: unknown
+  withCredentials?: boolean
 };
 
 function queryStringify(data: TRequestData) {
@@ -23,32 +24,39 @@ function queryStringify(data: TRequestData) {
 }
 
 class HTTPTransport {
-  public get = (url: string, options = {}) => {
+  private _parentPath: string;
+
+  constructor(_parentPath: string = '') {
+    this._parentPath = _parentPath;
+  }
+
+  public get = <T>(url: string, options = {}): Promise<T> => {
     return this.request(url, { ...options, method: METHODS.GET });
   };
 
-  public post = (url: string, options = {}) => {
+  public post = <T>(url: string, options = {}): Promise<T> => {
     return this.request(url, { ...options, method: METHODS.POST });
   };
 
-  public put = (url: string, options = {}) => {
+  public put = <T>(url: string, options = {}): Promise<T> => {
     return this.request(url, { ...options, method: METHODS.PUT });
   };
 
-  public patch = (url: string, options = {}) => {
+  public patch = <T>(url: string, options = {}): Promise<T> => {
     return this.request(url, { ...options, method: METHODS.PATCH });
   };
 
-  public delete = (url: string, options = {}) => {
+  public delete = <T>(url: string, options = {}): Promise<T> => {
     return this.request(url, { ...options, method: METHODS.DELETE });
   };
 
-  request = (url: string, options: TRequestOptions) => {
+  request = (url: string, options: TRequestOptions): any => {
     const {
       method = METHODS.GET,
       headers = {},
       data,
       timeout = 5000,
+      withCredentials = false,
     } = options;
 
     // Если метод GET и передана data, трансформировать data в query запрос
@@ -57,7 +65,11 @@ class HTTPTransport {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
 
-      xhr.open(method, url + query);
+      xhr.open(method, this._parentPath + url + query);
+
+      if (withCredentials) {
+        xhr.withCredentials = true;
+      }
 
       Object.entries(headers).forEach(([key, value]) => {
         xhr.setRequestHeader(key, value);

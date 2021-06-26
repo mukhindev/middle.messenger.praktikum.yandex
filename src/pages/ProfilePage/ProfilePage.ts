@@ -49,8 +49,7 @@ class ProfilePage extends Block {
         light: true,
         classMix: bem.get('sign-out-button'),
         onClick: () => {
-          console.log('Кнопка выхода');
-          router.go('/sign-in');
+          console.log('Выход');
         },
       }),
       form: {
@@ -84,7 +83,7 @@ class ProfilePage extends Block {
           },
           {
             type: 'text',
-            name: 'firstName',
+            name: 'first_name',
             label: 'Имя',
             validation: {
               pattern: '[-A-Za-zА-Яа-я.\\s]*',
@@ -97,7 +96,7 @@ class ProfilePage extends Block {
           },
           {
             type: 'text',
-            name: 'secondName',
+            name: 'second_name',
             label: 'Фамилия',
             validation: {
               pattern: '[-A-Za-zА-Яа-я.\\s]*',
@@ -110,7 +109,7 @@ class ProfilePage extends Block {
           },
           {
             type: 'tel',
-            name: 'tel',
+            name: 'phone',
             label: 'Телефон',
             validation: {
               pattern: '^(\\+[0-9])\\s?\\(?[0-9]{3}\\)?\\s?[0-9]{7}$',

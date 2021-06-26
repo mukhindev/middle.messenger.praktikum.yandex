@@ -51,7 +51,7 @@ class SignUpPage extends Block {
           },
           {
             type: 'text',
-            name: 'firstName',
+            name: 'first_name',
             label: 'Имя',
             validation: {
               pattern: '[-A-Za-zА-Яа-я.\\s]*',
@@ -80,7 +80,7 @@ class SignUpPage extends Block {
           },
           {
             type: 'text',
-            name: 'secondName',
+            name: 'second_name',
             label: 'Фамилия',
             validation: {
               pattern: '[-A-Za-zА-Яа-я.\\s]*',
@@ -93,7 +93,7 @@ class SignUpPage extends Block {
           },
           {
             type: 'password',
-            name: 'repeatedPassword',
+            name: 'repeated_password',
             label: 'Пароль ещё раз',
             validation: {
               required: true,
@@ -119,7 +119,7 @@ class SignUpPage extends Block {
           },
           {
             type: 'tel',
-            name: 'tel',
+            name: 'phone',
             label: 'Телефон',
             validation: {
               pattern: '^(\\+[0-9])\\s?\\(?[0-9]{3}\\)?\\s?[0-9]{7}$',
@@ -165,7 +165,7 @@ class SignUpPage extends Block {
       acc[field.name] = field.value;
       return acc;
     }, {});
-    console.log(formData);
+    delete formData.repeated_password;
   }
 
   render() {

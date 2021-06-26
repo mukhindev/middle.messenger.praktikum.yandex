@@ -1,8 +1,8 @@
 const express = require('express');
 const path = require('path');
 const history = require('connect-history-api-fallback');
-const { PORT } = require('./utils/env');
-const { DISTRIBUTIVE_DIR } = require('./utils/constants');
+const { PORT } = require('./serverUtils/serverEnv');
+const { DISTRIBUTIVE_DIR } = require('./serverUtils/serverСonstants');
 
 const distributiveDirPath = path.join(__dirname, '../', DISTRIBUTIVE_DIR);
 

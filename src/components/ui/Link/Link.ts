@@ -3,7 +3,6 @@ import { compile } from '../../../utils/templator';
 import { template } from './Link.tmpl';
 import BemHandler from '../../../utils/BemHandler';
 import { router } from '../../../router';
-import './Link.scss';
 
 const bem = new BemHandler('link');
 

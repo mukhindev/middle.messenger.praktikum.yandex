@@ -5,11 +5,9 @@ import { IAuthSignInApi } from '../interfaces/IAuthSignInApi';
 
 const authApi = new HTTPTransport(`${env.HOST_API}/auth`);
 
-type TAuthSignInResponse = Promise<string>;
-
 class AuthSignInApi extends BaseApi {
   public request(user?: IAuthSignInApi) {
-    return authApi.post<TAuthSignInResponse>('/signin', {
+    return authApi.post('/signin', {
       headers: AuthSignInApi.defaultHeaders,
       withCredentials: true,
       data: user,

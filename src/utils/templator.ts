@@ -87,9 +87,11 @@ class Templator {
       const { children } = found.match(/<(?<tag>[A-Z]+\w+).*?>(?<children>.*?)<\/\k<tag>>/s)?.groups || {};
       if (children) {
         const compiledChildren = this.compile(() => children, this.context);
-        value.setProps({
-          children: compiledChildren,
-        });
+        setTimeout(() => {
+          value.setProps({
+            children: compiledChildren,
+          });
+        }, 0);
       }
 
       // Итерация

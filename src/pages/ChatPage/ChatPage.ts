@@ -13,6 +13,7 @@ import settingIcon from '../../assets/images/settings.svg';
 import { contacts, messages } from '../../utils/mockData';
 import { router } from '../../router';
 import Popup from '../../components/ui/Popup/Popup';
+import NewChatForm from '../../components/forms/NewChatForm/NewChatForm';
 import './ChatPage.scss';
 
 const bem = new BemHandler('chat-page');
@@ -47,11 +48,20 @@ class ChatPage extends Block {
         onAttachmentMedia: () => console.log('Кнопка прикрепления фото или видео'),
         onAttachmentLocation: () => console.log('Кнопка прикрепления локации'),
       }),
+      NewChatPopup: new Popup({
+        classMix: bem.get('new-chat-popup'),
+        title: 'Создать чат',
+      }),
       NewChatButton: new Button({
         label: 'Новый чат',
         icon: createChatIcon,
         light: true,
-        onClick: () => console.log('Кнопка создания чата'),
+        onClick: () => this.props.NewChatPopup.show(),
+      }),
+      NewChatForm: new NewChatForm({
+        onSubmit: (formData) => {
+          console.log(formData);
+        },
       }),
       SettingsButton: new Button({
         label: 'Настройки',
@@ -62,6 +72,7 @@ class ChatPage extends Block {
         },
       }),
       AddContactPopup: new Popup({
+        classMix: bem.get('add-contact-popup'),
         title: 'Добавить пользователя в чат',
       }),
       AddContactInput: new Input({

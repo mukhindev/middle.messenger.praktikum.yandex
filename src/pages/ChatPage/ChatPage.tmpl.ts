@@ -20,5 +20,8 @@ export const template = () => `
       <AddContactSubmitButton />
       <AddContactInviteButton />
     </AddContactPopup>
+    <NewChatPopup>
+      <NewChatForm />
+    </NewChatPopup>
   </template>
 `;

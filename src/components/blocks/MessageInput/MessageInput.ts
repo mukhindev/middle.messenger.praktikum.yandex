@@ -9,8 +9,9 @@ import attachmentIcon from '../../../assets/images/attachment.svg';
 import pictureIcon from '../../../assets/images/picture.svg';
 import locationIcon from '../../../assets/images/location.svg';
 import sendIcon from '../../../assets/images/send.svg';
+import { validateForm, handleFormSubmit } from '../../../utils/formHandler';
 import './MessageInput.scss';
-import validateForm from '../../../utils/validateForm';
+
 
 const bem = new BemHandler('message-input');
 
@@ -81,13 +82,7 @@ class MessageInput extends Block {
   }
 
   handleSubmit(evt: Event) {
-    evt.preventDefault();
-    const { elements } = evt.target as HTMLFormElement;
-    const fields = Array.from(elements).filter((el) => el.nodeName === 'INPUT');
-    const formData = fields.reduce((acc: Record<string, string>, field: HTMLInputElement) => {
-      acc[field.name] = field.value;
-      return acc;
-    }, {});
+    const formData = handleFormSubmit(evt);
     this.props.onMessageSend(formData);
   }
 

@@ -70,6 +70,13 @@
     border-bottom: 1px solid var(--color-border);
   }
 
+  /* Попапы */
+
+  &__new-chat-popup {
+    width: 100%;
+    max-width: 480px;
+  }
+
   /* Попап добавления контакта в чат */
 
   &__add-contact-submit-button {

@@ -3,9 +3,7 @@ import { compile } from '../../utils/templator';
 import { template } from './SignInPage.tmpl';
 import BemHandler from '../../utils/BemHandler';
 import Button from '../../components/ui/Button/Button';
-import Input from '../../components/ui/Input/Input';
-import validateForm from '../../utils/validateForm';
-import { TFormField, TFormButton } from '../../utils/generateForm';
+import { registerFormElements, validateForm, handleFormSubmit } from '../../utils/formHandler';
 import Link from '../../components/ui/Link/Link';
 import { authSignInController } from '../../controllers';
 import { userStore } from '../../stores/authStore';
@@ -75,9 +73,7 @@ class SignInPage extends Block {
       },
     });
 
-    this.props.Input = this.props.form.fields.map((field: TFormField) => new Input(field));
-    this.props.Button = this.props.form.buttons.map((button: TFormButton) => new Button(button));
-
+    registerFormElements(this.props);
     this.validate = this.validate.bind(this);
   }
 
@@ -87,15 +83,9 @@ class SignInPage extends Block {
   }
 
   handleSubmit(evt: Event) {
-    evt.preventDefault();
-    const { elements } = evt.target as HTMLFormElement;
-    const fields = Array.from(elements).filter((el) => el.nodeName === 'INPUT');
-    const formData = fields.reduce((acc: Record<string, string>, field: HTMLInputElement) => {
-      acc[field.name] = field.value;
-      return acc;
-    }, {});
+    const formData = handleFormSubmit(evt);
     authSignInController.signIn({
-      login: formData.user,
+      login: formData.login,
       password: formData.password,
     });
   }

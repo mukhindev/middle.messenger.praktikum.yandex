@@ -22,8 +22,9 @@ class Popup extends Block {
   constructor(props: IPopup) {
     super('div', {
       className: bem.get(),
-      classNameRoot: bem.get('', '', props.classMix),
-      classNameRootOpen: bem.get('', { opened: true }, props.classMix),
+      classNameRoot: bem.get('', ''),
+      classNameRootOpen: bem.get('', { opened: true }),
+      classNameCard: bem.get('card', '', props.classMix),
       title: props.title ?? '',
       children: props.children ?? '',
       comeBackButton: props.comeBackButton ?? false,

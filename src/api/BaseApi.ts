@@ -42,7 +42,7 @@ class BaseApi {
   }
 
   post(endpoint: `/${string}`, options: {}) {
-    return this._http.get(this.getPath() + endpoint, this.handleOptions(options));
+    return this._http.post(this.getPath() + endpoint, this.handleOptions(options));
   }
 }
 

@@ -1,14 +1,14 @@
 import ChatApi from '../api/ChatApi';
+import { IChatApiCreate } from '../interfaces/IChatApi';
 import { showPreloader, hidePreloader } from '../utils/preloader';
 import { handleError } from '../utils/apiHandler';
-import { IChatApi } from '../interfaces/IChatApi';
 import { showToast } from '../utils/toast';
 import { chatStore } from '../stores/chatStore';
 
 const chatApi = new ChatApi();
 
 class ChatController {
-  public create(data: IChatApi) {
+  public create(data: IChatApiCreate) {
     showPreloader();
     return chatApi.create(data)
       .then((xhr) => {
@@ -25,7 +25,6 @@ class ChatController {
     showPreloader();
     return chatApi.request()
       .then((xhr) => {
-        showToast('Данные чата', 'success');
         const response = JSON.parse(xhr.response);
         chatStore.setState({
           chats: response,

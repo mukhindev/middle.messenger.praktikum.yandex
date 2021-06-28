@@ -77,15 +77,9 @@
     max-width: 480px;
   }
 
-  /* Попап добавления контакта в чат */
+  &__user-list {
+    margin: 24px 0 0;
 
-  &__add-contact-submit-button {
-    margin: 80px 0 0;
   }
 
-  &__add-contact-invite-button {
-    align-self: center;
-    margin: 8px 0 0;
-    color: var(--color-primary);
-  }
 }

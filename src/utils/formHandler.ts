@@ -30,11 +30,17 @@ export function generateForm(form: TForm, formClassName: string) {
           <Input key="${index}"/>
         `))}
       </div>
-      <div class="${formClassName}-buttons">
-        ${join(form.buttons.map((_: unknown, index: number) => `
-          <Button key="${index}" />
-        `))}
-      </div>
+      ${form.buttons.length > 0
+        ? `
+          <div class="${formClassName}-buttons">
+            ${join(form.buttons.map((_: unknown, index: number) => `
+              <Button key="${index}" />
+            `))}
+          </div>
+        `
+        : ''
+      }
+
     </form>
   `;
 }

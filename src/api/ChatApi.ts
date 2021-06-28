@@ -1,12 +1,12 @@
 import BaseApi from './BaseApi';
-import { IChatApi } from '../interfaces/IChatApi';
+import { IChatApiCreate } from '../interfaces/IChatApi';
 
 class ChatApi extends BaseApi {
   constructor() {
     super({ path: '/chats' });
   }
 
-  public create(data?: IChatApi) {
+  public create(data: IChatApiCreate) {
     return this.post('/', {
       withCredentials: true,
       data,

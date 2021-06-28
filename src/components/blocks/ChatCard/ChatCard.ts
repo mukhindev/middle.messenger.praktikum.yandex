@@ -1,24 +1,24 @@
 import Block from '../../../classes/Block';
 import { compile } from '../../../utils/templator';
-import { template } from './ContactCard.tmpl';
+import { template } from './ChatCard.tmpl';
 import BemHandler from '../../../utils/BemHandler';
 import defaultAvatar from '../../../assets/images/default-avatar.jpg';
 // import formatDate from '../../../utils/formatDate';
-import './ContactCard.scss';
+import './ChatCard.scss';
 
-const bem = new BemHandler('contact-card');
+const bem = new BemHandler('chat-card');
 
-interface IContactCard {
+interface IChatCard {
   id: number
   created_by: number
   title: string
-  avatar: null
-  last_message: null
+  avatar: string | null
+  last_message: {} | null
   unread_count: number
 }
 
-class ContactCard extends Block {
-  constructor(props: IContactCard) {
+class ChatCard extends Block {
+  constructor(props: IChatCard) {
     super('li', {
       className: bem.get(),
       id: props.id,
@@ -39,4 +39,4 @@ class ContactCard extends Block {
   }
 }
 
-export default ContactCard;
+export default ChatCard;

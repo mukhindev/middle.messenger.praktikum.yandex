@@ -1,3 +1,3 @@
-export interface IChatApi {
+export interface IChatApiCreate {
   title: string
 }

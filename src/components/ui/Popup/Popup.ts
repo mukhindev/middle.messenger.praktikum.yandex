@@ -16,6 +16,8 @@ interface IPopup {
   children?: string
   closeButton?: boolean
   comeBackButton?: boolean
+  onOpen?: () => void
+  onClose?: () => void
 }
 
 class Popup extends Block {
@@ -46,6 +48,8 @@ class Popup extends Block {
         classMix: bem.get('close-button'),
         onClick: () => this.togglePopup(false),
       }),
+      onOpen: props.onOpen ?? (() => {}),
+      onClose: props.onClose ?? (() => {}),
     });
     this.handleOverlay = this.handleOverlay.bind(this);
     this.togglePopup = this.togglePopup.bind(this);
@@ -66,9 +70,11 @@ class Popup extends Block {
     if (isOpen) {
       popupElement.className = this.props.classNameRootOpen;
       document.addEventListener('mousedown', this.handleOverlay);
+      this.props.onOpen();
     } else {
       popupElement.className = this.props.classNameRoot;
       document.removeEventListener('mousedown', this.handleOverlay);
+      this.props.onClose();
     }
   }
 

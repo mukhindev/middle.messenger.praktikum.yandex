@@ -2,13 +2,12 @@ import AuthApi from '../api/AuthApi';
 import { router } from '../router';
 import { showPreloader, hidePreloader } from '../utils/preloader';
 import { handleError } from '../utils/apiHandler';
-import { IAuthSignInApi } from '../interfaces/IAuthSignInApi';
-import { IAuthSignUpApi } from '../interfaces/IAuthSignUpApi';
+import { IAuthApiSignIn, IAuthApiSignUp } from '../interfaces/IAuthApi';
 
 const authApi = new AuthApi();
 
 class AuthSingInController {
-  public signIn(user: IAuthSignInApi) {
+  public signIn(user: IAuthApiSignIn) {
     showPreloader();
     return authApi.signIn(user)
       .then((xhr) => {
@@ -21,7 +20,7 @@ class AuthSingInController {
       });
   }
 
-  public signUp(user: IAuthSignUpApi) {
+  public signUp(user: IAuthApiSignUp) {
     showPreloader();
     return authApi.signUp(user)
       .then((xhr) => {

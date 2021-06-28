@@ -1,24 +1,24 @@
 import Block from '../../../classes/Block';
 import { compile } from '../../../utils/templator';
-import { template } from './ChatHeader.tmpl';
+import { template } from './MessageHeader.tmpl';
 import BemHandler from '../../../utils/BemHandler';
 import DropDownMenu from '../../ui/DropDownMenu/DropDownMenu';
 import moreIcon from '../../../assets/images/more.svg';
 import addContactIcon from '../../../assets/images/add-contact.svg';
 import trashIcon from '../../../assets/images/trash.svg';
 import defaultAvatar from '../../../assets/images/default-avatar.jpg';
-import './ChatHeader.scss';
+import './MessageHeader.scss';
 
-const bem = new BemHandler('chat-header');
+const bem = new BemHandler('message-header');
 
-interface IChatHeader {
+interface IMessageHeader {
   avatar?: string | null
   onAddContact: () => void
   onRemoveContact: () => void
 }
 
-class ChatHeader extends Block {
-  constructor(props: IChatHeader) {
+class MessageHeader extends Block {
+  constructor(props: IMessageHeader) {
     super('div', {
       className: bem.get(),
       avatar: props.avatar ?? defaultAvatar,
@@ -53,4 +53,4 @@ class ChatHeader extends Block {
   }
 }
 
-export default ChatHeader;
+export default MessageHeader;

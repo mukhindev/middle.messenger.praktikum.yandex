@@ -1,22 +1,21 @@
 import BaseApi from './BaseApi';
-import { IAuthSignInApi } from '../interfaces/IAuthSignInApi';
-import { IAuthSignUpApi } from '../interfaces/IAuthSignUpApi';
+import { IAuthApiSignIn, IAuthApiSignUp } from '../interfaces/IAuthApi';
 
 class AuthApi extends BaseApi {
   constructor() {
     super({ path: '/auth' });
   }
 
-  public signIn(user?: IAuthSignInApi) {
+  public signIn(data: IAuthApiSignIn) {
     return this.post('/signin', {
       withCredentials: true,
-      data: user,
+      data,
     });
   }
 
-  public signUp(user?: IAuthSignUpApi) {
+  public signUp(data: IAuthApiSignUp) {
     return this.post('/signup', {
-      data: user,
+      data,
     });
   }
 }

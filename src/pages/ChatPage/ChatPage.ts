@@ -1,8 +1,8 @@
 import Block from '../../classes/Block';
-import ContactCardList from '../../components/blocks/ContactCardList/ContactCardList';
+import ChatCardList from '../../components/blocks/ChatCardList/ChatCardList';
 import Input from '../../components/ui/Input/Input';
 import Button from '../../components/ui/Button/Button';
-import ChatHeader from '../../components/blocks/ChatHeader/ChatHeader';
+import MessageHeader from '../../components/blocks/MessageHeader/MessageHeader';
 import MessageList from '../../components/blocks/MessageList/MessageList';
 import MessageInput from '../../components/blocks/MessageInput/MessageInput';
 import { compile } from '../../utils/templator';
@@ -14,9 +14,11 @@ import { messages } from '../../utils/mockData';
 import { router } from '../../router';
 import Popup from '../../components/ui/Popup/Popup';
 import NewChatForm from '../../components/forms/NewChatForm/NewChatForm';
-import './ChatPage.scss';
-import { chatController } from '../../controllers';
+import AddChatUserForm from '../../components/forms/AddChatUserForm/AddChatUserForm';
+import UserList from '../../components/blocks/UserList/UserList';
+import { chatController, userController } from '../../controllers';
 import { chatStore } from '../../stores/chatStore';
+import './ChatPage.scss';
 
 const bem = new BemHandler('chat-page');
 
@@ -30,13 +32,13 @@ class ChatPage extends Block {
         type: 'search',
         onInput: (value) => console.log('Поле поиска:', value),
       }),
-      ContactCardList: new ContactCardList({
+      ChatCardList: new ChatCardList({
         classMix: bem.get('contact-card-list'),
-        contacts: chatStore.state.chats,
+        chats: chatStore.state.chats,
       }),
-      ChatHeader: new ChatHeader({
+      MessageHeader: new MessageHeader({
         onAddContact: () => {
-          this.props.AddContactPopup.show();
+          this.props.AddChatUserPopup.show();
         },
         onRemoveContact: () => console.log('Кнопка удаления контакта'),
       }),
@@ -51,15 +53,15 @@ class ChatPage extends Block {
         onAttachmentMedia: () => console.log('Кнопка прикрепления фото или видео'),
         onAttachmentLocation: () => console.log('Кнопка прикрепления локации'),
       }),
-      NewChatPopup: new Popup({
-        classMix: bem.get('new-chat-popup'),
-        title: 'Создать чат',
-      }),
       NewChatButton: new Button({
         label: 'Новый чат',
         icon: createChatIcon,
         light: true,
         onClick: () => this.props.NewChatPopup.show(),
+      }),
+      NewChatPopup: new Popup({
+        classMix: bem.get('new-chat-popup'),
+        title: 'Создать чат',
       }),
       NewChatForm: new NewChatForm({
         onSubmit: (formData) => {
@@ -80,25 +82,38 @@ class ChatPage extends Block {
           router.go('/profile');
         },
       }),
-      AddContactPopup: new Popup({
+      AddChatUserPopup: new Popup({
         classMix: bem.get('add-contact-popup'),
         title: 'Добавить пользователя в чат',
+        onOpen: () => {
+          this.props.UserList.setProps({
+            users: [],
+          });
+        },
       }),
-      AddContactInput: new Input({
-        label: 'Логин',
-        onInput: (value) => console.log('Поле логина:', value),
+      AddChatUserForm: new AddChatUserForm({
+        onSubmit: (formData) => {
+          userController.search({
+            login: formData.login,
+          })
+            .then((res) => {
+              console.log(res);
+              this.props.UserList.setProps({
+                users: res,
+              });
+            });
+          console.log(formData);
+        },
       }),
-      AddContactSubmitButton: new Button({
-        label: 'Добавить',
-        color: 'primary',
-        classMix: bem.get('add-contact-submit-button'),
-        onClick: () => console.log('Субмит добавления пользователя'),
-      }),
-      AddContactInviteButton: new Button({
+      InviteChatUserButton: new Button({
         label: 'Пригласить в чат',
         light: true,
         classMix: bem.get('add-contact-invite-button'),
         onClick: () => console.log('Кнопка пригласить в чат'),
+      }),
+      UserList: new UserList({
+        className: bem.get('user-list'),
+        users: [],
       }),
     });
   }
@@ -106,8 +121,8 @@ class ChatPage extends Block {
   componentDidMount() {
     chatController.request();
     chatStore.subscribe((state) => {
-      this.props.ContactCardList.setProps({
-        contacts: state.chats,
+      this.props.ChatCardList.setProps({
+        chats: state.chats,
       });
     });
   }

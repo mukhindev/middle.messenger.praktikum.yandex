@@ -1,5 +1,5 @@
 export const template = () => `
   <template class="{{ classNameWithMix }}">
-    <ContactCard of="contacts" />
+    <ChatCard of="chats" />
   </template>
 `;

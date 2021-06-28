@@ -44,13 +44,14 @@ class Route {
   }
 
   public render() {
-    if (!this._block) {
+    // TODO: Нужно ли удалять инстансы компонентов?
+    // if (!this._block) {
       this._block = new this._blockClass();
       render(this._props.rootQuery, this._block);
-      return;
-    }
-
-    render(this._props.rootQuery, this._block);
+    //   return;
+    // }
+    //
+    // render(this._props.rootQuery, this._block);
   }
 }
 

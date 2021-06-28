@@ -15,6 +15,8 @@ import { router } from '../../router';
 import Popup from '../../components/ui/Popup/Popup';
 import NewChatForm from '../../components/forms/NewChatForm/NewChatForm';
 import './ChatPage.scss';
+import { chatController } from '../../controllers';
+import { chatStore } from '../../stores/chatStore';
 
 const bem = new BemHandler('chat-page');
 
@@ -22,6 +24,7 @@ class ChatPage extends Block {
   constructor() {
     super('div', {
       className: bem.get(),
+      chats: chatStore.state.chats,
       SearchInput: new Input({
         label: 'Поиск',
         type: 'search',
@@ -60,6 +63,12 @@ class ChatPage extends Block {
       }),
       NewChatForm: new NewChatForm({
         onSubmit: (formData) => {
+          chatController.create({
+            title: formData.title,
+          })
+            .then(() => {
+              this.props.NewChatPopup.hide();
+            });
           console.log(formData);
         },
       }),
@@ -91,6 +100,15 @@ class ChatPage extends Block {
         classMix: bem.get('add-contact-invite-button'),
         onClick: () => console.log('Кнопка пригласить в чат'),
       }),
+    });
+  }
+
+  componentDidMount() {
+    chatController.request();
+    chatStore.subscribe((state) => {
+      this.props.ContactCardList.setProps({
+        contacts: state.chats,
+      });
     });
   }
 

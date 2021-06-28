@@ -9,7 +9,7 @@ const bem = new BemHandler('contact-card-list');
 
 interface IContactCardList {
   classMix: string
-  contacts: any[]
+  contacts: unknown[],
 }
 
 class ContactCardList extends Block {
@@ -17,11 +17,13 @@ class ContactCardList extends Block {
     super('ul', {
       className: bem.get(),
       classNameWithMix: bem.get('', '', props.classMix),
-      ContactCard: props.contacts.map((contact) => new ContactCard(contact)),
+      contacts: props.contacts,
+      ContactCard,
     });
   }
 
   render() {
+    console.log('render IContactCardList', this.props.contacts);
     return compile(template, this.props);
   }
 }

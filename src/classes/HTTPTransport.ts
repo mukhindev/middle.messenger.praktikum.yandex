@@ -30,23 +30,23 @@ class HTTPTransport {
     this._parentPath = _parentPath;
   }
 
-  public get = <T>(url: string, options = {}): Promise<T> => {
+  public get = (url: string, options = {}): Promise<XMLHttpRequest> => {
     return this.request(url, { ...options, method: METHODS.GET });
   };
 
-  public post = <T>(url: string, options = {}): Promise<T> => {
+  public post = (url: string, options = {}): Promise<XMLHttpRequest> => {
     return this.request(url, { ...options, method: METHODS.POST });
   };
 
-  public put = <T>(url: string, options = {}): Promise<T> => {
+  public put = (url: string, options = {}): Promise<XMLHttpRequest> => {
     return this.request(url, { ...options, method: METHODS.PUT });
   };
 
-  public patch = <T>(url: string, options = {}): Promise<T> => {
+  public patch = (url: string, options = {}): Promise<XMLHttpRequest> => {
     return this.request(url, { ...options, method: METHODS.PATCH });
   };
 
-  public delete = <T>(url: string, options = {}): Promise<T> => {
+  public delete = (url: string, options = {}): Promise<XMLHttpRequest> => {
     return this.request(url, { ...options, method: METHODS.DELETE });
   };
 
@@ -83,10 +83,10 @@ class HTTPTransport {
         }
       };
 
-      xhr.onabort = reject;
-      xhr.onerror = reject;
+      xhr.onabort = () => reject(xhr);
+      xhr.onerror = () => reject(xhr);
       xhr.timeout = timeout;
-      xhr.ontimeout = reject;
+      xhr.ontimeout = () => reject(xhr);
 
       if (method === METHODS.GET || !data) {
         xhr.send();

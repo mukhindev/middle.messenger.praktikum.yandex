@@ -12,7 +12,7 @@ class AuthSingUpController {
     return authSignUpApi.request(user)
       .then((xhr) => {
         console.log(xhr);
-        router.go('/');
+        router.go('/sign-in');
       })
       .catch(handleError)
       .finally(() => {

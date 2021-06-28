@@ -94,7 +94,27 @@ class Templator {
         }, 0);
       }
 
-      // Итерация
+      // Итерация через атрибут of
+      if ('of' in props) {
+        const Component = value;
+        let template = '';
+        const items = this.context[props.of];
+        items.forEach((item: unknown, index: number) => {
+          this.context = {
+            ...this.context,
+            [`_${key}${index}`]: new Component(item),
+          };
+
+          const component = this.context[`_${key}${index}`];
+
+          window._componentStore[component._uuid] = component.getContent();
+          // Вернуть элемент-маркер который будет заменен на элемент компонента
+          template += `<node data-uuid="${component._uuid}"></node>`;
+        });
+        return template;
+      }
+
+      // Итерация из массива экземпляров
       if (Array.isArray(value) && (typeof props.key === 'string')) {
         if (!('key' in props)) {
           throw new Error('Компонентам внутри итерации необходим уникальный key="number", указывающий на экземпляр в массиве');

@@ -1,4 +1,4 @@
-import Preloader from '../components/blocks/Preloader/Preloader';
+import Preloader from '../components/ui/Preloader/Preloader';
 
 const preloader = new Preloader();
 

@@ -8,11 +8,11 @@
   width: 100%;
   animation: toast 10s;
   animation-fill-mode: forwards;
+  z-index: 9;
 }
 
 .toast_color_success {
   background-color: var(--color-success);
-  color: var(--color-text);
 }
 
 .toast_color_primary {

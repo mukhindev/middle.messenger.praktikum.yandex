@@ -20,7 +20,7 @@ interface IMessage {
 
 class Message extends Block {
   constructor(props: IMessage) {
-    super('div', {
+    super('li', {
       className: bem.get(),
       classNameRoot: bem.get('', { 'outgoing-message': props.authorId === props.ownerId }),
       classNameDate: bem.get('date', { 'outgoing-message': props.authorId === props.ownerId }),

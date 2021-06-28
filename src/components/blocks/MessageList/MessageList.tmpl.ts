@@ -1,12 +1,5 @@
-import { TProps } from '../../../classes/Block';
-import { join } from '../../../utils/templator';
-
-export const template = (props: TProps) => `
+export const template = () => `
   <template class="{{ classNameWithMix }}">
-    ${join(props.Message.map((_: unknown, index: number) => `
-      <li class="{{ className }}__item">
-        <Message key="${index}" />
-      </li>
-    `))}
+    <Message of="messages" />
   </template>
 `;

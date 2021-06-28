@@ -85,6 +85,8 @@ class Templator {
 
       // Найти вложения в тег компонента ({{ children }})
       const { children } = found.match(/<(?<tag>[A-Z]+\w+).*?>(?<children>.*?)<\/\k<tag>>/s)?.groups || {};
+
+      // Поместить children в props
       if (children) {
         const compiledChildren = this.compile(() => children, this.context);
         setTimeout(() => {
@@ -96,6 +98,14 @@ class Templator {
 
       // Итерация через атрибут of
       if ('of' in props) {
+        if (this.context[props.of] === undefined) {
+          throw new Error(`Не обнаружен контекст ${props.of}[] для компонента ${key}`);
+        }
+
+        if (!value?.prototype?.constructor) {
+          throw new Error(`Контекст ${key} должен быть функцией-конструктором`);
+        }
+
         const Component = value;
         let template = '';
         const items = this.context[props.of];

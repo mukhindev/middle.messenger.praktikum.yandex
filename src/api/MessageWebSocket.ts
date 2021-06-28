@@ -1,6 +1,6 @@
 import env from '../utils/env';
 
-class ChatWSController {
+class MessageWebSocket {
   private _ws: WebSocket;
 
   private _addEvents() {
@@ -60,4 +60,4 @@ class ChatWSController {
   }
 }
 
-export default ChatWSController;
+export default MessageWebSocket;

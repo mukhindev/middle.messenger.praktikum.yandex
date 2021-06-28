@@ -1,22 +1,20 @@
-import HTTPTransport from '../classes/HTTPTransport';
 import BaseApi from './BaseApi';
-import env from '../utils/env';
 import { IChatApi } from '../interfaces/IChatApi';
 
-const chatApi = new HTTPTransport(`${env.HOST_API}/chats`);
-
 class ChatApi extends BaseApi {
+  constructor() {
+    super({ path: '/chats' });
+  }
+
   public create(data?: IChatApi) {
-    return chatApi.post('/', {
-      headers: ChatApi.defaultHeaders,
+    return this.post('/', {
       withCredentials: true,
       data,
     });
   }
 
   public request() {
-    return chatApi.get('/', {
-      headers: ChatApi.defaultHeaders,
+    return this.get('/', {
       withCredentials: true,
     });
   }

@@ -2,11 +2,9 @@ import Block from '../../classes/Block';
 import { compile } from '../../utils/templator';
 import { template } from './SignInPage.tmpl';
 import BemHandler from '../../utils/BemHandler';
-import Button from '../../components/ui/Button/Button';
 import { registerFormElements, validateForm, handleFormSubmit } from '../../utils/formHandler';
 import Link from '../../components/ui/Link/Link';
-import { authSignInController } from '../../controllers';
-import { userStore } from '../../stores/authStore';
+import { authController } from '../../controllers';
 import './SignInPage.scss';
 
 const bem = new BemHandler('sign-in-page');
@@ -19,14 +17,6 @@ class SignInPage extends Block {
       Link: new Link({
         className: bem.get('to-sign-up-link'),
         to: '/sign-up',
-      }),
-      test: '',
-      TestButton: new Button({
-        label: 'Тест',
-        color: 'primary',
-        onClick: () => {
-          userStore.setState({ counter: userStore.state.counter + 1 });
-        },
       }),
       form: {
         fields: [
@@ -84,14 +74,10 @@ class SignInPage extends Block {
 
   handleSubmit(evt: Event) {
     const formData = handleFormSubmit(evt);
-    authSignInController.signIn({
+    authController.signIn({
       login: formData.login,
       password: formData.password,
     });
-  }
-
-  componentDidMount() {
-    userStore.subscribe((state) => { this.props.test = state.counter; });
   }
 
   render() {

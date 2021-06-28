@@ -1,9 +1,7 @@
-import AuthSignUpController from './AuthSignUpController';
-import AuthSignInController from './AuthSignInController';
+import AuthController from './AuthController';
 import ChatController from './ChatController';
-import ChatWsController from './ChatWsController';
+import MessageController from './MessageController';
 
-export const authSignUpController = new AuthSignUpController();
-export const authSignInController = new AuthSignInController();
+export const authController = new AuthController();
 export const chatController = new ChatController();
-export const chatWsController = new ChatWsController();
+export const messageController = new MessageController();

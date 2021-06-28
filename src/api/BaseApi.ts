@@ -1,12 +1,49 @@
-abstract class BaseApi {
-  static defaultHeaders = {
-    'Content-type': 'application/json; charset=UTF-8',
-  };
+import HTTPTransport from '../classes/HTTPTransport';
+import env from '../utils/env';
 
-  create() { throw new Error('Not implemented'); }
-  request() { throw new Error('Not implemented'); }
-  update() { throw new Error('Not implemented'); }
-  delete() { throw new Error('Not implemented'); }
+const defaultHeaders = {
+  'Content-type': 'application/json; charset=UTF-8',
+};
+
+interface IBaseApi {
+  baseUrl?: string,
+  path?: `/${string}`
+  headers?: Record<string, string>
+}
+
+class BaseApi {
+  private _http: HTTPTransport;
+  private _baseUrl: string;
+  private _path: string;
+  private _headers: Record<string, string>;
+
+  constructor(config: IBaseApi = {}) {
+    this._http = new HTTPTransport();
+    this._baseUrl = config.baseUrl || env.HOST_API || '';
+    this._path = config.path || '';
+    this._headers = config.headers || defaultHeaders;
+  }
+
+  getPath() {
+    return `${this._baseUrl}${this._path}`;
+  }
+
+  handleOptions(options: Record<any, any>) {
+    options.headers = options.headers || this._headers;
+    return options;
+  }
+
+  get headers() {
+    return this._headers;
+  }
+
+  get(endpoint: `/${string}`, options: {}) {
+    return this._http.get(this.getPath() + endpoint, this.handleOptions(options));
+  }
+
+  post(endpoint: `/${string}`, options: {}) {
+    return this._http.get(this.getPath() + endpoint, this.handleOptions(options));
+  }
 }
 
 export default BaseApi;

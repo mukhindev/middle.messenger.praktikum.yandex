@@ -10,7 +10,7 @@ import { template } from './ChatPage.tmpl';
 import BemHandler from '../../utils/BemHandler';
 import createChatIcon from '../../assets/images/create-chat.svg';
 import settingIcon from '../../assets/images/settings.svg';
-import { contacts, messages } from '../../utils/mockData';
+import { messages } from '../../utils/mockData';
 import { router } from '../../router';
 import Popup from '../../components/ui/Popup/Popup';
 import NewChatForm from '../../components/forms/NewChatForm/NewChatForm';
@@ -32,7 +32,7 @@ class ChatPage extends Block {
       }),
       ContactCardList: new ContactCardList({
         classMix: bem.get('contact-card-list'),
-        contacts,
+        contacts: chatStore.state.chats,
       }),
       ChatHeader: new ChatHeader({
         onAddContact: () => {

@@ -3,35 +3,34 @@ import { compile } from '../../../utils/templator';
 import { template } from './ContactCard.tmpl';
 import BemHandler from '../../../utils/BemHandler';
 import defaultAvatar from '../../../assets/images/default-avatar.jpg';
-import formatDate from '../../../utils/formatDate';
+// import formatDate from '../../../utils/formatDate';
 import './ContactCard.scss';
 
 const bem = new BemHandler('contact-card');
 
 interface IContactCard {
-  id: string,
-  updatedAt: string,
-  avatar: string | null,
-  name: string,
-  isGroup: boolean,
-  lastMessage: string,
-  ownerLastMessage: string,
-  counterUnreadMessages: number
+  id: number
+  created_by: number
+  title: string
+  avatar: null
+  last_message: null
+  unread_count: number
 }
 
 class ContactCard extends Block {
   constructor(props: IContactCard) {
-    super('div', {
+    super('li', {
       className: bem.get(),
-      avatar: props.avatar ?? defaultAvatar,
-      name: props.name,
-      isGroup: props.isGroup,
-      lastMessage: props.lastMessage,
-      updatedAt: props.updatedAt,
-      formattedUpdatedAt: formatDate(props.updatedAt),
       id: props.id,
-      ownerLastMessage: props.ownerLastMessage,
-      counterUnreadMessages: props.counterUnreadMessages,
+      created_by: props.created_by,
+      title: props.title,
+      avatar: props.avatar ?? defaultAvatar,
+      last_message: props.last_message,
+      unread_count: props.unread_count,
+      // TODO: Последнее сообщение
+      // updatedAt: props.updatedAt,
+      // formattedUpdatedAt: formatDate(props.updatedAt),
+      // ownerLastMessage: props.ownerLastMessage,
     });
   }
 

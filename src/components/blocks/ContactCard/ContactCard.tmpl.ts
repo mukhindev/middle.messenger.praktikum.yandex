@@ -9,12 +9,12 @@ export const template = (props: TProps) => `
     />
     <div class="{{ className }}__name-wrapper">
       ${props.isGroup ? '<div class="{{ className }}__group-marker"></div>' : ''}
-      <p class="{{ className }}__name">{{ name }}</p>
+      <p class="{{ className }}__name">{{ title }}</p>
     </div>
     <p class="{{ className }}__last-message">{{ lastMessage }}</p>
-    ${props.counterUnreadMessages
+    ${props.unread_count
       ? `<span class="{{ className }}__counter-unread-messages">
-          {{ counterUnreadMessages }}
+          {{ unread_count }}
         </span>`
       : ''
     }

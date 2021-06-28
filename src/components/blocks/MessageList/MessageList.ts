@@ -17,7 +17,8 @@ class MessageList extends Block {
     super('ul', {
       className: bem.get(),
       classNameWithMix: bem.get('', '', props.classMix),
-      Message: props.messages.map((message) => new Message(message)),
+      messages: props.messages,
+      Message,
     });
   }
 

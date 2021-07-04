@@ -1,5 +1,5 @@
 import BaseApi from './BaseApi';
-import { IChatApiCreate } from '../interfaces/IChatApi';
+import { IChatApiAddUser, IChatApiCreate } from '../interfaces/IChatApi';
 
 class ChatApi extends BaseApi {
   constructor() {
@@ -15,6 +15,19 @@ class ChatApi extends BaseApi {
 
   public request() {
     return this.get('/', {
+      withCredentials: true,
+    });
+  }
+
+  public addUserChat(data: IChatApiAddUser) {
+    return this.put('/users', {
+      withCredentials: true,
+      data,
+    });
+  }
+
+  public requestMessageToken(chatId: number) {
+    return this.post(`/token/${chatId}`, {
       withCredentials: true,
     });
   }

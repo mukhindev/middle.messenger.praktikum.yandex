@@ -4,25 +4,47 @@ import { compile } from '../../../utils/templator';
 import { template } from './UserList.tmpl';
 import BemHandler from '../../../utils/BemHandler';
 import './UserList.scss';
+import Button from '../../ui/Button/Button';
 
 const bem = new BemHandler('user-list');
 
 interface IUserList {
   className?: string
-  users: unknown[],
+  users: unknown[]
+  onAdd: (usersId: number[]) => void
 }
 
 class UserList extends Block {
   constructor(props: IUserList) {
-    super('ul', {
-      className: bem.get('', '', props.className),
+    super('div', {
+      className: bem.get(),
+      classNameRoot: bem.get('', '', props.className),
       users: props.users,
+      selectedUsers: [],
+      onSelect: (userId: number) => {
+        if (this.props.selectedUsers.includes(userId)) {
+          const updatedSelectedUsers = [...this.props.selectedUsers];
+          const userIndex = updatedSelectedUsers.findIndex((user) => user === userId);
+          updatedSelectedUsers.splice(userIndex, 1);
+          this.props.selectedUsers = updatedSelectedUsers;
+          return;
+        }
+        this.props.selectedUsers = [...this.props.selectedUsers, userId];
+      },
       User,
+      onAdd: props.onAdd,
+      ButtonAdd: new Button({
+        label: 'Добавить',
+        color: 'primary',
+        classMix: bem.get('add-button'),
+        onClick: () => {
+          this.props.onAdd(this.props.selectedUsers);
+        },
+      }),
     });
   }
 
   render() {
-    console.log('render UserList', this.props.users);
     return compile(template, this.props);
   }
 }

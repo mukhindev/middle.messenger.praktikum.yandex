@@ -28,8 +28,9 @@ class BaseApi {
     return `${this._baseUrl}${this._path}`;
   }
 
-  handleOptions(options: Record<any, any>) {
-    options.headers = options.headers || this._headers;
+  handleOptions(newOptions?: Record<any, any>) {
+    const options = newOptions || {};
+    options.headers = newOptions?.headers || this._headers;
     return options;
   }
 
@@ -37,12 +38,16 @@ class BaseApi {
     return this._headers;
   }
 
-  get(endpoint: `/${string}`, options: {}) {
+  get(endpoint: `/${string}`, options?: {}) {
     return this._http.get(this.getPath() + endpoint, this.handleOptions(options));
   }
 
-  post(endpoint: `/${string}`, options: {}) {
+  post(endpoint: `/${string}`, options?: {}) {
     return this._http.post(this.getPath() + endpoint, this.handleOptions(options));
+  }
+
+  put(endpoint: `/${string}`, options?: {}) {
+    return this._http.put(this.getPath() + endpoint, this.handleOptions(options));
   }
 }
 

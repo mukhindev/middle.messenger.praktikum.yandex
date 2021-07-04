@@ -9,7 +9,8 @@ const bem = new BemHandler('chat-card-list');
 
 interface IChatCardList {
   classMix: string
-  chats: unknown[],
+  chats: unknown[]
+  onSelect: (chatId: number) => void
 }
 
 class ChatCardList extends Block {
@@ -18,12 +19,12 @@ class ChatCardList extends Block {
       className: bem.get(),
       classNameWithMix: bem.get('', '', props.classMix),
       chats: props.chats,
+      onSelect: props.onSelect ?? (() => {}),
       ChatCard,
     });
   }
 
   render() {
-    console.log('render ChatCardList', this.props.chats);
     return compile(template, this.props);
   }
 }

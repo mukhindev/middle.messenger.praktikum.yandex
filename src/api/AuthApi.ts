@@ -18,6 +18,18 @@ class AuthApi extends BaseApi {
       data,
     });
   }
+
+  public checkAuth() {
+    return this.get('/user', {
+      withCredentials: true,
+    });
+  }
+
+  public signOut() {
+    return this.post('/logout', {
+      withCredentials: true,
+    });
+  }
 }
 
 export default AuthApi;

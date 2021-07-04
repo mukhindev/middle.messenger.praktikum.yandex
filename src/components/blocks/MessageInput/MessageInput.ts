@@ -12,11 +12,10 @@ import sendIcon from '../../../assets/images/send.svg';
 import { validateForm, handleFormSubmit } from '../../../utils/formHandler';
 import './MessageInput.scss';
 
-
 const bem = new BemHandler('message-input');
 
 interface IMessageInput {
-  onMessageInput: (value: string) => void
+  onMessageInput?: (value: string) => void
   onMessageSend: (formData: Record<string, string>) => void
   onAttachmentFile: () => void
   onAttachmentMedia: () => void

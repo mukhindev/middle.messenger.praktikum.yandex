@@ -45,6 +45,7 @@ class Store {
 
   private _storeDidMount() {
     this.storeDidMount();
+    console.log('📥 STORE', this.state);
   }
 
   public storeDidMount() {}
@@ -54,6 +55,7 @@ class Store {
     if (response) {
       this.eventBus().emit(Store.EVENTS.FLOW_USE);
     }
+    console.log('📥 STORE', this.state);
   }
 
   public storeDidUpdate(oldState?: TState, newState?: TState) {

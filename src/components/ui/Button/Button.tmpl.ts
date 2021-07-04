@@ -5,6 +5,7 @@ export const template = (props: TProps) => `
     class="{{ classNameWithMix }}"
     type="{{ type }}"
     ${props.title ? 'title="{{ title }}"' : ''}
+    ${props.disabled ? 'disabled' : ''}
     ${props.menuIndex ? 'data-menu-index="{{ menuIndex }}"' : ''}
     ${props.menuName ? 'data-menu-name="{{ menuName }}"' : ''}
   >

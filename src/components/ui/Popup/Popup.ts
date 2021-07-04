@@ -36,7 +36,6 @@ class Popup extends Block {
         light: true,
         classMix: bem.get('come-back-button'),
         onClick: () => {
-          console.log('Кнопка возврата');
           router.back();
         },
       }),

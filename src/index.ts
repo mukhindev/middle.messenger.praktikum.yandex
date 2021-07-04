@@ -7,8 +7,10 @@ import Error404Page from './pages/404/404';
 import Error500Page from './pages/500/500';
 import { router } from './router';
 import './assets/styles/global.scss';
+import { authController } from './controllers';
 
 router
+  .onRoute(authController.checkAuth)
   .use('/', ChatPage)
   .use('/profile', ProfilePage)
   .use('/sign-in', SignInPage)

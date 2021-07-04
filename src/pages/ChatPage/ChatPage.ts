@@ -10,14 +10,13 @@ import { template } from './ChatPage.tmpl';
 import BemHandler from '../../utils/BemHandler';
 import createChatIcon from '../../assets/images/create-chat.svg';
 import settingIcon from '../../assets/images/settings.svg';
-import { messages } from '../../utils/mockData';
 import { router } from '../../router';
 import Popup from '../../components/ui/Popup/Popup';
 import NewChatForm from '../../components/forms/NewChatForm/NewChatForm';
 import AddChatUserForm from '../../components/forms/AddChatUserForm/AddChatUserForm';
 import UserList from '../../components/blocks/UserList/UserList';
-import { chatController, userController } from '../../controllers';
-import { chatStore } from '../../stores/chatStore';
+import { chatController, messageController, userController } from '../../controllers';
+import { store } from '../../store';
 import './ChatPage.scss';
 
 const bem = new BemHandler('chat-page');
@@ -26,29 +25,35 @@ class ChatPage extends Block {
   constructor() {
     super('div', {
       className: bem.get(),
-      chats: chatStore.state.chats,
+      chats: store.state.chats,
       SearchInput: new Input({
         label: 'Поиск',
         type: 'search',
-        onInput: (value) => console.log('Поле поиска:', value),
+        onInput: () => {},
       }),
       ChatCardList: new ChatCardList({
         classMix: bem.get('contact-card-list'),
-        chats: chatStore.state.chats,
+        chats: store.state.chats,
+        onSelect: (chatId) => {
+          messageController.leave();
+          store.setState({ chatId });
+          this.requestChat(chatId);
+        },
       }),
       MessageHeader: new MessageHeader({
         onAddContact: () => {
           this.props.AddChatUserPopup.show();
         },
-        onRemoveContact: () => console.log('Кнопка удаления контакта'),
+        onRemoveContact: () => {},
       }),
       MessageList: new MessageList({
         classMix: bem.get('message-list'),
-        messages,
+        messages: [],
       }),
       MessageInput: new MessageInput({
-        onMessageInput: (value) => console.log('Ввод нового сообщения', value),
-        onMessageSend: (formData) => console.log(formData),
+        onMessageSend: ({ message }) => {
+          messageController.sendMessage(message);
+        },
         onAttachmentFile: () => console.log('Кнопка прикрепления файла'),
         onAttachmentMedia: () => console.log('Кнопка прикрепления фото или видео'),
         onAttachmentLocation: () => console.log('Кнопка прикрепления локации'),
@@ -111,18 +116,51 @@ class ChatPage extends Block {
         classMix: bem.get('add-contact-invite-button'),
         onClick: () => console.log('Кнопка пригласить в чат'),
       }),
+      selectedUsers: [],
       UserList: new UserList({
         className: bem.get('user-list'),
         users: [],
+        onAdd: (usersId) => {
+          chatController.addUserChat({
+            users: usersId,
+            chatId: store.state.chatId,
+          });
+        },
       }),
     });
   }
 
+  requestMessages(token: string = store.state.token) {
+    messageController.connect({
+      userId: store.state.currentUser.id,
+      chatId: store.state.chatId,
+      token,
+    });
+  }
+
+  requestChat(chatId: number) {
+    chatController.requestMessageToken(chatId)
+      .then(({ token }) => {
+        store.setState({ token });
+        this.requestMessages(token);
+      });
+  }
+
   componentDidMount() {
-    chatController.request();
-    chatStore.subscribe((state) => {
+    chatController.request()
+      .then(() => {
+        this.requestChat(store.state.chatId);
+      });
+
+    store.subscribe((state) => {
       this.props.ChatCardList.setProps({
         chats: state.chats,
+      });
+    });
+
+    store.subscribe((state) => {
+      this.props.MessageList.setProps({
+        messages: state.messages,
       });
     });
   }

@@ -7,6 +7,7 @@ class Router {
   private _currentRoute: Route | null;
   private _rootQuery: string;
   private _pathnames: string[];
+  private _onRouteCallback: () => void;
   static __instance: Router;
 
   constructor(rootQuery: string) {
@@ -19,6 +20,7 @@ class Router {
     this.history = window.history;
     this._currentRoute = null;
     this._rootQuery = rootQuery;
+    this._onRouteCallback = () => {};
 
     Router.__instance = this;
   }
@@ -62,6 +64,12 @@ class Router {
     this._currentRoute = route;
 
     route.render();
+    this._onRouteCallback();
+  }
+
+  public onRoute(callback: () => void) {
+    this._onRouteCallback = callback;
+    return this;
   }
 
   public go(pathname: string) {

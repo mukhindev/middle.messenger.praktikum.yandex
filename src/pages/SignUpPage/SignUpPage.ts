@@ -5,6 +5,7 @@ import BemHandler from '../../utils/BemHandler';
 import { registerFormElements, validateForm, handleFormSubmit } from '../../utils/formHandler';
 import Link from '../../components/ui/Link/Link';
 import './SignUpPage.scss';
+import { authController } from '../../controllers';
 
 const bem = new BemHandler('sign-up-page');
 
@@ -154,7 +155,14 @@ class SignUpPage extends Block {
 
   handleSubmit(evt: Event) {
     const formData = handleFormSubmit(evt);
-    delete formData.repeated_password;
+    authController.signUp({
+      login: formData.login,
+      password: formData.password,
+      first_name: formData.first_name,
+      second_name: formData.second_name,
+      email: formData.email,
+      phone: formData.phone,
+    });
   }
 
   render() {

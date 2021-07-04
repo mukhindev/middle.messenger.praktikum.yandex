@@ -8,13 +8,13 @@ const bem = new BemHandler('button');
 
 interface IButton {
   classMix?: string
-  type?: string,
-  icon?: string,
-  light?: boolean,
-  color?: string,
-  label?: string,
-  title?: string,
-  onClick?: () => void,
+  type?: string
+  icon?: string
+  light?: boolean
+  color?: string
+  label?: string
+  title?: string
+  onClick?: () => void
 }
 
 class Button extends Block {

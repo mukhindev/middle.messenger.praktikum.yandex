@@ -148,7 +148,7 @@ class IndexPage extends Block {
         label: 'Моя кнопка',
         color: 'success',
         // Данная функция будет вызвана событием внутри Button
-        onClick: () => console.log('Кнопка нажата'),
+        onClick: () => {},
       }),
     });
   }

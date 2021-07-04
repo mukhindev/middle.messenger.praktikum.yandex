@@ -6,8 +6,8 @@ export const template = () => `
       alt="Аватар пользователя {{ authorName }}"
     />
     <p class="{{ className }}__text">
-      {{ text }}
-      <date class="{{ classNameDate }}" datetime="{{ date }}">{{ formattedDate }}</date>
+      {{ content }}
+      <date class="{{ classNameDate }}" datetime="{{ time }}">{{ formattedTime }}</date>
     </p>
   </template>
 `;

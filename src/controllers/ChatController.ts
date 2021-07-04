@@ -1,9 +1,10 @@
 import ChatApi from '../api/ChatApi';
-import { IChatApiCreate } from '../interfaces/IChatApi';
+import { IChatApiAddUser, IChatApiCreate } from '../interfaces/IChatApi';
 import { showPreloader, hidePreloader } from '../utils/preloader';
 import { handleError } from '../utils/apiHandler';
 import { showToast } from '../utils/toast';
-import { chatStore } from '../stores/chatStore';
+import { store } from '../store';
+import { router } from '../router';
 
 const chatApi = new ChatApi();
 
@@ -26,15 +27,41 @@ class ChatController {
     return chatApi.request()
       .then((xhr) => {
         const response = JSON.parse(xhr.response);
-        chatStore.setState({
+        store.setState({
           chats: response,
         });
-        return JSON.parse(xhr.response);
+        if (!store.state.chatId) {
+          store.setState({
+            chatId: response[0]?.id || null,
+          });
+        }
+        return response;
       })
-      .catch(handleError)
+      .catch((error) => {
+        router.go('/sign-in');
+        handleError(error);
+      })
       .finally(() => {
         hidePreloader();
       });
+  }
+
+  public addUserChat(data: IChatApiAddUser) {
+    return chatApi.addUserChat(data)
+      .then((xhr) => {
+        const response = JSON.parse(xhr.response);
+        showToast('Пользователь добавлен', 'success');
+        return response;
+      })
+      .catch(handleError);
+  }
+
+  public requestMessageToken(chatId: number) {
+    return chatApi.requestMessageToken(chatId)
+      .then((xhr) => {
+        return JSON.parse(xhr.response);
+      })
+      .catch(handleError);
   }
 }
 

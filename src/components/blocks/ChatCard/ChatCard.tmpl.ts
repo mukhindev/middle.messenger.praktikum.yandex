@@ -1,7 +1,7 @@
 import { TProps } from '../../../classes/Block';
 
 export const template = (props: TProps) => `
-  <template class="{{ className }}">
+  <template class="{{ classNameRoot }}">
     <img
       class="{{ className }}__avatar"
       src="{{ avatar }}"

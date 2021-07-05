@@ -49,6 +49,10 @@ class BaseApi {
   put(endpoint: `/${string}`, options?: {}) {
     return this._http.put(this.getPath() + endpoint, this.handleOptions(options));
   }
+
+  delete(endpoint: `/${string}`, options?: {}) {
+    return this._http.delete(this.getPath() + endpoint, this.handleOptions(options));
+  }
 }
 
 export default BaseApi;

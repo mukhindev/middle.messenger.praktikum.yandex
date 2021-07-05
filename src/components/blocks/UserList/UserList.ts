@@ -11,7 +11,7 @@ const bem = new BemHandler('user-list');
 interface IUserList {
   className?: string
   users: unknown[]
-  onAdd: (usersId: number[]) => void
+  onApply: (usersId: number[]) => void
 }
 
 class UserList extends Block {
@@ -32,13 +32,13 @@ class UserList extends Block {
         this.props.selectedUsers = [...this.props.selectedUsers, userId];
       },
       User,
-      onAdd: props.onAdd,
+      onApply: props.onApply,
       ButtonAdd: new Button({
-        label: 'Добавить',
+        label: 'Применить',
         color: 'primary',
         classMix: bem.get('add-button'),
         onClick: () => {
-          this.props.onAdd(this.props.selectedUsers);
+          this.props.onApply(this.props.selectedUsers);
         },
       }),
     });

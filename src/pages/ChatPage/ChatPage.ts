@@ -45,7 +45,9 @@ class ChatPage extends Block {
         onAddContact: () => {
           this.props.AddChatUserPopup.show();
         },
-        onRemoveContact: () => {},
+        onRemoveContact: () => {
+          this.props.DeleteChatUserPopup.show();
+        },
       }),
       MessageList: new MessageList({
         classMix: bem.get('message-list'),
@@ -89,11 +91,9 @@ class ChatPage extends Block {
       }),
       AddChatUserPopup: new Popup({
         classMix: bem.get('add-contact-popup'),
-        title: 'Добавить пользователя в чат',
+        title: 'Добавить пользователей в чат',
         onOpen: () => {
-          this.props.UserList.setProps({
-            users: [],
-          });
+          this.props.AddUserList.setProps({ users: [], selectedUsers: [] });
         },
       }),
       AddChatUserForm: new AddChatUserForm({
@@ -102,27 +102,53 @@ class ChatPage extends Block {
             login: formData.login,
           })
             .then((res) => {
-              this.props.UserList.setProps({
+              this.props.AddUserList.setProps({
                 users: res,
               });
             });
         },
       }),
-      InviteChatUserButton: new Button({
-        label: 'Пригласить в чат',
-        light: true,
-        classMix: bem.get('add-contact-invite-button'),
-        onClick: () => {},
-      }),
-      selectedUsers: [],
-      UserList: new UserList({
+      AddUserList: new UserList({
         className: bem.get('user-list'),
         users: [],
-        onAdd: (usersId) => {
+        onApply: (usersId) => {
+          if (!this.props.AddUserList.props.users.length) {
+            return;
+          }
           chatController.addUserChat({
             users: usersId,
             chatId: store.state.chatId,
           });
+        },
+      }),
+      DeleteChatUserPopup: new Popup({
+        classMix: bem.get('delete-contact-popup'),
+        title: 'Удалить пользователей из чата',
+        onOpen: () => {
+          this.props.DeleteUserList.setProps({ users: [], selectedUsers: [] });
+          chatController.requestChatUsers(store.state.chatId)
+            .then((users) => {
+              const usersToDelete = users.filter((user: any) => {
+                return user.id !== store.state.currentUser.id;
+              });
+              this.props.DeleteUserList.setProps({
+                users: usersToDelete,
+              });
+            });
+        },
+      }),
+      DeleteUserList: new UserList({
+        className: bem.get('user-list'),
+        users: [],
+        onApply: (usersId) => {
+          if (!this.props.DeleteUserList.props.users.length) {
+            return;
+          }
+          chatController.deleteUserChat({
+            users: usersId,
+            chatId: store.state.chatId,
+          });
+          this.props.DeleteChatUserPopup.hide();
         },
       }),
     });

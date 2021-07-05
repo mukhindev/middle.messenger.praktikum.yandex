@@ -48,10 +48,16 @@ class ChatController {
 
   public addUserChat(data: IChatApiAddUser) {
     return chatApi.addUserChat(data)
-      .then((xhr) => {
-        const response = JSON.parse(xhr.response);
-        showToast('Пользователь добавлен', 'success');
-        return response;
+      .then(() => {
+        showToast('Пользователи добавлены', 'success');
+      })
+      .catch(handleError);
+  }
+
+  public deleteUserChat(data: IChatApiAddUser) {
+    return chatApi.deleteUserChat(data)
+      .then(() => {
+        showToast('Пользователи удалены', 'success');
       })
       .catch(handleError);
   }
@@ -60,6 +66,15 @@ class ChatController {
     return chatApi.requestMessageToken(chatId)
       .then((xhr) => {
         return JSON.parse(xhr.response);
+      })
+      .catch(handleError);
+  }
+
+  public requestChatUsers(chatId: number) {
+    return chatApi.requestChatUsers(chatId)
+      .then((xhr) => {
+        const response = JSON.parse(xhr.response);
+        return response;
       })
       .catch(handleError);
   }

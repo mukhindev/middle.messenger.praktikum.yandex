@@ -17,8 +17,11 @@ export const template = () => `
     </main>
     <AddChatUserPopup>
       <AddChatUserForm />
-      <UserList />
+      <AddUserList />
     </AddChatUserPopup>
+    <DeleteChatUserPopup>
+      <DeleteUserList />
+    </DeleteChatUserPopup>
     <NewChatPopup>
       <NewChatForm />
     </NewChatPopup>

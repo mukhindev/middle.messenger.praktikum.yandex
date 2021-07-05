@@ -26,8 +26,21 @@ class ChatApi extends BaseApi {
     });
   }
 
+  public deleteUserChat(data: IChatApiAddUser) {
+    return this.delete('/users', {
+      withCredentials: true,
+      data,
+    });
+  }
+
   public requestMessageToken(chatId: number) {
     return this.post(`/token/${chatId}`, {
+      withCredentials: true,
+    });
+  }
+
+  public requestChatUsers(chatId: number) {
+    return this.get(`/${chatId}/users`, {
       withCredentials: true,
     });
   }

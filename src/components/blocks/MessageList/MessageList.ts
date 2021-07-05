@@ -23,6 +23,12 @@ class MessageList extends Block {
   }
 
   render() {
+    const list = this.getContent();
+    setTimeout(() => {
+      list.scrollTo({
+        top: list.scrollHeight,
+      });
+    }, 0);
     return compile(template, this.props);
   }
 }

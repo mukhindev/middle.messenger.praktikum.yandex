@@ -21,7 +21,6 @@ class PasswordPage extends Block {
         light: true,
         classMix: bem.get('come-back-button'),
         onClick: () => {
-          console.log('Кнопка возврата');
           router.back();
         },
       }),
@@ -37,8 +36,7 @@ class PasswordPage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только англ и символы: -+~!?@#$%^&*;()[]|:',
             },
-            onInput: (value: string) => {
-              console.log('Поле пароля:', value);
+            onInput: () => {
               this.props.repeatedPasswordValidate();
             },
             onValidate: () => this.validate(),
@@ -53,8 +51,7 @@ class PasswordPage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только англ и символы: -+~!?@#$%^&*;()[]|:',
             },
-            onInput: (value: string) => {
-              console.log('Поле нового пароля:', value);
+            onInput: () => {
               this.props.repeatedPasswordValidate();
             },
             onValidate: () => this.validate(),
@@ -112,8 +109,7 @@ class PasswordPage extends Block {
   }
 
   handleSubmit(evt: Event) {
-    const formData = handleFormSubmit(evt);
-    console.log(formData);
+    handleFormSubmit(evt);
   }
 
   render() {

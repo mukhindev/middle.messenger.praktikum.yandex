@@ -37,6 +37,7 @@ class ChatPage extends Block {
         onSelect: (chatId) => {
           messageController.leave();
           store.setState({ chatId });
+          localStorage.setItem('last-select-chat-id', `${chatId}`);
           this.requestChat(chatId);
         },
       }),
@@ -54,9 +55,9 @@ class ChatPage extends Block {
         onMessageSend: ({ message }) => {
           messageController.sendMessage(message);
         },
-        onAttachmentFile: () => console.log('Кнопка прикрепления файла'),
-        onAttachmentMedia: () => console.log('Кнопка прикрепления фото или видео'),
-        onAttachmentLocation: () => console.log('Кнопка прикрепления локации'),
+        onAttachmentFile: () => {},
+        onAttachmentMedia: () => {},
+        onAttachmentLocation: () => {},
       }),
       NewChatButton: new Button({
         label: 'Новый чат',
@@ -76,7 +77,6 @@ class ChatPage extends Block {
             .then(() => {
               this.props.NewChatPopup.hide();
             });
-          console.log(formData);
         },
       }),
       SettingsButton: new Button({
@@ -102,19 +102,17 @@ class ChatPage extends Block {
             login: formData.login,
           })
             .then((res) => {
-              console.log(res);
               this.props.UserList.setProps({
                 users: res,
               });
             });
-          console.log(formData);
         },
       }),
       InviteChatUserButton: new Button({
         label: 'Пригласить в чат',
         light: true,
         classMix: bem.get('add-contact-invite-button'),
-        onClick: () => console.log('Кнопка пригласить в чат'),
+        onClick: () => {},
       }),
       selectedUsers: [],
       UserList: new UserList({
@@ -130,6 +128,7 @@ class ChatPage extends Block {
     });
   }
 
+  // TODO: Догрузка старых сообщений
   requestMessages(token: string = store.state.token) {
     messageController.connect({
       userId: store.state.currentUser.id,
@@ -147,6 +146,14 @@ class ChatPage extends Block {
   }
 
   componentDidMount() {
+    const lastChatId = localStorage.getItem('last-select-chat-id');
+
+    if (lastChatId) {
+      store.setState({
+        chatId: +lastChatId,
+      });
+    }
+
     chatController.request()
       .then(() => {
         this.requestChat(store.state.chatId);

@@ -30,7 +30,7 @@ class SignInPage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только англ. буквы, символ _ и точка',
             },
-            onInput: (value: string) => console.log('Поле логина:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -43,7 +43,7 @@ class SignInPage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только англ и символы: -+~!?@#$%^&*;()[]|:',
             },
-            onInput: (value: string) => console.log('Поле пароля:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
         ],

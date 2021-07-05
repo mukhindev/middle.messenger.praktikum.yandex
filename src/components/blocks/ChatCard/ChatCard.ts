@@ -6,6 +6,7 @@ import defaultAvatar from '../../../assets/images/default-avatar.jpg';
 // import formatDate from '../../../utils/formatDate';
 import { store } from '../../../store';
 import './ChatCard.scss';
+import formatDate from '../../../utils/formatDate';
 
 const bem = new BemHandler('chat-card');
 
@@ -14,7 +15,7 @@ interface IChatCard {
   created_by: number
   title: string
   avatar: string | null
-  last_message: {} | null
+  last_message: string | null
   unread_count: number
   onClick: (chatId: number) => void
 }
@@ -28,21 +29,21 @@ class ChatCard extends Block {
       created_by: props.created_by,
       title: props.title,
       avatar: props.avatar ?? defaultAvatar,
-      last_message: props.last_message,
+      last_message: props.last_message ? JSON.parse(props.last_message) : null,
       unread_count: props.unread_count,
       onClick: props.onClick,
       events: {
         click: () => this.props.onClick(this.props.id),
       },
-      // TODO: Последнее сообщение
-      // updatedAt: props.updatedAt,
-      // formattedUpdatedAt: formatDate(props.updatedAt),
-      // ownerLastMessage: props.ownerLastMessage,
     });
   }
 
   render() {
-    return compile(template, this.props);
+    return compile(template, {
+      ...this.props,
+      time: this.props.last_message?.time || null,
+      formattedTime: formatDate(this.props.last_message?.time || null),
+    });
   }
 }
 

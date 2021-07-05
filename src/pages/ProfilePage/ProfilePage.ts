@@ -22,7 +22,6 @@ class ProfilePage extends Block {
         light: true,
         classMix: bem.get('come-back-button'),
         onClick: () => {
-          console.log('Кнопка возврата');
           router.go('/');
         },
       }),
@@ -31,14 +30,13 @@ class ProfilePage extends Block {
         label: 'Удалить аватар',
         light: true,
         classMix: bem.get('avatar-delete-button'),
-        onClick: () => console.log('Кнопка удаления аватара'),
+        onClick: () => {},
       }),
       PasswordButton: new Button({
         label: 'Сменить пароль',
         light: true,
         classMix: bem.get('password-button'),
         onClick: () => {
-          console.log('Кнопка смены пароля');
           router.go('/password');
         },
       }),
@@ -46,9 +44,7 @@ class ProfilePage extends Block {
         label: 'Выйти из аккаунта',
         light: true,
         classMix: bem.get('sign-out-button'),
-        onClick: () => {
-          console.log('Выход');
-        },
+        onClick: () => {},
       }),
       form: {
         fields: [
@@ -63,7 +59,7 @@ class ProfilePage extends Block {
               required: true,
               'data-error': 'Обязательно поле в формате email',
             },
-            onInput: (value: string) => console.log('Поле почты:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -76,7 +72,7 @@ class ProfilePage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только англ. буквы, символ _ и точка',
             },
-            onInput: (value: string) => console.log('Поле логина:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -89,7 +85,7 @@ class ProfilePage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только буквы, дефис и точка',
             },
-            onInput: (value: string) => console.log('Поле имя:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -102,7 +98,7 @@ class ProfilePage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только буквы, дефис и точка',
             },
-            onInput: (value: string) => console.log('Поле фамилия:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -114,7 +110,7 @@ class ProfilePage extends Block {
               required: true,
               'data-error': 'Обязательно поле в формате телефона +79991234567',
             },
-            onInput: (value: string) => console.log('Поле телефона:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
         ],
@@ -144,8 +140,7 @@ class ProfilePage extends Block {
   }
 
   handleSubmit(evt: Event) {
-    const formData = handleFormSubmit(evt);
-    console.log(formData);
+    handleFormSubmit(evt);
   }
 
   render() {

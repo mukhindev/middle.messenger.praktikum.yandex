@@ -31,7 +31,7 @@ class SignUpPage extends Block {
               required: true,
               'data-error': 'Обязательно поле в формате email',
             },
-            onInput: (value: string) => console.log('Поле почты:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -44,7 +44,7 @@ class SignUpPage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только англ. буквы, символ _ и точка',
             },
-            onInput: (value: string) => console.log('Поле логина:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -57,7 +57,7 @@ class SignUpPage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только буквы, дефис и точка',
             },
-            onInput: (value: string) => console.log('Поле имя:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -70,8 +70,7 @@ class SignUpPage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только англ и символы: -+~!?@#$%^&*;()[]|:',
             },
-            onInput: (value: string) => {
-              console.log('Поле пароля:', value);
+            onInput: () => {
               this.props.repeatedPasswordValidate();
             },
             onValidate: () => this.validate(),
@@ -86,7 +85,7 @@ class SignUpPage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только буквы, дефис и точка',
             },
-            onInput: (value: string) => console.log('Поле фамилия:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -124,7 +123,7 @@ class SignUpPage extends Block {
               required: true,
               'data-error': 'Обязательно поле в формате телефона +79991234567',
             },
-            onInput: (value: string) => console.log('Поле телефона:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
         ],

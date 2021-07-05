@@ -82,6 +82,10 @@ class MessageInput extends Block {
 
   handleSubmit(evt: Event) {
     const formData = handleFormSubmit(evt);
+    if (!formData.message) {
+      return;
+    }
+    (evt.target as HTMLFormElement).reset();
     this.props.onMessageSend(formData);
   }
 

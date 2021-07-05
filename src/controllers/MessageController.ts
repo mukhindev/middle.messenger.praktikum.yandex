@@ -4,10 +4,12 @@ import { store } from '../store';
 
 class MessageController {
   private _ws: WebSocket;
-  public isConnected: boolean;
+  private _userId: number;
+  private _chatId: number;
+  private _token: string;
+  private _ping: any;
 
   constructor() {
-    this.isConnected = false;
     this._handleOpen = this._handleOpen.bind(this);
     this._handleMassage = this._handleMassage.bind(this);
     this._handleError = this._handleError.bind(this);
@@ -29,15 +31,18 @@ class MessageController {
   }
 
   private _handleOpen() {
-    console.log('💬 _handleOpen');
-    this.isConnected = true;
     this.getMessages({ offset: 0 });
+    this._ping = setInterval(() => {
+      // this._ws.send('');
+    }, 10000);
   }
 
   private _handleMassage(evt: MessageEvent) {
-    console.log('💬 _handleMassage', evt.data);
-    const messages = JSON.parse(evt.data);
-    if (Array.isArray(messages)) {
+    const data = JSON.parse(evt.data);
+    if (Array.isArray(data)) {
+      store.setState({ messages: data });
+    } else if (typeof data === 'object' && data.type === 'message') {
+      const messages = [data, ...store.state.messages];
       store.setState({ messages });
     }
   }
@@ -47,16 +52,29 @@ class MessageController {
   }
 
   private _handleClose(evt: CloseEventInit) {
-    this.isConnected = false;
+    this._removeEvents();
     if (evt.wasClean) {
       console.log('💬 Соединение закрыто чисто');
     } else {
       console.log('💬 Обрыв соединения');
     }
-    console.log(`💬 Код: ${evt.code} | Причина: ${evt.reason}`);
+    if (evt.code === 1006) {
+      this._reconnection();
+    }
+  }
+
+  private _reconnection() {
+    this.connect({
+      userId: this._userId,
+      chatId: this._chatId,
+      token: this._token,
+    });
   }
 
   public connect(options: IMessageWebSocketConnect) {
+    this._userId = options.userId;
+    this._chatId = options.chatId;
+    this._token = options.token;
     this._ws = new WebSocket(`${env.HOST_WS}/chats/${options.userId}/${options.chatId}/${options.token}`);
     this._addEvents();
   }
@@ -69,6 +87,7 @@ class MessageController {
   }
 
   public leave() {
+    clearInterval(this._ping);
     this._ws.close();
     this._removeEvents();
   }

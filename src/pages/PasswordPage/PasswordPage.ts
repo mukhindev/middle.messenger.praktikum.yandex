@@ -58,7 +58,7 @@ class PasswordPage extends Block {
           },
           {
             type: 'password',
-            name: 'repeated_password',
+            name: 'repeatedPassword',
             label: 'Новый пароль ещё раз',
             validation: {
               required: true,

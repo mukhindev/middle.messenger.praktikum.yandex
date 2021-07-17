@@ -1,5 +1,6 @@
 import HTTPTransport from '../classes/HTTPTransport';
 import env from '../utils/env';
+import { convertKeysToCamelCase } from '../utils/keysConverter';
 
 const defaultHeaders = {
   'Content-type': 'application/json; charset=UTF-8',
@@ -24,14 +25,28 @@ class BaseApi {
     this._headers = config.headers || defaultHeaders;
   }
 
-  getPath() {
+  private getPath() {
     return `${this._baseUrl}${this._path}`;
   }
 
-  handleOptions(newOptions?: Record<any, any>) {
+  private handleOptions(newOptions?: Record<any, any>) {
     const options = newOptions || {};
     options.headers = newOptions?.headers || this._headers;
     return options;
+  }
+
+  private handleResponse(res: XMLHttpRequest) {
+    const response = JSON.parse(res.response);
+
+    if (response && Array.isArray(response)) {
+      return response.map((item) => convertKeysToCamelCase(item));
+    }
+
+    if (response && typeof response === 'object') {
+      return convertKeysToCamelCase(response);
+    }
+
+    return response;
   }
 
   get headers() {
@@ -39,19 +54,23 @@ class BaseApi {
   }
 
   get(endpoint: `/${string}`, options?: {}) {
-    return this._http.get(this.getPath() + endpoint, this.handleOptions(options));
+    return this._http.get(this.getPath() + endpoint, this.handleOptions(options))
+      .then(this.handleResponse);
   }
 
   post(endpoint: `/${string}`, options?: {}) {
-    return this._http.post(this.getPath() + endpoint, this.handleOptions(options));
+    return this._http.post(this.getPath() + endpoint, this.handleOptions(options))
+      .then(this.handleResponse);
   }
 
   put(endpoint: `/${string}`, options?: {}) {
-    return this._http.put(this.getPath() + endpoint, this.handleOptions(options));
+    return this._http.put(this.getPath() + endpoint, this.handleOptions(options))
+      .then(this.handleResponse);
   }
 
   delete(endpoint: `/${string}`, options?: {}) {
-    return this._http.delete(this.getPath() + endpoint, this.handleOptions(options));
+    return this._http.delete(this.getPath() + endpoint, this.handleOptions(options))
+      .then(this.handleResponse);
   }
 }
 

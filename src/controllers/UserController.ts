@@ -7,8 +7,8 @@ const userApi = new UserApi();
 class ChatController {
   public search(data: IUserApiSearch) {
     return userApi.search(data)
-      .then((xhr) => {
-        return JSON.parse(xhr.response);
+      .then((users) => {
+        return users;
       })
       .catch(handleError);
   }

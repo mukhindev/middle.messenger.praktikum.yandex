@@ -69,6 +69,7 @@ class Store {
   public subscribe(subscriber: (state: TState) => void) {
     this.subscribers.push((subscriber));
     subscriber(this.state);
+    console.log('STORE', this.state);
   }
 
   public setState(nextState: TState) {

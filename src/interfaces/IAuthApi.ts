@@ -4,8 +4,8 @@ export interface IAuthApiSignIn {
 }
 
 export interface IAuthApiSignUp {
-  first_name: string
-  second_name: string
+  firstName: string
+  secondName: string
   login: string
   email: string
   phone: string

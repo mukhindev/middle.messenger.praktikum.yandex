@@ -49,7 +49,7 @@ class SignUpPage extends Block {
           },
           {
             type: 'text',
-            name: 'first_name',
+            name: 'firstName',
             label: 'Имя',
             validation: {
               pattern: '[-A-Za-zА-Яа-я.\\s]*',
@@ -77,7 +77,7 @@ class SignUpPage extends Block {
           },
           {
             type: 'text',
-            name: 'second_name',
+            name: 'secondName',
             label: 'Фамилия',
             validation: {
               pattern: '[-A-Za-zА-Яа-я.\\s]*',
@@ -90,7 +90,7 @@ class SignUpPage extends Block {
           },
           {
             type: 'password',
-            name: 'repeated_password',
+            name: 'repeatedPassword',
             label: 'Пароль ещё раз',
             validation: {
               required: true,
@@ -157,8 +157,8 @@ class SignUpPage extends Block {
     authController.signUp({
       login: formData.login,
       password: formData.password,
-      first_name: formData.first_name,
-      second_name: formData.second_name,
+      firstName: formData.firstName,
+      secondName: formData.secondName,
       email: formData.email,
       phone: formData.phone,
     });

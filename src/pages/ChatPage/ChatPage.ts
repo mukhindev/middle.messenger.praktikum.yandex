@@ -52,6 +52,7 @@ class ChatPage extends Block {
       MessageList: new MessageList({
         classMix: bem.get('message-list'),
         messages: [],
+        onEndList: (length) => { console.log(length); },
       }),
       MessageInput: new MessageInput({
         onMessageSend: ({ message }) => {
@@ -101,9 +102,9 @@ class ChatPage extends Block {
           userController.search({
             login: formData.login,
           })
-            .then((res) => {
+            .then((users) => {
               this.props.AddUserList.setProps({
-                users: res,
+                users,
               });
             });
         },

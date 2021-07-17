@@ -11,12 +11,12 @@ const bem = new BemHandler('message');
 
 interface IMessage {
   id: number,
-  chat_id: number
-  user_id: number
+  chatId: number
+  userId: number
   type: string
   content: string
   file: string | null
-  is_read: boolean
+  isRead: boolean
   time: string
 }
 
@@ -24,11 +24,11 @@ class Message extends Block {
   constructor(props: IMessage) {
     super('li', {
       className: bem.get(),
-      classNameRoot: bem.get('', { 'outgoing-message': props.user_id === store.state.currentUser.id }),
-      classNameDate: bem.get('date', { 'outgoing-message': props.user_id === store.state.currentUser.id }),
+      classNameRoot: bem.get('', { 'outgoing-message': props.userId === store.state.currentUser.id }),
+      classNameDate: bem.get('date', { 'outgoing-message': props.userId === store.state.currentUser.id }),
       id: props.id,
-      chat_id: props.chat_id,
-      user_id: props.user_id,
+      chatId: props.chatId,
+      userId: props.userId,
       type: props.type,
       content: props.content,
       file: props.file,

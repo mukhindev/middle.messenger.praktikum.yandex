@@ -1,6 +1,7 @@
 import env from '../utils/env';
 import { IMessageWebSocketConnect, IMessageWebSocketGet } from '../interfaces/IMessageWebSocket';
 import { store } from '../store';
+import { convertKeysToCamelCase } from '../utils/keysConverter';
 
 class MessageController {
   private _ws: WebSocket;
@@ -40,9 +41,9 @@ class MessageController {
   private _handleMassage(evt: MessageEvent) {
     const data = JSON.parse(evt.data);
     if (Array.isArray(data)) {
-      store.setState({ messages: data });
+      store.setState({ messages: data.map((item) => convertKeysToCamelCase(item)) });
     } else if (typeof data === 'object' && data.type === 'message') {
-      const messages = [data, ...store.state.messages];
+      const messages = [convertKeysToCamelCase(data), ...store.state.messages];
       store.setState({ messages });
     }
   }

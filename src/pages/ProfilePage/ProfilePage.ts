@@ -77,7 +77,7 @@ class ProfilePage extends Block {
           },
           {
             type: 'text',
-            name: 'first_name',
+            name: 'firstName',
             label: 'Имя',
             validation: {
               pattern: '[-A-Za-zА-Яа-я.\\s]*',
@@ -90,7 +90,7 @@ class ProfilePage extends Block {
           },
           {
             type: 'text',
-            name: 'second_name',
+            name: 'secondName',
             label: 'Фамилия',
             validation: {
               pattern: '[-A-Za-zА-Яа-я.\\s]*',

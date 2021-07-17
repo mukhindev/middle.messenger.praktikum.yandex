@@ -12,9 +12,9 @@ class ChatController {
   public create(data: IChatApiCreate) {
     showPreloader();
     return chatApi.create(data)
-      .then((xhr) => {
+      .then((chat) => {
         showToast('Чат создан', 'success');
-        return JSON.parse(xhr.response);
+        return chat;
       })
       .catch(handleError)
       .finally(() => {
@@ -25,17 +25,16 @@ class ChatController {
   public request() {
     showPreloader();
     return chatApi.request()
-      .then((xhr) => {
-        const response = JSON.parse(xhr.response);
+      .then((chats) => {
         store.setState({
-          chats: response,
+          chats,
         });
         if (!store.state.chatId) {
           store.setState({
-            chatId: response[0]?.id || null,
+            chatId: chats[0]?.id || null,
           });
         }
-        return response;
+        return chats;
       })
       .catch((error) => {
         router.go('/sign-in');
@@ -64,17 +63,16 @@ class ChatController {
 
   public requestMessageToken(chatId: number) {
     return chatApi.requestMessageToken(chatId)
-      .then((xhr) => {
-        return JSON.parse(xhr.response);
+      .then((auth) => {
+        return auth;
       })
       .catch(handleError);
   }
 
   public requestChatUsers(chatId: number) {
     return chatApi.requestChatUsers(chatId)
-      .then((xhr) => {
-        const response = JSON.parse(xhr.response);
-        return response;
+      .then((users) => {
+        return users;
       })
       .catch(handleError);
   }

@@ -13,9 +13,9 @@ interface IUser {
   login: string
   email: string
   avatar: string | null
-  first_name: string
-  second_name: string
-  display_name: string | null
+  firstName: string
+  secondName: string
+  displayName: string | null
   phone: string
   onClick: (userId: number) => void
   selectedUsers: number[]
@@ -30,9 +30,9 @@ class User extends Block {
       login: props.login,
       email: props.email,
       avatar: props.avatar ? env.HOST_RESOURCES + props.avatar : defaultAvatar,
-      first_name: props.first_name,
-      second_name: props.second_name,
-      display_name: props.display_name,
+      firstName: props.firstName,
+      secondName: props.secondName,
+      displayName: props.displayName,
       phone: props.phone,
       onClick: props.onClick,
       events: {

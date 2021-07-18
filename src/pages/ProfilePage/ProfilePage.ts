@@ -7,8 +7,10 @@ import arrowLeftIcon from '../../assets/images/arrow-left.svg';
 import defaultAvatar from '../../assets/images/default-avatar.jpg';
 import { registerFormElements, validateForm, handleFormSubmit } from '../../utils/formHandler';
 import { router } from '../../router';
+import { authController, userController } from '../../controllers';
+import { store } from '../../store';
+import { convertKeysToSnakeCase } from '../../utils/keysConverter';
 import './ProfilePage.scss';
-import { authController } from '../../controllers';
 
 const bem = new BemHandler('profile-page');
 
@@ -135,6 +137,7 @@ class ProfilePage extends Block {
 
     registerFormElements(this.props);
     this.validate = this.validate.bind(this);
+    this.setFormValues = this.setFormValues.bind(this);
   }
 
   validate() {
@@ -143,7 +146,36 @@ class ProfilePage extends Block {
   }
 
   handleSubmit(evt: Event) {
-    handleFormSubmit(evt);
+    const formDate = handleFormSubmit(evt);
+    userController.updateProfile(convertKeysToSnakeCase({
+      firstName: formDate.firstName,
+      secondName: formDate.secondName,
+      displayName: '',
+      login: formDate.login,
+      email: formDate.email,
+      phone: formDate.phone,
+    }));
+  }
+
+  setFormValues(formData: Record<string, string>) {
+    if (!formData) {
+      return;
+    }
+    const formElement = this.getContent().querySelector(`.${this.props.classNameForm}`);
+    if (!formElement) {
+      return;
+    }
+    const { elements } = formElement as HTMLFormElement;
+    const fields = Array.from(elements).filter((el) => el.nodeName === 'INPUT');
+    fields.forEach((field: HTMLInputElement) => {
+      field.value = formData[field.name];
+    });
+  }
+
+  componentDidMount() {
+    store.subscribe((state) => {
+      this.setFormValues(state.currentUser);
+    });
   }
 
   render() {

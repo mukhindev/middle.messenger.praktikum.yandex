@@ -1,5 +1,5 @@
 import BaseApi from './BaseApi';
-import { IUserApiSearch } from '../interfaces/IUserApi';
+import { IUserApiSearch, IUserApiUpdateProfile } from '../interfaces/IUserApi';
 
 class UserApi extends BaseApi {
   constructor() {
@@ -8,6 +8,13 @@ class UserApi extends BaseApi {
 
   public search(data: IUserApiSearch) {
     return this.post('/search', {
+      withCredentials: true,
+      data,
+    });
+  }
+
+  public updateProfile(data: IUserApiUpdateProfile) {
+    return this.put('/profile', {
       withCredentials: true,
       data,
     });

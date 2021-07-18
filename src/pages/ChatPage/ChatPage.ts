@@ -35,6 +35,7 @@ class ChatPage extends Block {
         classMix: bem.get('contact-card-list'),
         chats: store.state.chats,
         onSelect: (chatId) => {
+          store.setState({ messages: [] });
           messageController.leave();
           store.setState({ chatId });
           localStorage.setItem('last-select-chat-id', `${chatId}`);
@@ -166,7 +167,6 @@ class ChatPage extends Block {
     });
   }
 
-  // TODO: Догрузка старых сообщений
   requestMessages(token: string = store.state.token) {
     messageController.connect({
       userId: store.state.currentUser.id,
@@ -220,6 +220,10 @@ class ChatPage extends Block {
 
   onDestroy() {
     messageController.leave();
+    store.setState({
+      chats: [],
+      messages: [],
+    });
   }
 }
 

@@ -9,7 +9,7 @@ class ChatApi extends BaseApi {
   public create(data: IChatApiCreate) {
     return this.post('/', {
       withCredentials: true,
-      data,
+      data: JSON.stringify(data),
     });
   }
 
@@ -22,21 +22,21 @@ class ChatApi extends BaseApi {
   public removeChat(chatId: number) {
     return this.delete('/', {
       withCredentials: true,
-      data: { chatId },
+      data: JSON.stringify({ chatId }),
     });
   }
 
   public addUserChat(data: IChatApiAddUser) {
     return this.put('/users', {
       withCredentials: true,
-      data,
+      data: JSON.stringify(data),
     });
   }
 
   public deleteUserChat(data: IChatApiAddUser) {
     return this.delete('/users', {
       withCredentials: true,
-      data,
+      data: JSON.stringify(data),
     });
   }
 

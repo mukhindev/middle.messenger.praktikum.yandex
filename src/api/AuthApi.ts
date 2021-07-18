@@ -9,13 +9,13 @@ class AuthApi extends BaseApi {
   public signIn(data: IAuthApiSignIn) {
     return this.post('/signin', {
       withCredentials: true,
-      data,
+      data: JSON.stringify(data),
     });
   }
 
   public signUp(data: IAuthApiSignUp) {
     return this.post('/signup', {
-      data,
+      data: JSON.stringify(data),
     });
   }
 

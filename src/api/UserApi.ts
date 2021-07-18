@@ -9,12 +9,20 @@ class UserApi extends BaseApi {
   public search(data: IUserApiSearch) {
     return this.post('/search', {
       withCredentials: true,
-      data,
+      data: JSON.stringify(data),
     });
   }
 
   public updateProfile(data: IUserApiUpdateProfile) {
     return this.put('/profile', {
+      withCredentials: true,
+      data: JSON.stringify(data),
+    });
+  }
+
+  public updateAvatar(data: FormData) {
+    return this.put('/profile/avatar', {
+      headers: {},
       withCredentials: true,
       data,
     });

@@ -9,10 +9,7 @@ export const template = (props: TProps) => `
         <h1 class="{{ className }}__title">@mukhindev</h1>
       </div>
       <div class="{{ className }}__avatar-wrapper">
-        <button class="{{ className }}__avatar-change-button">
-          <img class="{{ className }}__avatar" src="{{ avatar }}" alt="" />
-        </button>
-        <AvatarDeleteButton />
+        <ChooseAvatar />
       </div>
       ${generateForm(props.form, '{{ classNameForm }}')}
       <div class="{{ className }}__footer">

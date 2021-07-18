@@ -4,12 +4,13 @@ import { template } from './ProfilePage.tmpl';
 import BemHandler from '../../utils/BemHandler';
 import Button from '../../components/ui/Button/Button';
 import arrowLeftIcon from '../../assets/images/arrow-left.svg';
-import defaultAvatar from '../../assets/images/default-avatar.jpg';
 import { registerFormElements, validateForm, handleFormSubmit } from '../../utils/formHandler';
 import { router } from '../../router';
 import { authController, userController } from '../../controllers';
 import { store } from '../../store';
 import { convertKeysToSnakeCase } from '../../utils/keysConverter';
+import ImageFile from '../../components/ui/ImageFile/ImageFile';
+import env from '../../utils/env';
 import './ProfilePage.scss';
 
 const bem = new BemHandler('profile-page');
@@ -28,12 +29,15 @@ class ProfilePage extends Block {
           router.go('/');
         },
       }),
-      avatar: defaultAvatar,
-      AvatarDeleteButton: new Button({
-        label: 'Удалить аватар',
-        light: true,
-        classMix: bem.get('avatar-delete-button'),
-        onClick: () => {},
+      ChooseAvatar: new ImageFile({
+        classMix: bem.get('choose-avatar'),
+        src: '',
+        alt: 'Аватар',
+        onChange: (file) => {
+          const formData = new FormData();
+          formData.append('avatar', file);
+          userController.updateAvatar(formData);
+        },
       }),
       PasswordButton: new Button({
         label: 'Сменить пароль',
@@ -175,6 +179,9 @@ class ProfilePage extends Block {
   componentDidMount() {
     store.subscribe((state) => {
       this.setFormValues(state.currentUser);
+      this.props.ChooseAvatar.props.src = state.currentUser?.avatar
+        ? env.HOST_RESOURCES + state.currentUser?.avatar
+        : '';
     });
   }
 

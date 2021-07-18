@@ -3,6 +3,8 @@ import { IUserApiSearch, IUserApiUpdateProfile } from '../interfaces/IUserApi';
 import { handleError } from '../utils/apiHandler';
 import { hidePreloader, showPreloader } from '../utils/preloader';
 import { showToast } from '../utils/toast';
+import { store } from '../store';
+import { convertKeysToCamelCase } from '../utils/keysConverter';
 
 const userApi = new UserApi();
 
@@ -18,9 +20,26 @@ class ChatController {
   public updateProfile(data: IUserApiUpdateProfile) {
     showPreloader();
     return userApi.updateProfile(data)
-      .then((users) => {
+      .then((user) => {
         showToast('Профиль обновлён', 'success');
-        return users;
+        return user;
+      })
+      .catch(handleError)
+      .finally(() => {
+        hidePreloader();
+      });
+  }
+
+  public updateAvatar(data: FormData) {
+    showPreloader();
+    return userApi.updateAvatar(data)
+      .then((res) => {
+        showToast('Аватар обновлён', 'success');
+        const user = convertKeysToCamelCase(res);
+        store.setState({
+          currentUser: user,
+        });
+        return user;
       })
       .catch(handleError)
       .finally(() => {

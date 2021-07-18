@@ -41,7 +41,15 @@ class MessageController {
   private _handleMassage(evt: MessageEvent) {
     const data = JSON.parse(evt.data);
     if (Array.isArray(data)) {
-      store.setState({ messages: data.map((item) => convertKeysToCamelCase(item)) });
+      if (data[0].id === 0) {
+        store.setState({ messages: data.map((item) => convertKeysToCamelCase(item)) });
+      } else {
+        const messages = [
+          ...store.state.messages,
+          ...data.map((item) => convertKeysToCamelCase(item)),
+        ];
+        store.setState({ messages });
+      }
     } else if (typeof data === 'object' && data.type === 'message') {
       const messages = [convertKeysToCamelCase(data), ...store.state.messages];
       store.setState({ messages });

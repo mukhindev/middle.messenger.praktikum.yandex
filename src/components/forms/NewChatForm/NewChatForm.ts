@@ -24,10 +24,10 @@ class NewChatForm extends Block {
             name: 'title',
             label: 'Название',
             validation: {
-              pattern: '[-A-Za-zА-Яа-я.\\s]*',
+              pattern: '[-_A-Za-zА-Яа-я0-9\\s!]*',
               maxlength: 60,
               required: true,
-              'data-error': 'Обязательно поле. Только буквы, дефис и точка',
+              'data-error': 'Обязательно поле. Буквы, цифры, знаки -_! и пробелы',
             },
             onInput: () => {},
             onValidate: () => this.validate(),

@@ -48,15 +48,24 @@ class ChatPage extends Block {
         onRemoveContact: () => {
           this.props.DeleteChatUserPopup.show();
         },
+        onRemoveChat: () => {
+          chatController.removeChat();
+        },
       }),
       MessageList: new MessageList({
         classMix: bem.get('message-list'),
         messages: [],
-        onEndList: (length) => { console.log(length); },
+        onEndList: (length) => {
+          if (length % 20 === 0) {
+            console.log(length);
+            messageController.getMessages({ offset: length });
+          }
+        },
       }),
       MessageInput: new MessageInput({
         onMessageSend: ({ message }) => {
           messageController.sendMessage(message);
+          this.props.MessageList.scrollToLastMessage();
         },
         onAttachmentFile: () => {},
         onAttachmentMedia: () => {},
@@ -77,8 +86,10 @@ class ChatPage extends Block {
           chatController.create({
             title: formData.title,
           })
-            .then(() => {
+            .then((chatId) => {
               this.props.NewChatPopup.hide();
+              this.requestChatList();
+              store.state.chatId = chatId;
             });
         },
       }),
@@ -172,6 +183,13 @@ class ChatPage extends Block {
       });
   }
 
+  requestChatList() {
+    chatController.request()
+      .then(() => {
+        this.requestChat(store.state.chatId);
+      });
+  }
+
   componentDidMount() {
     const lastChatId = localStorage.getItem('last-select-chat-id');
 
@@ -181,10 +199,7 @@ class ChatPage extends Block {
       });
     }
 
-    chatController.request()
-      .then(() => {
-        this.requestChat(store.state.chatId);
-      });
+    this.requestChatList();
 
     store.subscribe((state) => {
       this.props.ChatCardList.setProps({
@@ -201,6 +216,10 @@ class ChatPage extends Block {
 
   render() {
     return compile(template, this.props);
+  }
+
+  onDestroy() {
+    messageController.leave();
   }
 }
 

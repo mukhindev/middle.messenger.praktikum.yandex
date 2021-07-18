@@ -8,6 +8,7 @@ class Router {
   private _rootQuery: string;
   private _pathnames: string[];
   private _onRouteCallback: () => void;
+  private _unprotectedPaths: `/${string}`[];
   static __instance: Router;
 
   constructor(rootQuery: string) {
@@ -64,11 +65,19 @@ class Router {
     this._currentRoute = route;
 
     route.render();
-    this._onRouteCallback();
+
+    if (!this._unprotectedPaths.includes(pathname as `/${string}`)) {
+      this._onRouteCallback();
+    }
   }
 
   public onRoute(callback: () => void) {
     this._onRouteCallback = callback;
+    return this;
+  }
+
+  public setUnprotectedPaths(paths: `/${string}`[]) {
+    this._unprotectedPaths = paths;
     return this;
   }
 

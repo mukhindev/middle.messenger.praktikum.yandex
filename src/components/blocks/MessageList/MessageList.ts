@@ -29,7 +29,7 @@ class MessageList extends Block {
       },
     });
 
-    this.handleScrollWithDebounce = debounce.call(this, this.handleScroll, 200);
+    this.handleScrollWithDebounce = debounce.call(this, this.handleScroll, 500);
     this.handleScroll = this.handleScroll.bind(this);
   }
 
@@ -43,13 +43,14 @@ class MessageList extends Block {
     }
   }
 
-  render() {
+  public scrollToLastMessage() {
     const list = this.getContent();
-    setTimeout(() => {
-      list.scrollTo({
-        top: list.scrollHeight,
-      });
-    }, 0);
+    list.scrollTo({
+      top: list.scrollHeight,
+    });
+  }
+
+  render() {
     return compile(template, this.props);
   }
 }

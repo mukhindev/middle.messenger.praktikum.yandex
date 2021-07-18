@@ -5,6 +5,7 @@ export function translate(phrase: string): string {
     case 'login is empty, but required': return 'Логин не введён, обязательное поле';
     case 'Email already exists': return 'Пользователь с таким email уже существует';
     case 'Cookie is not valid': return 'Вы не авторизованы. Войдите или зарегистрируйтесь';
+    case 'phone is not valid': return 'Неверный формат телефона';
     default: return phrase;
   }
 }

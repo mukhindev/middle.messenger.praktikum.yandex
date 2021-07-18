@@ -36,6 +36,10 @@ class BaseApi {
   }
 
   private handleResponse(res: XMLHttpRequest) {
+    if (res.response === 'OK') {
+      return { ok: true };
+    }
+
     const response = JSON.parse(res.response);
 
     if (response && Array.isArray(response)) {

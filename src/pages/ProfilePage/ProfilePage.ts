@@ -8,6 +8,7 @@ import defaultAvatar from '../../assets/images/default-avatar.jpg';
 import { registerFormElements, validateForm, handleFormSubmit } from '../../utils/formHandler';
 import { router } from '../../router';
 import './ProfilePage.scss';
+import { authController } from '../../controllers';
 
 const bem = new BemHandler('profile-page');
 
@@ -44,7 +45,9 @@ class ProfilePage extends Block {
         label: 'Выйти из аккаунта',
         light: true,
         classMix: bem.get('sign-out-button'),
-        onClick: () => {},
+        onClick: () => {
+          authController.signOut();
+        },
       }),
       form: {
         fields: [

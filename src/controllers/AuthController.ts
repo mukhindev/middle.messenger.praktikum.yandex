@@ -4,6 +4,7 @@ import { showPreloader, hidePreloader } from '../utils/preloader';
 import { handleError } from '../utils/apiHandler';
 import { IAuthApiSignIn, IAuthApiSignUp } from '../interfaces/IAuthApi';
 import { store } from '../store';
+import { showToast } from '../utils/toast';
 
 const authApi = new AuthApi();
 
@@ -12,6 +13,7 @@ class AuthSingInController {
     showPreloader();
     return authApi.signIn(user)
       .then(() => {
+        showToast('Вы вошли', 'success');
         router.go('/');
       })
       .catch(handleError)
@@ -24,11 +26,19 @@ class AuthSingInController {
     showPreloader();
     return authApi.signUp(user)
       .then(() => {
+        showToast('Вы зарегистрировались', 'success');
         router.go('/sign-in');
       })
       .catch(handleError)
       .finally(() => {
         hidePreloader();
+      });
+  }
+
+  public signOut() {
+    return authApi.signOut()
+      .then(() => {
+        router.go('/sign-in');
       });
   }
 

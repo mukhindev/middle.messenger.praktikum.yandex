@@ -170,7 +170,10 @@ class Block {
 
   public destroy() {
     this._element.remove();
+    this.onDestroy();
   }
+
+  public onDestroy() {}
 }
 
 export default Block;

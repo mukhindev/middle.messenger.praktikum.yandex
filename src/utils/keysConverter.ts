@@ -1,4 +1,4 @@
-export function convertKeysToCamelCase(obj: Record<string, any>, replaceableСhar?: string) {
+export function convertKeysToCamelCase<T>(obj: Record<string, any>, replaceableСhar?: string): T {
   return Object.entries(obj).reduce((acc: Record<string, any>, [key, value]) => {
     const chars = [...key];
     chars.forEach((char, index) => {
@@ -10,14 +10,13 @@ export function convertKeysToCamelCase(obj: Record<string, any>, replaceableСha
 
     acc[chars.join('')] = value;
     return acc;
-  }, {});
+  }, {}) as T;
 }
 
-export function convertKeysToSnakeCase(obj: Record<string, any>) {
+export function convertKeysToSnakeCase<T>(obj: Record<string, any>): T {
   return Object.entries(obj).reduce((acc: Record<string, any>, [key, value]) => {
     const chars = [...key];
     chars.forEach((char, index) => {
-      console.log(char);
       if (char === char.toUpperCase()) {
         chars[index] = chars[index].toLowerCase();
         chars.splice(index, 0, '_');
@@ -26,5 +25,5 @@ export function convertKeysToSnakeCase(obj: Record<string, any>) {
 
     acc[chars.join('')] = value;
     return acc;
-  }, {});
+  }, {}) as T;
 }

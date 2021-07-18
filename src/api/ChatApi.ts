@@ -19,6 +19,13 @@ class ChatApi extends BaseApi {
     });
   }
 
+  public removeChat(chatId: number) {
+    return this.delete('/', {
+      withCredentials: true,
+      data: { chatId },
+    });
+  }
+
   public addUserChat(data: IChatApiAddUser) {
     return this.put('/users', {
       withCredentials: true,

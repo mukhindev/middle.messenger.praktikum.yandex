@@ -14,7 +14,7 @@ class ChatController {
     return chatApi.create(data)
       .then((chat) => {
         showToast('Чат создан', 'success');
-        return chat;
+        return chat.id;
       })
       .catch(handleError)
       .finally(() => {
@@ -42,6 +42,13 @@ class ChatController {
       })
       .finally(() => {
         hidePreloader();
+      });
+  }
+
+  public removeChat() {
+    return chatApi.removeChat(store.state.chatId)
+      .then(() => {
+        this.request();
       });
   }
 

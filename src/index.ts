@@ -6,10 +6,11 @@ import PasswordPage from './pages/PasswordPage/PasswordPage';
 import Error404Page from './pages/404/404';
 import Error500Page from './pages/500/500';
 import { router } from './router';
-import './assets/styles/global.scss';
 import { authController } from './controllers';
+import './assets/styles/global.scss';
 
 router
+  .setUnprotectedPaths(['/sign-in', '/sign-up', '/500'])
   .onRoute(authController.checkAuth)
   .use('/', ChatPage)
   .use('/profile', ProfilePage)

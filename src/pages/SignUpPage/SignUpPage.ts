@@ -6,6 +6,7 @@ import { registerFormElements, validateForm, handleFormSubmit } from '../../util
 import Link from '../../components/ui/Link/Link';
 import './SignUpPage.scss';
 import { authController } from '../../controllers';
+import { convertKeysToSnakeCase } from '../../utils/keysConverter';
 
 const bem = new BemHandler('sign-up-page');
 
@@ -154,14 +155,14 @@ class SignUpPage extends Block {
 
   handleSubmit(evt: Event) {
     const formData = handleFormSubmit(evt);
-    authController.signUp({
+    authController.signUp(convertKeysToSnakeCase({
       login: formData.login,
       password: formData.password,
       firstName: formData.firstName,
       secondName: formData.secondName,
       email: formData.email,
       phone: formData.phone,
-    });
+    }));
   }
 
   render() {

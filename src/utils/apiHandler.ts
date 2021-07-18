@@ -3,6 +3,7 @@ import { translate } from './translate';
 import { router } from '../router';
 
 export function handleError(error: XMLHttpRequest) {
+  console.log('error in handleError', error);
   if (!error.response) {
     return router.go('/500');
   }

@@ -33,6 +33,7 @@ class Message extends Block {
       content: props.content,
       file: props.file,
       time: props.time,
+      // TODO: Отображать аватар пользователя в чате
       avatar: defaultAvatar,
       formattedTime: formatDate(props.time),
     });

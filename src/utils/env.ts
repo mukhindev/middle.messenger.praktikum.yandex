@@ -1,15 +1,3 @@
-if (process.env.NODE_ENV === 'production') {
-  if (!process.env.HOST_API) {
-    throw new Error('HOST_API in .env file is required');
-  }
-  if (!process.env.HOST_RESOURCES) {
-    throw new Error('В режиме production наличие переменной окружения HOST_RESOURCES — обязательно');
-  }
-  if (!process.env.HOST_WS) {
-    throw new Error('В режиме production наличие переменной окружения HOST_WS — обязательно');
-  }
-}
-
 export default {
   NODE_ENV: process.env.NODE_ENV || 'development',
   HOST_API: process.env.HOST_API || 'https://ya-praktikum.tech/api/v2',

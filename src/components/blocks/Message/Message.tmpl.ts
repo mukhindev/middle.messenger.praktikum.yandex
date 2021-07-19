@@ -3,7 +3,7 @@ export const template = () => `
     <img
       class="{{ className }}__avatar"
       src="{{ avatar }}"
-      alt="Аватар пользователя {{ authorName }}"
+      alt="Аватар"
     />
     <p class="{{ className }}__text">
       {{ content }}

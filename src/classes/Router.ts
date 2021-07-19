@@ -18,12 +18,17 @@ class Router {
 
     this.routes = [];
     this._pathnames = [];
+    this._unprotectedPaths = [];
     this.history = window.history;
     this._currentRoute = null;
     this._rootQuery = rootQuery;
     this._onRouteCallback = () => {};
 
     Router.__instance = this;
+  }
+
+  get currentRoute() {
+    return this._currentRoute;
   }
 
   public use(pathname: string, block: typeof Block) {

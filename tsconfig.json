@@ -6,6 +6,7 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "target": "es2018",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "module": "esnext"
   }
 }

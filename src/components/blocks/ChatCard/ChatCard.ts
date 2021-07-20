@@ -3,7 +3,6 @@ import { compile } from '../../../utils/templator';
 import { template } from './ChatCard.tmpl';
 import BemHandler from '../../../utils/BemHandler';
 import defaultAvatar from '../../../assets/images/default-avatar.jpg';
-// import formatDate from '../../../utils/formatDate';
 import { store } from '../../../store';
 import './ChatCard.scss';
 import formatDate from '../../../utils/formatDate';

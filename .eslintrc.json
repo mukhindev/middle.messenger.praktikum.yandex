@@ -29,6 +29,7 @@
     ],
     "@typescript-eslint/indent": "off",
     "no-console": "off",
-    "max-classes-per-file": "off"
+    "max-classes-per-file": "off",
+    "import/no-extraneous-dependencies": "off"
   }
 }

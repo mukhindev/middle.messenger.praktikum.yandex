@@ -22,7 +22,7 @@ app.use(helmet.permittedCrossDomainPolicies());
 app.use(helmet.referrerPolicy());
 app.use(helmet.xssFilter());
 app.use(helmet.contentSecurityPolicy({
-  useDefaults: true,
+  useDefaults: false,
   directives: {
     'default-src': [
       "'self'",

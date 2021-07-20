@@ -175,6 +175,9 @@ class ChatPage extends Block {
   }
 
   requestChat(chatId: number) {
+    if (!chatId) {
+      return;
+    }
     chatController.requestMessageToken(chatId)
       .then(({ token }) => {
         store.setState({ token });
@@ -218,7 +221,9 @@ class ChatPage extends Block {
   }
 
   onDestroy() {
-    messageController.leave();
+    if (store.state.chats.length) {
+      messageController.leave();
+    }
     store.setState({
       chats: [],
       messages: [],

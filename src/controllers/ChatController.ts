@@ -48,6 +48,7 @@ class ChatController {
   public removeChat() {
     return chatApi.removeChat(store.state.chatId)
       .then(() => {
+        showToast('Чат удалён', 'success');
         this.request();
       });
   }

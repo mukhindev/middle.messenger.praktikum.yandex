@@ -2,6 +2,7 @@ import env from '../utils/env';
 import { IMessageWebSocketConnect, IMessageWebSocketGet } from '../interfaces/IMessageWebSocket';
 import { store } from '../store';
 import { convertKeysToCamelCase } from '../utils/keysConverter';
+import { showToast } from '../utils/toast';
 
 class MessageController {
   private _ws: WebSocket;
@@ -34,7 +35,7 @@ class MessageController {
   private _handleOpen() {
     this.getMessages({ offset: 0 });
     this._ping = setInterval(() => {
-      // this._ws.send('');
+      this._ws.send('');
     }, 10000);
   }
 
@@ -65,9 +66,9 @@ class MessageController {
   private _handleClose(evt: CloseEventInit) {
     this._removeEvents();
     if (evt.wasClean) {
-      console.log('💬 Соединение закрыто чисто');
+      showToast('Соединение закрыто чисто', 'error');
     } else {
-      console.log('💬 Обрыв соединения');
+      showToast('Проблемы с подключением', 'error');
     }
     if (evt.code === 1006) {
       this._reconnection();

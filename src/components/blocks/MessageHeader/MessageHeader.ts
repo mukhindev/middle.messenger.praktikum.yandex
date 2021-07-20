@@ -9,6 +9,7 @@ import removeContactIcon from '../../../assets/images/remove-contact.svg';
 import trashIcon from '../../../assets/images/trash.svg';
 import defaultAvatar from '../../../assets/images/default-avatar.jpg';
 import './MessageHeader.scss';
+import { store } from '../../../store';
 
 const bem = new BemHandler('message-header');
 
@@ -24,7 +25,7 @@ class MessageHeader extends Block {
     super('div', {
       className: bem.get(),
       avatar: props.avatar ?? defaultAvatar,
-      name: 'Денис Колбасов',
+      name: '',
       ContactMenu: new DropDownMenu({
         classMix: bem.get('more-menu'),
         icon: moreIcon,
@@ -52,6 +53,12 @@ class MessageHeader extends Block {
           },
         ],
       }),
+    });
+  }
+
+  componentDidMount() {
+    store.subscribe((state) => {
+      this.props.name = state.chats.find((chat: any) => chat.id === state.chatId)?.title || 'Выберете или создайте чат';
     });
   }
 

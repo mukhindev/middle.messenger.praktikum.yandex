@@ -38,6 +38,7 @@ class AuthSingInController {
   public signOut() {
     return authApi.signOut()
       .then(() => {
+        localStorage.removeItem('last-select-chat-id');
         router.go('/sign-in');
       });
   }
@@ -49,7 +50,10 @@ class AuthSingInController {
           currentUser: user,
         });
       })
-      .catch(handleError);
+      .catch((error) => {
+        handleError(error);
+        router.go('/sign-in');
+      });
   }
 }
 

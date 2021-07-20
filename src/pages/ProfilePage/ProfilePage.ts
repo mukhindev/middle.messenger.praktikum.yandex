@@ -10,6 +10,7 @@ import { authController, userController } from '../../controllers';
 import { store } from '../../store';
 import { convertKeysToSnakeCase } from '../../utils/keysConverter';
 import ImageFile from '../../components/ui/ImageFile/ImageFile';
+import defaultAvatar from '../../assets/images/default-avatar.jpg';
 import env from '../../utils/env';
 import './ProfilePage.scss';
 
@@ -181,7 +182,7 @@ class ProfilePage extends Block {
       this.setFormValues(state.currentUser);
       this.props.ChooseAvatar.props.src = state.currentUser?.avatar
         ? env.HOST_RESOURCES + state.currentUser?.avatar
-        : '';
+        : defaultAvatar;
     });
   }
 

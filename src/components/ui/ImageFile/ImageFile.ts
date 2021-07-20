@@ -19,7 +19,7 @@ class ImageFile extends Block {
     super('label', {
       className: bem.get(),
       classNameRoot: bem.get('', '', props?.classMix),
-      src: props?.src ?? defaultImage,
+      src: props?.src || defaultImage,
       alt: props?.alt ?? '',
       onChange: props?.onChange,
       events: {

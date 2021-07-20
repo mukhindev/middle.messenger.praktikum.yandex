@@ -6,7 +6,7 @@
   bottom: 0;
   height: max-content;
   width: 100%;
-  animation: toast 10s;
+  animation: toast 5s;
   animation-fill-mode: forwards;
   z-index: 9;
 }
@@ -29,11 +29,11 @@
     transform: translateY(100%);
   }
 
-  5% {
+  10% {
     transform: translateY(0);
   }
 
-  95% {
+  90% {
     transform: translateY(0);
   }
 

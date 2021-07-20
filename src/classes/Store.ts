@@ -45,7 +45,6 @@ class Store {
 
   private _storeDidMount() {
     this.storeDidMount();
-    console.log(this.state);
   }
 
   public storeDidMount() {}

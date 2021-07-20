@@ -7,5 +7,5 @@ export const showToast = (message: string, color: string = 'primary') => {
   document.body.append(toast.getContent());
   setTimeout(() => {
     toast.destroy();
-  }, 10000);
+  }, 5000);
 };

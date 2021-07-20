@@ -57,8 +57,7 @@ class ChatPage extends Block {
         classMix: bem.get('message-list'),
         messages: [],
         onEndList: (length) => {
-          if (length % 20 === 0) {
-            console.log(length);
+          if (length && (length % 20 === 0)) {
             messageController.getMessages({ offset: length });
           }
         },

@@ -8,11 +8,12 @@ enum METHODS {
 
 type TRequestData = Record<string, string | number>;
 
-type TRequestOptions = {
+export type TRequestOptions = {
   method?: METHODS
   headers?: Record<string, string>
   timeout?: number
   data?: unknown
+  withCredentials?: boolean
 };
 
 function queryStringify(data: TRequestData) {
@@ -23,41 +24,52 @@ function queryStringify(data: TRequestData) {
 }
 
 class HTTPTransport {
-  public get = (url: string, options = {}) => {
+  private _parentPath: string;
+
+  constructor(_parentPath: string = '') {
+    this._parentPath = _parentPath;
+  }
+
+  public get = (url: string, options = {}): Promise<XMLHttpRequest> => {
     return this.request(url, { ...options, method: METHODS.GET });
   };
 
-  public post = (url: string, options = {}) => {
+  public post = (url: string, options = {}): Promise<XMLHttpRequest> => {
     return this.request(url, { ...options, method: METHODS.POST });
   };
 
-  public put = (url: string, options = {}) => {
+  public put = (url: string, options = {}): Promise<XMLHttpRequest> => {
     return this.request(url, { ...options, method: METHODS.PUT });
   };
 
-  public patch = (url: string, options = {}) => {
+  public patch = (url: string, options = {}): Promise<XMLHttpRequest> => {
     return this.request(url, { ...options, method: METHODS.PATCH });
   };
 
-  public delete = (url: string, options = {}) => {
+  public delete = (url: string, options = {}): Promise<XMLHttpRequest> => {
     return this.request(url, { ...options, method: METHODS.DELETE });
   };
 
-  request = (url: string, options: TRequestOptions) => {
+  request = (url: string, options: TRequestOptions): any => {
     const {
       method = METHODS.GET,
       headers = {},
       data,
       timeout = 5000,
+      withCredentials = false,
     } = options;
 
     // Если метод GET и передана data, трансформировать data в query запрос
     const query = method === METHODS.GET ? queryStringify(data as TRequestData) : '';
 
     return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
+      const xhr = new window.XMLHttpRequest();
 
-      xhr.open(method, url + query);
+      xhr.open(method, this._parentPath + url + query);
+
+      if (withCredentials) {
+        xhr.withCredentials = true;
+      }
 
       Object.entries(headers).forEach(([key, value]) => {
         xhr.setRequestHeader(key, value);
@@ -71,18 +83,18 @@ class HTTPTransport {
         }
       };
 
-      xhr.onabort = reject;
-      xhr.onerror = reject;
+      xhr.onabort = () => reject(xhr);
+      xhr.onerror = () => reject(xhr);
       xhr.timeout = timeout;
-      xhr.ontimeout = reject;
+      xhr.ontimeout = () => reject(xhr);
 
       if (method === METHODS.GET || !data) {
         xhr.send();
       } else {
-        xhr.send(JSON.stringify(data));
+        xhr.send(data as any);
       }
     });
   };
 }
 
-export default HTTPTransport;
+export default new HTTPTransport();

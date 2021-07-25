@@ -4,21 +4,26 @@ export const template = () => `
       <div class="{{ className }}__side-panel-header">
         <SearchInput />
       </div>
-      <ContactCardList />
+      <ChatCardList />
       <div class="{{ className }}__side-panel-footer">
         <NewChatButton />
         <SettingsButton />
       </div>
     </aside>
     <main class="{{ className }}__main">
-      <ChatHeader />
+      <MessageHeader />
       <MessageList />
       <MessageInput />
     </main>
-    <AddContactPopup>
-      <AddContactInput />
-      <AddContactSubmitButton />
-      <AddContactInviteButton />
-    </AddContactPopup>
+    <AddChatUserPopup>
+      <AddChatUserForm />
+      <AddUserList />
+    </AddChatUserPopup>
+    <DeleteChatUserPopup>
+      <DeleteUserList />
+    </DeleteChatUserPopup>
+    <NewChatPopup>
+      <NewChatForm />
+    </NewChatPopup>
   </template>
 `;

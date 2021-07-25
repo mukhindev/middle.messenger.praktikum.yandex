@@ -2,11 +2,9 @@ import Block from '../../classes/Block';
 import { compile } from '../../utils/templator';
 import { template } from './SignInPage.tmpl';
 import BemHandler from '../../utils/BemHandler';
-import Button from '../../components/ui/Button/Button';
-import Input from '../../components/ui/Input/Input';
-import validateForm from '../../utils/validateForm';
-import { TFormField, TFormButton } from '../../utils/generateForm';
-import '../../assets/styles/global.scss';
+import { registerFormElements, validateForm, handleFormSubmit } from '../../utils/formHandler';
+import Link from '../../components/ui/Link/Link';
+import { authController } from '../../controllers';
 import './SignInPage.scss';
 
 const bem = new BemHandler('sign-in-page');
@@ -16,6 +14,10 @@ class SignInPage extends Block {
     super('div', {
       className: bem.get(),
       classNameForm: bem.get('form'),
+      Link: new Link({
+        className: bem.get('to-sign-up-link'),
+        to: '/sign-up',
+      }),
       form: {
         fields: [
           {
@@ -28,7 +30,7 @@ class SignInPage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только англ. буквы, символ _ и точка',
             },
-            onInput: (value: string) => console.log('Поле логина:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -41,7 +43,7 @@ class SignInPage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только англ и символы: -+~!?@#$%^&*;()[]|:',
             },
-            onInput: (value: string) => console.log('Поле пароля:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
         ],
@@ -61,9 +63,7 @@ class SignInPage extends Block {
       },
     });
 
-    this.props.Input = this.props.form.fields.map((field: TFormField) => new Input(field));
-    this.props.Button = this.props.form.buttons.map((button: TFormButton) => new Button(button));
-
+    registerFormElements(this.props);
     this.validate = this.validate.bind(this);
   }
 
@@ -73,14 +73,11 @@ class SignInPage extends Block {
   }
 
   handleSubmit(evt: Event) {
-    evt.preventDefault();
-    const { elements } = evt.target as HTMLFormElement;
-    const fields = Array.from(elements).filter((el) => el.nodeName === 'INPUT');
-    const formData = fields.reduce((acc: Record<string, string>, field: HTMLInputElement) => {
-      acc[field.name] = field.value;
-      return acc;
-    }, {});
-    console.log(formData);
+    const formData = handleFormSubmit(evt);
+    authController.signIn({
+      login: formData.login,
+      password: formData.password,
+    });
   }
 
   render() {
@@ -88,4 +85,4 @@ class SignInPage extends Block {
   }
 }
 
-document.body.prepend(new SignInPage().getContent());
+export default SignInPage;

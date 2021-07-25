@@ -1,0 +1,19 @@
+.user-list {
+
+  &__user-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: var(--color-white);
+    gap: 16px;
+    width: 656px;
+    min-height: 152px;
+  }
+
+  &__add-button {
+    margin: 0 0 0 auto;
+  }
+}

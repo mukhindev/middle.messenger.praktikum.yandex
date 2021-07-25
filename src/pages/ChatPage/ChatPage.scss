@@ -70,15 +70,16 @@
     border-bottom: 1px solid var(--color-border);
   }
 
-  /* Попап добавления контакта в чат */
+  /* Попапы */
 
-  &__add-contact-submit-button {
-    margin: 80px 0 0;
+  &__new-chat-popup {
+    width: 100%;
+    max-width: 480px;
   }
 
-  &__add-contact-invite-button {
-    align-self: center;
-    margin: 8px 0 0;
-    color: var(--color-primary);
+  &__user-list {
+    margin: 24px 0 0;
+
   }
+
 }

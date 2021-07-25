@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="./favicon.png" />
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src
+      'self'
+      https://ya-praktikum.tech
+      wss://ya-praktikum.tech
+      ws://localhost:*
+      'unsafe-inline'
+    ;
+    script-src
+      'self'
+      'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE='
+    ;
+  ">
+  <title>Чат — Главная</title>
+</head>
+<body class="body">
+  <div class="app"></div>
+  <script src="../src/index.ts"></script>
+</body>
+</html>

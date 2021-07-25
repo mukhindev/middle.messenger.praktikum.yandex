@@ -6,6 +6,7 @@ import arrowLeftIcon from '../../../assets/images/arrow-left.svg';
 import closeIcon from '../../../assets/images/close.svg';
 import BemHandler from '../../../utils/BemHandler';
 import './Popup.scss';
+import { router } from '../../../router';
 
 const bem = new BemHandler('popup');
 
@@ -15,14 +16,17 @@ interface IPopup {
   children?: string
   closeButton?: boolean
   comeBackButton?: boolean
+  onOpen?: () => void
+  onClose?: () => void
 }
 
 class Popup extends Block {
   constructor(props: IPopup) {
     super('div', {
       className: bem.get(),
-      classNameRoot: bem.get('', '', props.classMix),
-      classNameRootOpen: bem.get('', { opened: true }, props.classMix),
+      classNameRoot: bem.get('', ''),
+      classNameRootOpen: bem.get('', { opened: true }),
+      classNameCard: bem.get('card', '', props.classMix),
       title: props.title ?? '',
       children: props.children ?? '',
       comeBackButton: props.comeBackButton ?? false,
@@ -32,8 +36,7 @@ class Popup extends Block {
         light: true,
         classMix: bem.get('come-back-button'),
         onClick: () => {
-          console.log('Кнопка возврата');
-          window.location.href = '/chat.html';
+          router.back();
         },
       }),
       closeButton: props.closeButton ?? true,
@@ -44,6 +47,8 @@ class Popup extends Block {
         classMix: bem.get('close-button'),
         onClick: () => this.togglePopup(false),
       }),
+      onOpen: props.onOpen ?? (() => {}),
+      onClose: props.onClose ?? (() => {}),
     });
     this.handleOverlay = this.handleOverlay.bind(this);
     this.togglePopup = this.togglePopup.bind(this);
@@ -64,9 +69,11 @@ class Popup extends Block {
     if (isOpen) {
       popupElement.className = this.props.classNameRootOpen;
       document.addEventListener('mousedown', this.handleOverlay);
+      this.props.onOpen();
     } else {
       popupElement.className = this.props.classNameRoot;
       document.removeEventListener('mousedown', this.handleOverlay);
+      this.props.onClose();
     }
   }
 

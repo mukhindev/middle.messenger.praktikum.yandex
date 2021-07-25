@@ -1,0 +1,10 @@
+.chat-card-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--color-white);
+  gap: 16px;
+  user-select: none;
+}

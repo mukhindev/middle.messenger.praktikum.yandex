@@ -1,5 +1,5 @@
 import { TProps } from '../../classes/Block';
-import generateForm from '../../utils/generateForm';
+import { generateForm } from '../../utils/formHandler';
 
 export const template = (props: TProps) => `
   <template class="{{ className }}">
@@ -8,7 +8,7 @@ export const template = (props: TProps) => `
       ${generateForm(props.form, '{{ classNameForm }}')}
       <p class="{{ className }}__to-sign-in">
         Есть аккаунт?
-        <a class="{{ className }}__to-sign-in-link" href="/sign-in.html">Вход</a>
+        <Link>Вход</Link>
       </p>
     </main>
   </template>

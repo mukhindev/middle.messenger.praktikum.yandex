@@ -2,12 +2,11 @@ import Block from '../../classes/Block';
 import { compile } from '../../utils/templator';
 import { template } from './SignUpPage.tmpl';
 import BemHandler from '../../utils/BemHandler';
-import Button from '../../components/ui/Button/Button';
-import Input from '../../components/ui/Input/Input';
-import validateForm from '../../utils/validateForm';
-import { TFormField, TFormButton } from '../../utils/generateForm';
-import '../../assets/styles/global.scss';
+import { registerFormElements, validateForm, handleFormSubmit } from '../../utils/formHandler';
+import Link from '../../components/ui/Link/Link';
 import './SignUpPage.scss';
+import { authController } from '../../controllers';
+import { convertKeysToSnakeCase } from '../../utils/keysConverter';
 
 const bem = new BemHandler('sign-up-page');
 
@@ -16,6 +15,10 @@ class SignUpPage extends Block {
     super('div', {
       className: bem.get(),
       classNameForm: bem.get('form'),
+      Link: new Link({
+        className: bem.get('to-sign-in-link'),
+        to: '/sign-in',
+      }),
       form: {
         fields: [
           {
@@ -29,7 +32,7 @@ class SignUpPage extends Block {
               required: true,
               'data-error': 'Обязательно поле в формате email',
             },
-            onInput: (value: string) => console.log('Поле почты:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -42,7 +45,7 @@ class SignUpPage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только англ. буквы, символ _ и точка',
             },
-            onInput: (value: string) => console.log('Поле логина:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -55,7 +58,7 @@ class SignUpPage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только буквы, дефис и точка',
             },
-            onInput: (value: string) => console.log('Поле имя:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -68,8 +71,7 @@ class SignUpPage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только англ и символы: -+~!?@#$%^&*;()[]|:',
             },
-            onInput: (value: string) => {
-              console.log('Поле пароля:', value);
+            onInput: () => {
               this.props.repeatedPasswordValidate();
             },
             onValidate: () => this.validate(),
@@ -84,7 +86,7 @@ class SignUpPage extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только буквы, дефис и точка',
             },
-            onInput: (value: string) => console.log('Поле фамилия:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -115,14 +117,14 @@ class SignUpPage extends Block {
           },
           {
             type: 'tel',
-            name: 'tel',
+            name: 'phone',
             label: 'Телефон',
             validation: {
               pattern: '^(\\+[0-9])\\s?\\(?[0-9]{3}\\)?\\s?[0-9]{7}$',
               required: true,
               'data-error': 'Обязательно поле в формате телефона +79991234567',
             },
-            onInput: (value: string) => console.log('Поле телефона:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
         ],
@@ -142,9 +144,7 @@ class SignUpPage extends Block {
       },
     });
 
-    this.props.Input = this.props.form.fields.map((field: TFormField) => new Input(field));
-    this.props.Button = this.props.form.buttons.map((button: TFormButton) => new Button(button));
-
+    registerFormElements(this.props);
     this.validate = this.validate.bind(this);
   }
 
@@ -154,14 +154,15 @@ class SignUpPage extends Block {
   }
 
   handleSubmit(evt: Event) {
-    evt.preventDefault();
-    const { elements } = evt.target as HTMLFormElement;
-    const fields = Array.from(elements).filter((el) => el.nodeName === 'INPUT');
-    const formData = fields.reduce((acc: Record<string, string>, field: HTMLInputElement) => {
-      acc[field.name] = field.value;
-      return acc;
-    }, {});
-    console.log(formData);
+    const formData = handleFormSubmit(evt);
+    authController.signUp(convertKeysToSnakeCase({
+      login: formData.login,
+      password: formData.password,
+      firstName: formData.firstName,
+      secondName: formData.secondName,
+      email: formData.email,
+      phone: formData.phone,
+    }));
   }
 
   render() {
@@ -169,4 +170,4 @@ class SignUpPage extends Block {
   }
 }
 
-document.body.prepend(new SignUpPage().getContent());
+export default SignUpPage;

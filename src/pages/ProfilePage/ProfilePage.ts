@@ -3,17 +3,20 @@ import { compile } from '../../utils/templator';
 import { template } from './ProfilePage.tmpl';
 import BemHandler from '../../utils/BemHandler';
 import Button from '../../components/ui/Button/Button';
-import Input from '../../components/ui/Input/Input';
 import arrowLeftIcon from '../../assets/images/arrow-left.svg';
+import { registerFormElements, validateForm, handleFormSubmit } from '../../utils/formHandler';
+import { router } from '../../router';
+import { authController, userController } from '../../controllers';
+import { store } from '../../store';
+import { convertKeysToSnakeCase } from '../../utils/keysConverter';
+import ImageFile from '../../components/ui/ImageFile/ImageFile';
 import defaultAvatar from '../../assets/images/default-avatar.jpg';
-import validateForm from '../../utils/validateForm';
-import { TFormField, TFormButton } from '../../utils/generateForm';
-import '../../assets/styles/global.scss';
+import env from '../../utils/env';
 import './ProfilePage.scss';
 
 const bem = new BemHandler('profile-page');
 
-class Profile extends Block {
+class ProfilePage extends Block {
   constructor() {
     super('div', {
       className: bem.get(),
@@ -24,24 +27,25 @@ class Profile extends Block {
         light: true,
         classMix: bem.get('come-back-button'),
         onClick: () => {
-          console.log('Кнопка возврата');
-          window.location.href = '/chat.html';
+          router.go('/');
         },
       }),
-      avatar: defaultAvatar,
-      AvatarDeleteButton: new Button({
-        label: 'Удалить аватар',
-        light: true,
-        classMix: bem.get('avatar-delete-button'),
-        onClick: () => console.log('Кнопка удаления аватара'),
+      ChooseAvatar: new ImageFile({
+        classMix: bem.get('choose-avatar'),
+        src: '',
+        alt: 'Аватар',
+        onChange: (file) => {
+          const formData = new FormData();
+          formData.append('avatar', file);
+          userController.updateAvatar(formData);
+        },
       }),
       PasswordButton: new Button({
         label: 'Сменить пароль',
         light: true,
         classMix: bem.get('password-button'),
         onClick: () => {
-          console.log('Кнопка смены пароля');
-          window.location.href = '/password.html';
+          router.go('/password');
         },
       }),
       SignOutButton: new Button({
@@ -49,8 +53,7 @@ class Profile extends Block {
         light: true,
         classMix: bem.get('sign-out-button'),
         onClick: () => {
-          console.log('Кнопка выхода');
-          window.location.href = '/sign-in.html';
+          authController.signOut();
         },
       }),
       form: {
@@ -66,7 +69,7 @@ class Profile extends Block {
               required: true,
               'data-error': 'Обязательно поле в формате email',
             },
-            onInput: (value: string) => console.log('Поле почты:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -79,7 +82,7 @@ class Profile extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только англ. буквы, символ _ и точка',
             },
-            onInput: (value: string) => console.log('Поле логина:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -92,7 +95,7 @@ class Profile extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только буквы, дефис и точка',
             },
-            onInput: (value: string) => console.log('Поле имя:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
@@ -105,19 +108,19 @@ class Profile extends Block {
               required: true,
               'data-error': 'Обязательно поле. Только буквы, дефис и точка',
             },
-            onInput: (value: string) => console.log('Поле фамилия:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
           {
             type: 'tel',
-            name: 'tel',
+            name: 'phone',
             label: 'Телефон',
             validation: {
               pattern: '^(\\+[0-9])\\s?\\(?[0-9]{3}\\)?\\s?[0-9]{7}$',
               required: true,
               'data-error': 'Обязательно поле в формате телефона +79991234567',
             },
-            onInput: (value: string) => console.log('Поле телефона:', value),
+            onInput: () => {},
             onValidate: () => this.validate(),
           },
         ],
@@ -137,10 +140,9 @@ class Profile extends Block {
       },
     });
 
-    this.props.Input = this.props.form.fields.map((field: TFormField) => new Input(field));
-    this.props.Button = this.props.form.buttons.map((button: TFormButton) => new Button(button));
-
+    registerFormElements(this.props);
     this.validate = this.validate.bind(this);
+    this.setFormValues = this.setFormValues.bind(this);
   }
 
   validate() {
@@ -149,14 +151,39 @@ class Profile extends Block {
   }
 
   handleSubmit(evt: Event) {
-    evt.preventDefault();
-    const { elements } = evt.target as HTMLFormElement;
+    const formDate = handleFormSubmit(evt);
+    userController.updateProfile(convertKeysToSnakeCase({
+      firstName: formDate.firstName,
+      secondName: formDate.secondName,
+      displayName: '',
+      login: formDate.login,
+      email: formDate.email,
+      phone: formDate.phone,
+    }));
+  }
+
+  setFormValues(formData: Record<string, string>) {
+    if (!formData) {
+      return;
+    }
+    const formElement = this.getContent().querySelector(`.${this.props.classNameForm}`);
+    if (!formElement) {
+      return;
+    }
+    const { elements } = formElement as HTMLFormElement;
     const fields = Array.from(elements).filter((el) => el.nodeName === 'INPUT');
-    const formData = fields.reduce((acc: Record<string, string>, field: HTMLInputElement) => {
-      acc[field.name] = field.value;
-      return acc;
-    }, {});
-    console.log(formData);
+    fields.forEach((field: HTMLInputElement) => {
+      field.value = formData[field.name];
+    });
+  }
+
+  componentDidMount() {
+    store.subscribe((state) => {
+      this.setFormValues(state.currentUser);
+      this.props.ChooseAvatar.props.src = state.currentUser?.avatar
+        ? env.HOST_RESOURCES + state.currentUser?.avatar
+        : defaultAvatar;
+    });
   }
 
   render() {
@@ -164,4 +191,4 @@ class Profile extends Block {
   }
 }
 
-document.body.prepend(new Profile().getContent());
+export default ProfilePage;

@@ -1,20 +1,10 @@
 .message-list {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   margin: 0;
   padding: 0;
   list-style: none;
   background: var(--color-background);
-
-  &__item {
-    margin: 0 0 16px;
-
-    &:first-of-type {
-      margin: auto 0 16px;
-    }
-
-    &:last-of-type {
-      margin: 0;
-    }
-  }
+  gap: 16px;
+  overflow-anchor: none;
 }

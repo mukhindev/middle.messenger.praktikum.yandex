@@ -1,0 +1,43 @@
+.toast {
+  color: var(--color-white);
+  padding: 16px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: max-content;
+  width: 100%;
+  animation: toast 5s;
+  animation-fill-mode: forwards;
+  z-index: 9;
+}
+
+.toast_color_success {
+  background-color: var(--color-success);
+}
+
+.toast_color_primary {
+  background-color: var(--color-primary);
+}
+
+.toast_color_error {
+  background-color: var(--color-error);
+}
+
+@keyframes toast {
+
+  0% {
+    transform: translateY(100%);
+  }
+
+  10% {
+    transform: translateY(0);
+  }
+
+  90% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}

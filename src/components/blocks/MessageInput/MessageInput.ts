@@ -9,13 +9,13 @@ import attachmentIcon from '../../../assets/images/attachment.svg';
 import pictureIcon from '../../../assets/images/picture.svg';
 import locationIcon from '../../../assets/images/location.svg';
 import sendIcon from '../../../assets/images/send.svg';
+import { validateForm, handleFormSubmit } from '../../../utils/formHandler';
 import './MessageInput.scss';
-import validateForm from '../../../utils/validateForm';
 
 const bem = new BemHandler('message-input');
 
 interface IMessageInput {
-  onMessageInput: (value: string) => void
+  onMessageInput?: (value: string) => void
   onMessageSend: (formData: Record<string, string>) => void
   onAttachmentFile: () => void
   onAttachmentMedia: () => void
@@ -81,13 +81,11 @@ class MessageInput extends Block {
   }
 
   handleSubmit(evt: Event) {
-    evt.preventDefault();
-    const { elements } = evt.target as HTMLFormElement;
-    const fields = Array.from(elements).filter((el) => el.nodeName === 'INPUT');
-    const formData = fields.reduce((acc: Record<string, string>, field: HTMLInputElement) => {
-      acc[field.name] = field.value;
-      return acc;
-    }, {});
+    const formData = handleFormSubmit(evt);
+    if (!formData.message) {
+      return;
+    }
+    (evt.target as HTMLFormElement).reset();
     this.props.onMessageSend(formData);
   }
 

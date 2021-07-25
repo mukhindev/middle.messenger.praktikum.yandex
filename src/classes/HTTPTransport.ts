@@ -97,4 +97,4 @@ class HTTPTransport {
   };
 }
 
-export default HTTPTransport;
+export default new HTTPTransport();

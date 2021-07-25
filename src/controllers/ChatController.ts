@@ -1,12 +1,10 @@
-import ChatApi from '../api/ChatApi';
+import chatApi from '../api/ChatApi';
 import { IChatApiAddUser, IChatApiCreate } from '../interfaces/IChatApi';
 import { showPreloader, hidePreloader } from '../utils/preloader';
 import { handleError } from '../utils/apiHandler';
 import { showToast } from '../utils/toast';
 import { store } from '../store';
 import { router } from '../router';
-
-const chatApi = new ChatApi();
 
 class ChatController {
   public create(data: IChatApiCreate) {
@@ -86,4 +84,4 @@ class ChatController {
   }
 }
 
-export default ChatController;
+export default new ChatController();

@@ -1,8 +1,8 @@
-import HTTPTransport from './HTTPTransport';
+import http from './HTTPTransport';
 
 describe('HTTPTransport', () => {
   it('Get', (done) => {
-    new HTTPTransport()
+    http
       .get(
         'https://jsonplaceholder.typicode.com/comments',
         { data: { postId: 1 } },
@@ -19,7 +19,7 @@ describe('HTTPTransport', () => {
   });
 
   it('Post', (done) => {
-    new HTTPTransport()
+    http
       .post('https://jsonplaceholder.typicode.com/posts', {
         headers: {
           'Content-type': 'application/json; charset=UTF-8',

@@ -1,12 +1,10 @@
-import UserApi from '../api/UserApi';
+import userApi from '../api/UserApi';
 import { IUserApiSearch, IUserApiUpdateProfile } from '../interfaces/IUserApi';
 import { handleError } from '../utils/apiHandler';
 import { hidePreloader, showPreloader } from '../utils/preloader';
 import { showToast } from '../utils/toast';
 import { store } from '../store';
 import { convertKeysToCamelCase } from '../utils/keysConverter';
-
-const userApi = new UserApi();
 
 class ChatController {
   public search(data: IUserApiSearch) {
@@ -48,4 +46,4 @@ class ChatController {
   }
 }
 
-export default ChatController;
+export default new ChatController();

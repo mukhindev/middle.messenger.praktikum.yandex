@@ -53,4 +53,4 @@ class ChatApi extends BaseApi {
   }
 }
 
-export default ChatApi;
+export default new ChatApi();

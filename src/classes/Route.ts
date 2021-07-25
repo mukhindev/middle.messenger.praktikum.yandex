@@ -30,13 +30,6 @@ class Route {
     return this._pathname;
   }
 
-  public navigate(pathname: string) {
-    if (this.match(pathname)) {
-      this._pathname = pathname;
-      this.render();
-    }
-  }
-
   public leave() {
     if (this._block) {
       this._block.destroy();

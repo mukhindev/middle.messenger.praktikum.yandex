@@ -32,4 +32,4 @@ class AuthApi extends BaseApi {
   }
 }
 
-export default AuthApi;
+export default new AuthApi();

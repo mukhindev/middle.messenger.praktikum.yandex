@@ -1,4 +1,4 @@
-import HTTPTransport from '../classes/HTTPTransport';
+import http from '../classes/HTTPTransport';
 import env from '../utils/env';
 import { convertKeysToCamelCase } from '../utils/keysConverter';
 
@@ -13,13 +13,13 @@ interface IBaseApi {
 }
 
 class BaseApi {
-  private _http: HTTPTransport;
+  private _http: typeof http;
   private _baseUrl: string;
   private _path: string;
   private _headers: Record<string, string>;
 
   constructor(config: IBaseApi = {}) {
-    this._http = new HTTPTransport();
+    this._http = http;
     this._baseUrl = config.baseUrl || env.HOST_API || '';
     this._path = config.path || '';
     this._headers = config.headers || defaultHeaders;

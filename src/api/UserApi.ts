@@ -29,4 +29,4 @@ class UserApi extends BaseApi {
   }
 }
 
-export default UserApi;
+export default new UserApi();

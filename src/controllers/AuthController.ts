@@ -1,12 +1,10 @@
-import AuthApi from '../api/AuthApi';
+import authApi from '../api/AuthApi';
 import { router } from '../router';
 import { showPreloader, hidePreloader } from '../utils/preloader';
 import { handleError } from '../utils/apiHandler';
 import { IAuthApiSignIn, IAuthApiSignUp } from '../interfaces/IAuthApi';
 import { store } from '../store';
 import { showToast } from '../utils/toast';
-
-const authApi = new AuthApi();
 
 class AuthSingInController {
   public signIn(user: IAuthApiSignIn) {
@@ -57,4 +55,4 @@ class AuthSingInController {
   }
 }
 
-export default AuthSingInController;
+export default new AuthSingInController();

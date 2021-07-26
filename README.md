@@ -105,6 +105,12 @@ npm run build
 npm run build
 ```
 
+Старт сервера Express для раздачи статики из `./dist`:
+
+```bash
+npm run start
+```
+
 Запустить Webpack Dev Server. http://localhost:3000:
 
 ```bash

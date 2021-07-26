@@ -2,6 +2,7 @@
 
 * Макет в Figma: [https://www.figma.com/file/nMKeQd1eOiWN27uZpuzREb/mukhin-chat?node-id=0%3A1](https://www.figma.com/file/nMKeQd1eOiWN27uZpuzREb/mukhin-chat?node-id=0%3A1)
 * Опубликованное в Netlify приложение: [https://frosty-poincare-ded0e8.netlify.app](https://frosty-poincare-ded0e8.netlify.app)
+* Опубликованное в Heroku (через контейнер docker) приложение: [https://praktikum-chat.herokuapp.com/](https://praktikum-chat.herokuapp.com/)
 
 ## Что это?
 
@@ -9,7 +10,7 @@ Cамостоятельная практическая работа, выпол�
 
 ## Текущий этап
 
-Спринт 3 из 4
+Спринт 4 из 4
 
 ## Спринт 1
 
@@ -56,6 +57,14 @@ https://github.com/mukhindev-praktikum/middle.messenger.praktikum.yandex/pull/3
   * Отправка и получение текстовых сообщений
 * Добавлены правила `Content-Security-Policy`
 * Для сервера раздачи статики добавлен rate-limit
+
+## Спринт 4
+
+https://github.com/mukhindev-praktikum/middle.messenger.praktikum.yandex/pull/4
+
+* Переход с Parcel на Webpack
+* Dockerfile для создания docker-контейнера с дистрибутивом и сервером на Express
+* Деплой контейнера на Heroku
 
 ## TODO
 

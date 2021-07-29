@@ -33,6 +33,7 @@ app.use(helmet.contentSecurityPolicy({
     ],
     'script-src': [
       "'self'",
+      "'unsafe-eval'",
       "'sha256-vvt4KWwuNr51XfE5m+hzeNEGhiOfZzG97ccfqGsPwvE='",
     ],
   },

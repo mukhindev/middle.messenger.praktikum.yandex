@@ -1,9 +1,8 @@
-Текущий Pull Request https://github.com/mukhindev-praktikum/middle.messenger.praktikum.yandex/pull/4
-
 # Чат
 
 * Макет в Figma: [https://www.figma.com/file/nMKeQd1eOiWN27uZpuzREb/mukhin-chat?node-id=0%3A1](https://www.figma.com/file/nMKeQd1eOiWN27uZpuzREb/mukhin-chat?node-id=0%3A1)
 * Опубликованное в Netlify приложение: [https://frosty-poincare-ded0e8.netlify.app](https://frosty-poincare-ded0e8.netlify.app)
+* Опубликованное в Heroku (через контейнер docker) приложение: [https://praktikum-chat.herokuapp.com/](https://praktikum-chat.herokuapp.com/)
 
 ## Что это?
 
@@ -11,7 +10,7 @@ Cамостоятельная практическая работа, выпол�
 
 ## Текущий этап
 
-Спринт 3 из 4
+Спринт 4 из 4
 
 ## Спринт 1
 
@@ -59,6 +58,15 @@ https://github.com/mukhindev-praktikum/middle.messenger.praktikum.yandex/pull/3
 * Добавлены правила `Content-Security-Policy`
 * Для сервера раздачи статики добавлен rate-limit
 
+## Спринт 4
+
+https://github.com/mukhindev-praktikum/middle.messenger.praktikum.yandex/pull/4
+
+* Переход с Parcel на [Webpack](https://webpack.js.org/)
+* Dockerfile для создания [docker](https://www.docker.com/) -контейнера с дистрибутивом и сервером на Express
+* Деплой контейнера на Heroku
+* Настроен pre commit ([husky](https://typicode.github.io/husky/#/))
+
 ## TODO
 
 - [ ] Пересмотреть Store
@@ -79,28 +87,40 @@ npm i
 
 ### Сборка и запуск
 
-Сборка проекта. Используемый сборщик [Parcel](https://parceljs.org/):
+Подготовка проекта (установка Husky):
+
+```bash
+npm run prepare
+```
+
+Сборка проекта. Используемый сборщик [Webpack](https://webpack.js.org/):
 
 ```bash
 npm run build
 ```
 
-Сборка проекта с наблюдением за файлами (пересобирается при изменении файлов):
+Сборка контейнера docker (`./dist` + `./server`):
 
 ```bash
-npm run watch
+npm run build
 ```
 
-Выполняется сборка и запуск статического сервера на Express, на порту 3000. http://localhost:3000:
+Старт сервера Express для раздачи статики из `./dist`:
 
 ```bash
 npm run start
 ```
 
-Сборка проекта с наблюдением за файлами и запуск статического сервера на Express, на порту 3000. http://localhost:3000:
+Запустить Webpack Dev Server. http://localhost:3000:
 
 ```bash
 npm run dev
+```
+
+Запуск тестов
+
+```bash
+npm run test
 ```
 
 Проверка на стилистические и типовые ошибки. Используются правила Airbnb.
@@ -109,10 +129,10 @@ npm run dev
 npm run lint
 ```
 
-Запуск тестов
+Статический анализ css и scss файлов. Используются правила Airbnb.
 
 ```bash
-npm run test
+npm run stylelint
 ```
 
 ## Шаблонизатор `v2`
